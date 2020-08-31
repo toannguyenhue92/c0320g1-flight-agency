@@ -16,4 +16,4 @@
             └── resources
                 └── application.properties      # Giá trị dùng để kết nối database
        
- **Lưu ý: Thay đổi các giá trị ở `application.properties` trước khi chạy!**
+ **Lưu ý: Tạo file `application.properties` từ file mẫu `application-sample.properties` trước khi chạy!**
