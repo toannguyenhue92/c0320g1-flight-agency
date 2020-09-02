@@ -19,7 +19,7 @@ public class HomeController {
     @Autowired
     private FeedbackService feedbackService;
 
-    @PostMapping("/save-feedback")
+    @PostMapping("/home/save-feedback")
     public ResponseEntity<Feedback> saveFeedback (@Valid @RequestBody Feedback feedback, BindingResult bindingResult) throws ViolatedException {
         if (bindingResult.hasFieldErrors()) {
             throw new ViolatedException(bindingResult);
