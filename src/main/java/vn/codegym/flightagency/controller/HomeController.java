@@ -1,0 +1,31 @@
+package vn.codegym.flightagency.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import vn.codegym.flightagency.exception.ViolatedException;
+import vn.codegym.flightagency.model.Feedback;
+import vn.codegym.flightagency.service.FeedbackService;
+
+import javax.validation.Valid;
+
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@RestController
+@RequestMapping("/api/v1")
+public class HomeController {
+
+    @Autowired
+    private FeedbackService feedbackService;
+
+    @PostMapping("/home/save-feedback")
+    public ResponseEntity<Feedback> saveFeedback (@Valid @RequestBody Feedback feedback, BindingResult bindingResult) throws ViolatedException {
+        if (bindingResult.hasFieldErrors()) {
+            throw new ViolatedException(bindingResult);
+        }
+        feedbackService.save(feedback);
+        return ResponseEntity.ok(feedback);
+    }
+
+}
