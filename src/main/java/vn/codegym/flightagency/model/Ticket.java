@@ -1,27 +1,27 @@
 package vn.codegym.flightagency.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ticket")
+@Table(name = "tickets")
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_ticket")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "depature")
-    private String depature;
+    @Column(name = "departure")
+    private String departure;
 
     @Column(name = "destination")
     private String destination;
 
-    @Column(name = "depature_time")
-    private Date depatureTtime;
+    @Column(name = "departure_time")
+    private LocalDateTime departureTime;
 
     @Column(name = "arrival_time")
-    private Date arrivalTime;
+    private LocalDateTime arrivalTime;
 
     @Column(name = "booking_code")
     private String bookingCode;
@@ -36,10 +36,10 @@ public class Ticket {
     private String chair;
 
     @Column(name = "price")
-    private int price;
+    private Double price;
 
     @Column(name = "taxes_and_fees")
-    private int taxesAndFees;
+    private Double taxesAndFees;
 
     @Column(name = "type_customer")
     private String typeCustomer;
@@ -58,7 +58,5 @@ public class Ticket {
 
     @Column(name = "extra_luggage")
     private String extraLuggage;
-
-
 
 }
