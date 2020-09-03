@@ -1,22 +1,40 @@
 package vn.codegym.flightagency.model;
 
-import lombok.Data;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+
+@Setter
+@Getter
+@Entity
+@Table(name = "bills")
+@NoArgsConstructor
 public class Bill {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name="date_created")
     private LocalDateTime dateCreated;
 
-//    private Deal deal;
+    @JoinColumn(name="transaction_id")
+    @OneToOne
+    private Transaction transaction;
 
-    private UUID billCode;
+    @Column(name="bill_code")
+    private String billCode;
 
-    public Bill() {
-        this.billCode = UUID.randomUUID();
-    }
+    @Column(name="tax_code")
+    private String taxCode;
+
+
 }
 
