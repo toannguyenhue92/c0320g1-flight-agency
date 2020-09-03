@@ -7,42 +7,45 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "UserTable")
+@Table(name = "User_Table")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false,name = "user_name")
     @Size(min = 6)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "password")
     @Size(min = 6)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "confirm_password")
     private String confirmPassword;
 
+    @Column("name")
     private String name;
 
+    @Column("birth")
     private Date birth;
 
     @Email
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false,name = "email")
     private String email;
 
+    @Column(name = "phone")
     private String phone;
 
+    @Column(name = "address")
     private String address;
 
-    @Column(nullable = true)
+    @Column(nullable = true,name = "gender")
     private String gender;
-//    //kích hoạt tài khoản thông qua Verify Email
-//    private boolean status;
 
-    //Trạng thái kich hoat
+    @Column(name = "status")
     private boolean isEnabled;
 
     public static long getSerialVersionUID() {

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name = "Create_new_account")
 public class ConfirmationToken {
 
     @Id
@@ -15,6 +16,7 @@ public class ConfirmationToken {
     @Column(name = "confirmation_token")
     private String confirmationToken;
 
+    @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
