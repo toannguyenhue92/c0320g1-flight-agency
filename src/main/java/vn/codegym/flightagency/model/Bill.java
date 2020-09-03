@@ -1,14 +1,11 @@
 package vn.codegym.flightagency.model;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
-
 
 @Setter
 @Getter
@@ -25,8 +22,8 @@ public class Bill {
     @Column(name="date_created")
     private LocalDateTime dateCreated;
 
-    @JoinColumn(name="transaction_id")
     @OneToOne
+    @JoinColumn(name = "transaction_id")
     private Transaction transaction;
 
     @Column(name="bill_code")
