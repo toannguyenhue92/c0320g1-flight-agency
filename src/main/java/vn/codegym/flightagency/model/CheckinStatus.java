@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 public class CheckinStatus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "checkin_status_id")
