@@ -25,7 +25,9 @@ public class Account implements Serializable {
     @Column(name = "password")
     private String password;
 
-     @Column(name = "role_id")
+
+     @ManyToOne
+     @JoinColumn(name = "role_id")
     private Role role;
 
      @Column(name = "status")
