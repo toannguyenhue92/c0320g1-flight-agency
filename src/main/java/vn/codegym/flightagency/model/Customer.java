@@ -1,10 +1,11 @@
 package vn.codegym.flightagency.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customers")
@@ -21,7 +22,7 @@ public class Customer {
     private String fullName;
 
     @Column(name = "customer_birthday")
-    private LocalDate birthday;
+    private LocalDateTime birthday;
 
     @Column(name = "customer_gender")
     private String gender;
@@ -44,4 +45,20 @@ public class Customer {
 
     @Column(name = "customer_status")
     private Boolean status;
+
+    @Column(name = "booking_code")
+    private String bookingCode;
+
+    @Column(name = "flight_route")
+    private String flightRoute;
+
+    @Column(name = "date_of_flight")
+    private LocalDateTime dateOfFlight;
+
+    @Column(name = "total_money")
+    private Double totalMoney;
+
+//    @ManyToOne
+//    @JoinColumn(name = "checkin_status_id")
+//    private CheckinStatus checkinStatus;
 }
