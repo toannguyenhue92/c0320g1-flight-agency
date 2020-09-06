@@ -40,9 +40,11 @@ public class FlightSchedule {
     @JoinColumn(name = "brand_id")
     private Branch brand;
 
-    @ManyToOne
-    @JoinColumn(name = "aircraft_id")
-    private Aircraft aircraft;
+    @Column(name = "flight_code")
+    private String flightCode;
+
+    @Column(name = "flight_capacity")
+    private Integer flightCapacity;
 
     @Column(name = "price")
     private Double price;
