@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "User_Table")
-public class User implements Serializable {
+@Table(name = "Accounts")
+public class Accounts implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,10 @@ public class User implements Serializable {
     @Column(nullable = false,name = "confirm_password")
     private String confirmPassword;
 
-    @Column("name")
+    @Column(name = "name")
     private String name;
 
-    @Column("birth")
+    @Column(name = "birth")
     private Date birth;
 
     @Email
@@ -47,6 +47,17 @@ public class User implements Serializable {
 
     @Column(name = "status")
     private boolean isEnabled;
+
+    @Column(name = "role")
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
