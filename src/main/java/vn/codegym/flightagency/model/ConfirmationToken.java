@@ -1,32 +1,32 @@
 package vn.codegym.flightagency.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "Create_new_account")
+@Table(name = "confirmation_tokens")
+@Getter
+@Setter
+@NoArgsConstructor
 public class ConfirmationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "token_id")
-    private long tokenid;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "confirmation_token")
     private String confirmationToken;
 
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDate createdDate;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
-    private User user;
+    @OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
-    public ConfirmationToken(User user) {
-        this.user = user;
-        createdDate = new Date();
-        confirmationToken = UUID.randomUUID().toString();
-    }
 }
