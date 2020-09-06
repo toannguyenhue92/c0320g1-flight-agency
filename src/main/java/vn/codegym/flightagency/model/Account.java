@@ -11,11 +11,11 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "users")
+@Table(name = "accounts")
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class User {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "full_name", unique = true, nullable = false)
+    @Column(name = "full_name", nullable = false)
     @Size(min = 6)
     private String fullName;
 
