@@ -29,7 +29,7 @@ public class Promo {
     @Column(name = "discount", nullable = false)
     @Min(0)
     @Max(1)
-    private Long discount;
+    private Float discount;
 
     @OneToOne
     @JoinColumn(name = "flight_schedules") //lấy tuyến bay kết hợp gtri 2 trường departure_airport_id và arrival_airport_id
