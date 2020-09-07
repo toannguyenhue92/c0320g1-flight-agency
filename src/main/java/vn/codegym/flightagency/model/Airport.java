@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "airport")
+@Table(name = "airports")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,4 +23,7 @@ public class Airport {
 
     @Column(name = "airport_name")
     private String name;
+
+    @Column(name = "airport_city")
+    private String city;
 }
