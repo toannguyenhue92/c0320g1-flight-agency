@@ -1,5 +1,6 @@
 package vn.codegym.flightagency.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
 
@@ -10,7 +11,10 @@ public interface AccountService {
 
     Optional<Account> findByEmail(String email);
 
-    Account saveAccount(String email);
+    Account saveAccount(Account account);
 
-    TokenDto login(Account account);
+    UserDetails getUserDetail(Account account);
+
+    Account getProfileGoogle(TokenDto tokenDto);
+    Account getProfileFacebook(TokenDto tokenDto);
 }

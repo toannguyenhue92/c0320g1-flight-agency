@@ -8,4 +8,5 @@ import lombok.Setter;
 public class TokenDto {
 
     String value;
+    String email;
 }

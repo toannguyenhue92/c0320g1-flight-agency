@@ -5,41 +5,69 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
-
+@Entity
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-public class Account implements Serializable {
+public class Account {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "email",unique = true)
-    private String email;
+    @Column(name = "code")
+    private String code;
 
-    @Column(name = "password")
+    @Column(name = "full_name", unique = true, nullable = false)
+    @Size(min = 6)
+    private String fullName;
+
+    @Column(name = "password", nullable = false)
+    @Size(min = 6)
     private String password;
 
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
-     @ManyToOne
-     @JoinColumn(name = "role_id")
-    private Role role;
+    @Email
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
 
-     @Column(name = "status")
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "avatar_image_url")
+    private String avatarImageUrl;
+
+    @Column(name = "role")
+    @Pattern(regexp = "^(ROLE_USER|ROLE_EMPLOYEE|ROLE_ADMIN)$")
+    private String role;
+
+    @Column(name = "status")
     private boolean status;
 
-     @Column(name="image_url")
-    private String imageURL;
-
-    public Account(String email, String password, Role role, boolean status) {
+    public Account(String email, String password, String role, boolean status,
+                   String fullName,LocalDate birthDate,String avatarImageUrl,String gender ) {
         this.email = email;
-        this.password = password;
+        this.password =  password;
         this.role = role;
         this.status = status;
+        this.fullName = fullName;
+        this.birthDate = birthDate;
+        this.avatarImageUrl = avatarImageUrl;
+        this.gender = gender;
     }
 }

@@ -36,7 +36,7 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Account user;
 
     @Column(name = "price")
     private Double price;

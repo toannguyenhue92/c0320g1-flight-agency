@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.repository.AccountRepository;
 
+
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
@@ -20,20 +21,20 @@ import java.util.Set;
 public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepository userReposiroty;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Optional<Account> account = accountRepository.findByEmailAndStatusIsTrue(s);
-        System.out.println(account);
-        if (account.isPresent()) {
-            throw new UsernameNotFoundException("Account not found");
+        Optional<Account> users = userReposiroty.findByEmailAndStatusIsTrue(s);
+        System.out.println(users);
+        if (users.isPresent()) {
+            throw new UsernameNotFoundException("User not found");
         }
-        String email = account.get().getEmail();
-        String password = account.get().getPassword();
+        String email = users.get().getEmail();
+        String password = users.get().getPassword();
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        String role = account.get().getRole();
+        String role = users.get().getRole();
         grantedAuthorities.add(new SimpleGrantedAuthority(role));
         return new org.springframework.security.core.userdetails.User(email, password, grantedAuthorities);
     }
