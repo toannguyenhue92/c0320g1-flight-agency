@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,10 +31,6 @@ public class Promo {
     @Max(1)
     private Long discount;
 
-    @OneToMany(mappedBy = "branches", nullable = false) //hãng máy bay
-    @JoinColumn(name = "airline_company")
-    private List<Branch> airlineCompanyList;
-
     @OneToOne
     @JoinColumn(name = "flight_schedules") //lấy tuyến bay kết hợp gtri 2 trường departure_airport_id và arrival_airport_id
     private FlightSchedule flightSchedule;
@@ -54,5 +53,5 @@ public class Promo {
 
     @Column(name = "is_delete", nullable = false)
     private boolean isDelete;
-    
+
 }
