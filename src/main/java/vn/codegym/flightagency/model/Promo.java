@@ -23,17 +23,25 @@ public class Promo {
     private Long id;
 
     @Column(name = "name_promo", nullable = false)
-    @Pattern(regexp = "^[ 0-9%-A-ZẮẰẲẴẶĂẤẦẨẪẬÂÁÀÃẢẠĐẾỀỂỄỆÊÉÈẺẼẸÍÌỈĨỊỐỒỔỖỘÔỚỜỞỠỢƠÓÒÕỎỌỨỪỬỮỰƯÚÙỦŨỤÝỲỶỸỴa-zắằẳẵặăấầẩẫậâáàãảạđếềểễệêéèẻẽẹíìỉĩịốồổỗộôớờởỡợơóòõỏọứừửữựưúùủũụýỳỷỹỵ]{3,}$")
+//    @Pattern(regexp = "^[ 0-9%-A-ZẮẰẲẴẶĂẤẦẨẪẬÂÁÀÃẢẠĐẾỀỂỄỆÊÉÈẺẼẸÍÌỈĨỊỐỒỔỖỘÔỚỜỞỠỢƠÓÒÕỎỌỨỪỬỮỰƯÚÙỦŨỤÝỲỶỸỴa-zắằẳẵặăấầẩẫậâáàãảạđếềểễệêéèẻẽẹíìỉĩịốồổỗộôớờởỡợơóòõỏọứừửữựưúùủũụýỳỷỹỵ]{3,}$")
     private String namePromo;
+
+    @OneToOne
+    @JoinColumn(name = "airline")
+    private Branch airline;
+
+    @ManyToOne
+    @JoinColumn(name = "departure_place")
+    private Airport departurePlace;
+
+    @ManyToOne
+    @JoinColumn(name = "arrival_place")
+    private Airport arrivalPlace;
 
     @Column(name = "discount", nullable = false)
     @Min(0)
     @Max(1)
-    private Float discount;
-
-    @OneToOne
-    @JoinColumn(name = "flight_schedules") //lấy tuyến bay kết hợp gtri 2 trường departure_airport_id và arrival_airport_id
-    private FlightSchedule flightSchedule;
+    private Double discount;
 
     @Column(name = "promo_date_start", nullable = false) //ngày bắt đầu chạy khuyến mãi
     private LocalDateTime promoDateStart;
@@ -47,11 +55,7 @@ public class Promo {
     @Column(name = "flight_departure_date_end", nullable = false) //ngày bay cuối cùng được giảm giá
     private LocalDateTime flightDepartureDateEnd;
 
-//    @OneToOne //hạng ghế ngồi/hạng dịch vụ
-//    @JoinColumn(name = "service_class")
-//    private ServiceClass serviceClass;
-
     @Column(name = "is_delete", nullable = false)
     private boolean isDelete;
-
+    
 }
