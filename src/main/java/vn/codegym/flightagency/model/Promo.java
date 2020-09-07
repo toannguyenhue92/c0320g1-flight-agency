@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,44 +19,39 @@ public class Promo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "promo_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name_promo")
+    @Column(name = "name_promo", nullable = false)
+    @Pattern(regexp = "^[ 0-9%-A-ZẮẰẲẴẶĂẤẦẨẪẬÂÁÀÃẢẠĐẾỀỂỄỆÊÉÈẺẼẸÍÌỈĨỊỐỒỔỖỘÔỚỜỞỠỢƠÓÒÕỎỌỨỪỬỮỰƯÚÙỦŨỤÝỲỶỸỴa-zắằẳẵặăấầẩẫậâáàãảạđếềểễệêéèẻẽẹíìỉĩịốồổỗộôớờởỡợơóòõỏọứừửữựưúùủũụýỳỷỹỵ]{3,}$")
     private String namePromo;
 
-    @Column(name = "discount")
+    @Column(name = "discount", nullable = false)
+    @Min(0)
+    @Max(1)
     private Long discount;
 
-//    @OneToMany(mappedBy = "airline_company")
-//    @JoinColumn(name = "airline_company")
-//    private List<AirlineCompany> airlineCompanyList;
+    @OneToOne
+    @JoinColumn(name = "flight_schedules") //lấy tuyến bay kết hợp gtri 2 trường departure_airport_id và arrival_airport_id
+    private FlightSchedule flightSchedule;
 
-//    @OneToOne
-//    @JoinColumn(name = "airline_routes_id")
-//    private AirlineRoutes airlineRoutes;
+    @Column(name = "promo_date_start", nullable = false) //ngày bắt đầu chạy khuyến mãi
+    private LocalDateTime promoDateStart;
 
-    @Column(name = "date_run_promo_start")
-    private LocalDateTime dateRunPromoStart;
+    @Column(name = "promo_date_end", nullable = false) //ngày cuối cùng chạy khuyến mãi
+    private LocalDateTime promoDateEnd;
 
-    @Column(name = "date_run_promo_end")
-    private LocalDateTime dateRunPromoEnd;
+    @Column(name = "flight_departure_date_start", nullable = false) //ngày bay bắt đầu được giảm giá
+    private LocalDateTime flightDepartureDateStart;
 
-    @Column(name = "flight_departure_time_start")
-    private LocalDateTime flightDepartureTimeStart;
+    @Column(name = "flight_departure_date_end", nullable = false) //ngày bay cuối cùng được giảm giá
+    private LocalDateTime flightDepartureDateEnd;
 
-    @Column(name = "flight_departure_time_end")
-    private LocalDateTime flightDepartureTimeEnd;
-
-//    @OneToMany(mappedBy = "customer_ranking")
-//    @JoinColumn(name = "customer_ranking")
-//    private CustomerRanking customerRanking;
-
-//    @OneToOne
-//    @JoinColumn(name = "customer_ranking")
+//    @OneToOne //hạng ghế ngồi/hạng dịch vụ
+//    @JoinColumn(name = "service_class")
 //    private ServiceClass serviceClass;
 
-    @Column(name = "is_delete")
+    @Column(name = "is_delete", nullable = false)
     private boolean isDelete;
-    
+
 }
