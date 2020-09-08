@@ -38,4 +38,7 @@ public class Passenger {
     @ManyToMany(mappedBy = "passengers")
     @JsonBackReference
     private List<Transaction> transactions;
+
+    @Column(name = "checkin_status")
+    private Boolean checkin;
 }
