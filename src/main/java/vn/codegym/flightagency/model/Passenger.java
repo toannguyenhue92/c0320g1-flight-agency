@@ -39,6 +39,9 @@ public class Passenger {
     @JsonBackReference
     private List<Transaction> transactions;
 
+    @Column(name = "checkin_status", columnDefinition = "boolean default false")
+    private Boolean checkin;
+
     //Creator Hậu
     @Column(name="id_card")
     private String idCard;
