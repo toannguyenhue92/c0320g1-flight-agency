@@ -26,7 +26,6 @@ import vn.codegym.flightagency.service.AccountService;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 
@@ -57,7 +56,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<Account> findByEmail(String email) {
+    public Account findByEmail(String email) {
         return accountRepository.findByEmailAndStatusIsTrue(email);
     }
 
@@ -69,10 +68,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UserDetails getUserDetail(Account account) {
-        System.out.println(account.getEmail());
-        System.out.println(account.getPassword());
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(account.getEmail(), account.getPassword())
+                new UsernamePasswordAuthenticationToken(account.getEmail(), secretPsw)
         );
         return userDetailServiceImpl.loadUserByUsername(authentication.getName());
     }
@@ -102,9 +99,8 @@ public class AccountServiceImpl implements AccountService {
             String name = profile.getNames().get(0).getDisplayName();
             String gender = profile.getGenders().get(0).getValue();
             gender = checkGender(gender);
-            String avatarImageURL = profile.getPhotos().get(0).getUrl();
             account = new Account(email, passwordEncoder.encode(secretPsw), "ROLE_USER",
-                    true, name, birthday, avatarImageURL, gender);
+                    true, name, birthday, tokenDto.getAvatarURL(), gender);
 
         } else {
             Logger.getLogger("Not profile google");
@@ -116,7 +112,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account getProfileFacebook(TokenDto tokenDto) {
         Facebook facebook = new FacebookTemplate(tokenDto.getValue());
-        final String[] fields = {"email", "birthday", "name", "gender", "picture"};
+        final String[] fields = {"email", "birthday", "name", "gender"};
         User userFacebook = facebook.fetchObject("me", User.class, fields);
         String email = userFacebook.getEmail();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -124,9 +120,8 @@ public class AccountServiceImpl implements AccountService {
         String name = userFacebook.getName();
         String gender = userFacebook.getGender();
          gender = checkGender(gender);
-        String avatarURL = userFacebook.getExtraData().get("picture").toString();
         return new Account(email, passwordEncoder.encode(secretPsw), "ROLE_USER",
-                true, name, birthday, avatarURL, gender);
+                true, name, birthday, tokenDto.getAvatarURL(), gender);
     }
 
     public String checkGender(String gender){
@@ -135,6 +130,8 @@ public class AccountServiceImpl implements AccountService {
         }else {
             return "nữ";
         }
+
+
     }
 }
 

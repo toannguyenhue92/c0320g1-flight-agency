@@ -35,8 +35,8 @@ public class Transaction {
     private List<Passenger> passengers;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Account user;
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
     @Column(name = "price")
     private Double price;

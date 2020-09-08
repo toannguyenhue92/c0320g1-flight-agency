@@ -9,4 +9,5 @@ public class TokenDto {
 
     String value;
     String email;
+    String avatarURL;
 }

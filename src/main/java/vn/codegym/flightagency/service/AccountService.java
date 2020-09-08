@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface AccountService {
     boolean existsEmail(String email);
 
-    Optional<Account> findByEmail(String email);
+    Account findByEmail(String email);
 
     Account saveAccount(Account account);
 
