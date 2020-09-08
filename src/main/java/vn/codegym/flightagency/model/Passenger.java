@@ -38,4 +38,11 @@ public class Passenger {
     @ManyToMany(mappedBy = "passengers")
     @JsonBackReference
     private List<Transaction> transactions;
+
+    //Creator Hậu
+    @Column(name="id_card")
+    private String idCard;
+
+    @Column(name = "address")
+    private String address;
 }
