@@ -2,6 +2,8 @@ package vn.codegym.flightagency.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.codegym.flightagency.model.Passenger;
@@ -15,6 +17,8 @@ public class EmployeeController {
     private PassengerService passengerService;
 
     @GetMapping("/employee/customer-checkin-list")
-    public ResponseEntity<Page<Passenger>> getAllPassengerCheckin(@RequestParam)
+    public ResponseEntity<Page<Passenger>> getAllPassengerCheckin(@PageableDefault(value = 4)Pageable pageable){
+
+    }
 
 }
