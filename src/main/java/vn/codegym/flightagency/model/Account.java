@@ -59,4 +59,10 @@ public class Account {
     @Column(name = "status")
     private boolean status;
 
+    @Column(name = "customer_rank", columnDefinition = "varchar(255) default 'Thành viên'")
+    private String customerRank;
+
+    @Column(name = "identifier_card")
+    private String identifierCard;
+
 }
