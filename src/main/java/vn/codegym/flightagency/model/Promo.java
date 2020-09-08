@@ -26,19 +26,19 @@ public class Promo {
 //    @Pattern(regexp = "^[ 0-9%-A-ZẮẰẲẴẶĂẤẦẨẪẬÂÁÀÃẢẠĐẾỀỂỄỆÊÉÈẺẼẸÍÌỈĨỊỐỒỔỖỘÔỚỜỞỠỢƠÓÒÕỎỌỨỪỬỮỰƯÚÙỦŨỤÝỲỶỸỴa-zắằẳẵặăấầẩẫậâáàãảạđếềểễệêéèẻẽẹíìỉĩịốồổỗộôớờởỡợơóòõỏọứừửữựưúùủũụýỳỷỹỵ]{3,}$")
     private String namePromo;
 
-    @OneToOne
-    @JoinColumn(name = "airline")
+    @ManyToOne
+    @JoinColumn(name = "airline", nullable = false) //hãng bay
     private Branch airline;
 
     @ManyToOne
-    @JoinColumn(name = "departure_place")
+    @JoinColumn(name = "departure_place") //điểm khởi hành
     private Airport departurePlace;
 
     @ManyToOne
-    @JoinColumn(name = "arrival_place")
+    @JoinColumn(name = "arrival_place") //điểm đến
     private Airport arrivalPlace;
 
-    @Column(name = "discount", nullable = false)
+    @Column(name = "discount", nullable = false) //đã chia 100
     @Min(0)
     @Max(1)
     private Double discount;
