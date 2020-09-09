@@ -1,7 +1,6 @@
 package vn.codegym.flightagency.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,8 @@ public class HomeController {
     private FeedbackService feedbackService;
 
     @PostMapping("/home/save-feedback")
-    public ResponseEntity<Feedback> saveFeedback (@Valid @RequestBody Feedback feedback, BindingResult bindingResult) throws ViolatedException {
+    public ResponseEntity<Feedback> saveFeedback(@Valid @RequestBody Feedback feedback, BindingResult bindingResult)
+            throws ViolatedException {
         if (bindingResult.hasFieldErrors()) {
             throw new ViolatedException(bindingResult);
         }
