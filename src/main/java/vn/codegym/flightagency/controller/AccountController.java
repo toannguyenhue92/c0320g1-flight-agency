@@ -42,7 +42,7 @@ public class AccountController {
         UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(authentication.getName());
         String jwtToken = jwtTokenUtil.generateToken(userDetails);
         Account accountLogin = accountService.findByEmail(userDetails.getUsername());
-        return ResponseEntity.ok(new JwtResponse(jwtToken,accountLogin.getId(), userDetails.getUsername(), accountLogin.getAvatarImageUrl(),userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwtToken,accountLogin.getId(),accountLogin.getFullName(), userDetails.getUsername(), accountLogin.getAvatarImageUrl(),userDetails.getAuthorities()));
     }
 
 
@@ -62,7 +62,7 @@ public class AccountController {
         }
         UserDetails userDetails = accountService.getUserDetail(accountGoogle);
         String jwtToken = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(jwtToken,accountGoogle.getId(),userDetails.getUsername(),accountGoogle.getAvatarImageUrl(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwtToken,accountGoogle.getId(),accountGoogle.getFullName(),userDetails.getUsername(),accountGoogle.getAvatarImageUrl(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/facebook")
@@ -79,7 +79,7 @@ public class AccountController {
 
         UserDetails userDetails = accountService.getUserDetail(accountFacebook);
         String jwtToken = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(jwtToken,accountFacebook.getId(), userDetails.getUsername(), accountFacebook.getAvatarImageUrl(),userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwtToken,accountFacebook.getId(),accountFacebook.getFullName(), userDetails.getUsername(), accountFacebook.getAvatarImageUrl(),userDetails.getAuthorities()));
     }
 
 }
