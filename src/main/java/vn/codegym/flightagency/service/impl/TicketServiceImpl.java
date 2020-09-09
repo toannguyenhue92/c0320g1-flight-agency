@@ -23,7 +23,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Page<Ticket> findAllByFlight(String search, Pageable pageable) {
-        return ticketRepository.findAllByDepatureContaining(search,pageable);
+        return ticketRepository.findAllByDepartureContaining(search,pageable);
     }
 
     @Override

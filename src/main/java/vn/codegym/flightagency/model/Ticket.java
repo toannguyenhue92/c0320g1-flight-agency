@@ -1,6 +1,11 @@
 package vn.codegym.flightagency.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,52 +17,68 @@ public class Ticket {
     private Long id;
 
     @Column(name = "departure")
+    @NotNull(message = "khong duoc de trong")
     private String departure;
 
     @Column(name = "destination")
+    @NotNull(message = "khong duoc de trong")
     private String destination;
 
     @Column(name = "departure_time")
+    @NotNull(message = "khong duoc de trong")
     private LocalDateTime departureTime;
 
 
     @Column(name = "arrival_time")
+    @NotNull(message = "khong duoc de trong")
     private LocalDateTime arrivalTime;
 
     @Column(name = "booking_code")
+    @NotNull(message = "khong duoc de trong")
     private String bookingCode;
 
     @Column(name = "airline")
+    @NotNull(message = "khong duoc de trong")
     private String airline;
 
     @Column(name = "type_ticket")
+    @NotNull(message = "khong duoc de trong")
     private String typeTicket;
 
     @Column(name = "chair")
+    @NotNull(message = "khong duoc de trong")
     private String chair;
 
     @Column(name = "price")
+    @NotNull(message = "khong duoc de trong")
+    @Min(value = 0)
     private Double price;
 
     @Column(name = "taxes_and_fees")
+    @Min(value = 0)
     private Double taxesAndFees;
 
     @Column(name = "type_customer")
+    @NotNull(message = "khong duoc de trong")
     private String typeCustomer;
 
     @Column(name = "name_customer")
+    @Pattern(regexp = "(^[AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*$)|(^[AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*[\\ ][AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*$)|(^[AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*[\\ ][AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*[\\ ][AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*$)|(^[AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*[\\ ][AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*[\\ ][AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*[\\ ][AẢÀÃÁẠĂẰẲẴẮẶÂẨẦẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIỈÌĨÍỊJKLMNOỎÒÕÓỌÔỒỖỔỘỐƠỜỠỞỢỚPQRSTUÚỦŨỤÙƯỨỬỮỪỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*$)")
     private String name;
 
     @Column(name = "email")
+    @Pattern(regexp = "^[\\w]+[\\@][a-z]+[\\.][a-z]+$")
     private String email;
 
     @Column(name = "address")
     private String address;
 
     @Column(name = "phone_number")
+    @Length(min = 9)
     private String phone;
 
     @Column(name = "extra_luggage")
+    @Min(value = 0)
     private String extraLuggage;
 
 
