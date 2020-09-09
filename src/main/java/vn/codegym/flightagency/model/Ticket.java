@@ -4,21 +4,22 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ticket")
+@Table(name = "tickets")
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_ticket")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "depature")
-    private String depature;
+    @Column(name = "departure")
+    private String departure;
 
     @Column(name = "destination")
     private String destination;
 
-    @Column(name = "depature_time")
-    private LocalDateTime depatureTime;
+    @Column(name = "departure_time")
+    private LocalDateTime departureTime;
+
 
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
@@ -36,10 +37,10 @@ public class Ticket {
     private String chair;
 
     @Column(name = "price")
-    private int price;
+    private Double price;
 
     @Column(name = "taxes_and_fees")
-    private int taxesAndFees;
+    private Double taxesAndFees;
 
     @Column(name = "type_customer")
     private String typeCustomer;
@@ -71,12 +72,12 @@ public class Ticket {
         this.id = id;
     }
 
-    public String getDepature() {
-        return depature;
+    public String getDeparture() {
+        return departure;
     }
 
-    public void setDepature(String depature) {
-        this.depature = depature;
+    public void setDepature(String deprature) {
+        this.departure = departure;
     }
 
     public String getDestination() {
@@ -87,12 +88,12 @@ public class Ticket {
         this.destination = destination;
     }
 
-    public LocalDateTime getDepatureTtime() {
-        return depatureTime;
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
     }
 
-    public void setDepatureTtime(LocalDateTime depatureTtime) {
-        this.depatureTime = depatureTtime;
+    public void setDepatureTtime(LocalDateTime departureTtime) {
+        this.departureTime = departureTtime;
     }
 
     public LocalDateTime getArrivalTime() {
@@ -135,19 +136,19 @@ public class Ticket {
         this.chair = chair;
     }
 
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getTaxesAndFees() {
+    public Double getTaxesAndFees() {
         return taxesAndFees;
     }
 
-    public void setTaxesAndFees(int taxesAndFees) {
+    public void setTaxesAndFees(Double taxesAndFees) {
         this.taxesAndFees = taxesAndFees;
     }
 
