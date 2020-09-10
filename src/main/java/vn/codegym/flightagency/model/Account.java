@@ -13,7 +13,6 @@ public class Account {
     private String email ;
     private String password ;
     private String role;
-    @OneToOne
-    @JoinColumn(name = "employee_id")
+    @OneToOne(mappedBy = "account")
     private Employee employee;
 }

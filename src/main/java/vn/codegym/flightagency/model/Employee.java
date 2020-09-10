@@ -19,6 +19,7 @@ public class Employee {
     private String phoneNumber;
     private String position;
     private Boolean status;
-    @OneToOne(mappedBy = "employee")
+    @OneToOne
+    @JoinColumn(name = "account_id")
     private Account account;
 }
