@@ -1,6 +1,5 @@
 package vn.codegym.flightagency.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,8 +36,8 @@ public class FlightSchedule {
     private LocalDateTime arrivalDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Branch brand;
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
 
     @Column(name = "flight_code")
     private String flightCode;
