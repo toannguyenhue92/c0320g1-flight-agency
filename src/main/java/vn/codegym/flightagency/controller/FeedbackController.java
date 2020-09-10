@@ -16,15 +16,15 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/v1")
 public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
-    @GetMapping("/feedback-page")
+    @GetMapping("/admin/feedback-page")
     public ResponseEntity<Page<Feedback>> getAllFeedback(
             @RequestParam(name = "customerName", defaultValue = "") String customerName,
             @RequestParam(name = "createDate", defaultValue = "") String createDate,
-//            @RequestParam(name = "processStatus", defaultValue = "") String processStatus,
+//            @RequestParam(name = "processStatus", defaultValue = "false") String processStatus,
             @RequestParam("page") int page){
         Specification<Feedback> search = feedbackService.getFilter(customerName, createDate);
         Page<Feedback> feedbackPages;
@@ -40,14 +40,14 @@ public class FeedbackController {
         return ResponseEntity.ok(feedbackPages);
     }
 
-    @GetMapping("/feedback-list")
+    @GetMapping("/admin/feedback-list")
     public ResponseEntity<List<Feedback>> getFeedbackList(){
         List<Feedback> feedbackList;
         feedbackList = feedbackService.findAllFeedback();
         return ResponseEntity.ok(feedbackList);
     }
 
-    @PutMapping("/feedback/{id}")
+    @PutMapping("/admin/feedback/{id}")
     private ResponseEntity<Feedback> updateFeedback(@PathVariable("id") long id,@RequestBody Feedback feedback){
         feedback.setProcessStatus(true);
         feedbackService.save(feedback);

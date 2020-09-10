@@ -19,9 +19,6 @@ public class FeedbackSpecification implements Specification<Feedback> {
         if (criteria.getOperation().equalsIgnoreCase("like")) {
             // value like %chuỗi_tìm_kiếm%
             return criteriaBuilder.like(root.get(criteria.getKey()), "%" + criteria.getValues().get(0) + "%");
-        } else if (criteria.getOperation().equalsIgnoreCase("equal")) {
-            Long _id = Long.valueOf(criteria.getValues().get(0));
-            return criteriaBuilder.equal(root.get(criteria.getKey()), _id);
         } else {
             return null;
         }

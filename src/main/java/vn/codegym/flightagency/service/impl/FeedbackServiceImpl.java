@@ -51,15 +51,16 @@ public class FeedbackServiceImpl implements FeedbackService {
         Specification<Feedback> spec;
         // search theo
         // customer of name
-        if (customerName != null && !"undefined".equals(customerName) && !"".equals(customerName)) {
+        if (!"".equals(customerName) && !"undefined".equals(customerName)) {
             specs.add(new FeedbackSpecification(new SearchCriteria("customerName", "like", customerName)));
         }
-        if (createDate != null && !"undefined".equals(createDate) && !"".equals(createDate)) {
+        // customer of created day
+        if (!"".equals(createDate) && !"undefined".equals(createDate)) {
             specs.add(new FeedbackSpecification(new SearchCriteria("createDate", "like", createDate)));
         }
-//        if (processStatus != null && !"undefined".equals(processStatus) && !"".equals(processStatus)) {
-//            specs.add(new FeedbackSpecification(new SearchCriteria("processStatus", "like", processStatus)));
-//        }
+        if (!"".equals(processStatus) && !"undefined".equals(processStatus)) {
+            specs.add(new FeedbackSpecification(new SearchCriteria("processStatus", "like", processStatus)));
+        }
         if (specs.size() != 0) {
             spec = Specification.where(specs.get(0));
             for (int i = 1; i < specs.size(); i++) {
@@ -73,9 +74,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public Page<Feedback> findFeedbackByCriteria(Specification<Feedback> specs, int page) {
-        Pageable pageable = PageRequest.of(page - 1, 4, Sort.by("id"));
-        Page<Feedback> users = feedbackRepository.findAll(specs, pageable);
-        return users;
+        Pageable pageable = PageRequest.of(page - 1, 4);
+        Page<Feedback> feedbackPages = feedbackRepository.findAll(specs, pageable);
+        return feedbackPages;
     }
 
     @Override
