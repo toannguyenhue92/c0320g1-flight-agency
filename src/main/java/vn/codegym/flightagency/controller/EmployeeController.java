@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.codegym.flightagency.dto.FlightSeachDTO;
+import vn.codegym.flightagency.dto.EmployeeFlightSearchDTO;
 import vn.codegym.flightagency.dto.TransactionPassengerDTO;
 import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.model.Airport;
@@ -43,10 +43,10 @@ public class EmployeeController {
 
     //BHung lay danh sach chuyến bay
     @PostMapping("/employee/flightSchedule")
-    public ResponseEntity<List<FlightSchedule>> findAllFlightSchedules(@RequestBody FlightSeachDTO flightSeachDTO){
-        List<FlightSchedule> flightSchedules = flightScheduleService.findAllFlightScheduleByEmployee(flightSeachDTO.getDeparturePlace().getId(),
-                flightSeachDTO.getArrivalPlace().getId(), flightSeachDTO.getDepartureDate(),
-                flightSeachDTO.getAdult()+ flightSeachDTO.getChild(),"active");
+    public ResponseEntity<List<FlightSchedule>> findAllFlightSchedules(@RequestBody EmployeeFlightSearchDTO employeeFlightSearchDTO){
+        List<FlightSchedule> flightSchedules = flightScheduleService.findAllFlightScheduleByEmployee(employeeFlightSearchDTO.getDeparturePlace().getId(),
+                employeeFlightSearchDTO.getArrivalPlace().getId(), employeeFlightSearchDTO.getDepartureDate(),
+                employeeFlightSearchDTO.getAdult()+ employeeFlightSearchDTO.getChild(),"active");
         if (flightSchedules==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -82,7 +82,7 @@ public class EmployeeController {
     }
 
     //BHung tim kiem transaction
-    @GetMapping("/transaction/{id}")
+    @GetMapping("/employee/transaction/{id}")
     public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id){
         Transaction transaction = employeeService.findTransactionById(id);
         if (transaction==null){
