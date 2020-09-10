@@ -2,8 +2,11 @@ package vn.codegym.flightagency.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import vn.codegym.flightagency.model.Bill;
+import vn.codegym.flightagency.model.Account;
 
 @Repository
-public interface BillRepository extends JpaRepository<Bill, Long> {
+public interface AccountRepository extends JpaRepository<Account,Long> {
+
+    //BHung
+    Account findByEmail(String email);
 }
