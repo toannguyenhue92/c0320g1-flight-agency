@@ -17,7 +17,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService ;
 
-//    Created By Thiện
+//    Created By Thiện - Tìm khách hàng theo Id
     @GetMapping("/customer/{id}")
     public ResponseEntity<CustomerUpdateDTO> findCustomerById(@PathVariable Long id) {
         CustomerUpdateDTO customerUpdateDTO = accountService.findCustomerUpdateDTOById(id);
@@ -27,7 +27,7 @@ public class AccountController {
         return ResponseEntity.ok(customerUpdateDTO);
     }
 
-    //    Created By Thiện
+    //    Created By Thiện - Chỉnh sửa thông tin khách hàng
     @PutMapping("customer/update/{id}")
     public ResponseEntity<CustomerUpdateDTO> updateCustomer(@PathVariable Long id, @RequestBody CustomerUpdateDTO customerUpdateDTO) {
         Account account = accountService.findAccountById(id);
@@ -38,7 +38,7 @@ public class AccountController {
         return new ResponseEntity<CustomerUpdateDTO>(customerUpdateDTO, HttpStatus.OK);
     }
 
-    //    Created By Thiện
+    //    Created By Thiện - Thay đổi mật khẩu dành cho khách hàng
     @PutMapping("customer/changepass/{id}")
     public ResponseEntity<CustomerChangePasswordDTO> CustomerChangePassword(@PathVariable Long id, @RequestBody CustomerChangePasswordDTO customerChangePasswordDTO) {
         Account account = accountService.findAccountById(id);
