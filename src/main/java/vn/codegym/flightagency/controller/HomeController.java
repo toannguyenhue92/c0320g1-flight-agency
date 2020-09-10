@@ -18,13 +18,20 @@ public class HomeController {
     @Autowired
     private FeedbackService feedbackService;
 
+    // Creator : Cường
+    // Method save Feedback entity
     @PostMapping("/home/save-feedback")
     public ResponseEntity<Feedback> saveFeedback(@Valid @RequestBody Feedback feedback, BindingResult bindingResult)
-            throws ViolatedException {
+            throws Exception  {
         if (bindingResult.hasFieldErrors()) {
             throw new ViolatedException(bindingResult);
         }
-        feedbackService.save(feedback);
+        try {
+            feedbackService.save(feedback);
+        } catch (Exception ex) {
+            throw new Exception("Không thể lưu được đối tượng xuống db, vui lòng kiểm tra tên column trong model");
+        }
+
         return ResponseEntity.ok(feedback);
     }
 
