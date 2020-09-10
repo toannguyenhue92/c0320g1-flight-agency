@@ -10,6 +10,12 @@ public interface TransactionService {
     String CANCELED = "Hủy";
     String PAID = "Đã thanh toán";
 
+    // Creator: Duy
+    Transaction save(Transaction transaction);
+
+    //Creator: Duy
+    Transaction createTransaction(Long flightScheduleId, Long accountId, Double totalPrice);
+
     // Created by Toàn
     Transaction findById(Long id);
 
