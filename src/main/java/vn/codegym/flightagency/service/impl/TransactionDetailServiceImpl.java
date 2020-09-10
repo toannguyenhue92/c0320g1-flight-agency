@@ -13,7 +13,6 @@ import vn.codegym.flightagency.service.PassengerService;
 import vn.codegym.flightagency.service.TransactionDetailService;
 import vn.codegym.flightagency.service.TransactionService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,6 +45,7 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
         passengerList.forEach((val) -> {
             addDetail(finalDepTransaction, val, booking.getDepPassengers());
         });
+        emailService.sendBookingCode(finalDepTransaction.getId(), finalDepTransaction.getFlightSchedule(), "nghoangduy1541996@gmail.com");
         // if round-trip
         if (booking.getRetFlightId() != 0) {
             passengerList = passengerService.addAllPassengers(booking.getRetPassengers());
@@ -54,6 +54,7 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
             passengerList.forEach((val) -> {
                 addDetail(finalRetTransaction, val, booking.getRetPassengers());
             });
+            emailService.sendBookingCode(finalRetTransaction.getId(), finalRetTransaction.getFlightSchedule(), "nghoangduy1541996@gmail.com");
         }
     }
 

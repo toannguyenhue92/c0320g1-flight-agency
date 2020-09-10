@@ -21,8 +21,6 @@ public class TransactionController {
     @Autowired
     private TransactionDetailService transactionDetailService;
 
-    @Autowired
-    private EmailService emailService;
     // Creator: Duy
     // Find flight schedule
     @PostMapping("/transaction/booking")
@@ -31,15 +29,4 @@ public class TransactionController {
         transactionDetailService.saveTransactionDetail(booking);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-//    @GetMapping("/test-email")
-//    public ResponseEntity<?> sendMail() {
-//        FlightSchedule flight = new FlightSchedule();
-//        Branch branch = new Branch();
-//        branch.setId(2l);
-//        branch.setName("BambooAir");
-//        flight.setBranch(branch);
-//        emailService.sendBookingCode(12l, flight, "nghoangduy1541996@gmail.com");
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
 }
