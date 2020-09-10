@@ -8,6 +8,7 @@ import vn.codegym.flightagency.model.FlightSchedule;
 
 import java.time.LocalDate;
 import java.util.List;
+
 public interface FlightScheduleService {
     //D-Bach
     Page<FlightSchedule> findAllFlightSchedule(Pageable pageable);

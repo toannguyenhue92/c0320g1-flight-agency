@@ -10,6 +10,7 @@ import vn.codegym.flightagency.model.FlightSchedule;
 import vn.codegym.flightagency.repository.FlightScheduleRepository;
 import vn.codegym.flightagency.service.FlightScheduleService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
     @Autowired
     private FlightScheduleRepository flightScheduleRepository;
 
+    // Creator: Duy
     private final Map<String, String> sortType = new HashMap<>();
     {
         sortType.put("priceUp", "price");
@@ -39,11 +41,22 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
     @Override
     public List<FlightSchedule> searchFlights(FlightSearchDTO flights) {
         LocalDateTime from = LocalDateTime.of(flights.getDepDate(), LocalTime.of(0, 0));
+    // Creator: Duy
+    @Override
+    public List<FlightSchedule> searchFlights(FlightSearchDTO flights) {
+        LocalDateTime from;
+        if (flights.getDepDate().compareTo(LocalDate.now()) == 0) {
+            LocalTime now = LocalTime.now();
+            from = LocalDateTime.of(flights.getDepDate(), LocalTime.of(now.getHour() + 4, now.getMinute()));
+        } else {
+            from = LocalDateTime.of(flights.getDepDate(), LocalTime.of(0, 0));
+        }
         LocalDateTime to = LocalDateTime.of(flights.getDepDate(), LocalTime.of(23, 59));
         Sort sort = getSort(flights.getSortBy()) ;
         return flightScheduleRepository.findAllFlightSchedules(flights.getDeparture(), flights.getArrival(), from, to, sort);
     }
 
+    // Creator: Duy
     private Sort getSort(String type) {
         if ("".equals(type))
             return null;

@@ -16,12 +16,17 @@ import vn.codegym.flightagency.service.FlightScheduleService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class FlightScheduleController {
+
     @Autowired
-    FlightScheduleService flightScheduleService;
+    private FlightScheduleService flightScheduleService;
+
+    @Autowired
+    private AirportService airportService;
 
     //D-Bach
     @GetMapping("/flight-schedule")
@@ -33,9 +38,6 @@ public class FlightScheduleController {
         }
         return new ResponseEntity<Page<FlightSchedule>>(flightSchedulePage, HttpStatus.OK);
     }
-
-    @Autowired
-    private AirportService airportService;
 
     // Creator: Duy
     // Find flight schedule
