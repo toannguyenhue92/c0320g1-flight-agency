@@ -7,6 +7,9 @@ import vn.codegym.flightagency.model.Passenger;
 import vn.codegym.flightagency.repository.PassengerRepository;
 import vn.codegym.flightagency.service.PassengerService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class PassengerServiceImpl implements PassengerService {
 
@@ -24,6 +27,17 @@ public class PassengerServiceImpl implements PassengerService {
            passenger = transferToPassenger(_passenger);
        }
        return passengerRepository.save(passenger);
+    }
+
+    // Creator: Duy
+    @Override
+    public List<Passenger> addAllPassengers(List<PassengerInfoDTO> passengerInfoDtoList) {
+        List<Passenger> passengerList = new ArrayList<>();
+        for (int i = 0; i < passengerInfoDtoList.size(); i++) {
+            Passenger passenger = saveAndUpdate(passengerInfoDtoList.get(i));
+            passengerList.add(passenger);
+        }
+        return  passengerList;
     }
 
     // Creator: Duy

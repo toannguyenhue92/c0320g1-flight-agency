@@ -19,5 +19,5 @@ public class PassengerInfoDTO {
 
     private String gender;
 
-    private Double baggagePrice;
+    private int baggagePrice;
 }

@@ -35,7 +35,7 @@ public class Passenger {
     @Column(name = "gender")
     private String gender;
 
-    @ManyToMany(mappedBy = "passengers")
-    @JsonBackReference
-    private List<Transaction> transactions;
+//    @ManyToMany(mappedBy = "passengers")
+//    @JsonBackReference
+//    private List<Transaction> transactions;
 }
