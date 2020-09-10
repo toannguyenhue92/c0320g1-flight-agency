@@ -35,8 +35,8 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
     public List<FlightSchedule> searchFlights(FlightSearchDTO flights) {
         LocalDateTime from;
         if (flights.getDepDate().compareTo(LocalDate.now()) == 0) {
-            LocalTime now = LocalTime.now();
-            from = LocalDateTime.of(flights.getDepDate(), LocalTime.of(now.getHour() + 4, now.getMinute()));
+            LocalDateTime now = LocalDateTime.now();
+            from = now.plusHours(4);
         } else {
             from = LocalDateTime.of(flights.getDepDate(), LocalTime.of(0, 0));
         }

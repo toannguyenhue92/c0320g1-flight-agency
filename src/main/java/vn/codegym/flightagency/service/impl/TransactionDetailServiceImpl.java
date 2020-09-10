@@ -45,7 +45,7 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
         passengerList.forEach((val) -> {
             addDetail(finalDepTransaction, val, booking.getDepPassengers());
         });
-        emailService.sendBookingCode(finalDepTransaction.getId(), finalDepTransaction.getFlightSchedule(), "nghoangduy1541996@gmail.com");
+        emailService.sendBookingCode(finalDepTransaction.getId(), booking.getDepBranch(), "nghoangduy1541996@gmail.com");
         // if round-trip
         if (booking.getRetFlightId() != 0) {
             passengerList = passengerService.addAllPassengers(booking.getRetPassengers());
@@ -54,7 +54,7 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
             passengerList.forEach((val) -> {
                 addDetail(finalRetTransaction, val, booking.getRetPassengers());
             });
-            emailService.sendBookingCode(finalRetTransaction.getId(), finalRetTransaction.getFlightSchedule(), "nghoangduy1541996@gmail.com");
+            emailService.sendBookingCode(finalRetTransaction.getId(), booking.getRetBranch(), "nghoangduy1541996@gmail.com");
         }
     }
 

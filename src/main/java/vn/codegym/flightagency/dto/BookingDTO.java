@@ -9,11 +9,13 @@ import java.util.List;
 @Setter
 public class BookingDTO {
 
+    private Long accountId;
     private Long depFlightId;
     private Long retFlightId;
-    private Long accountId;
     private Double depTotalPrice;
     private Double retTotalPrice;
+    private String depBranch;
+    private String retBranch;
     private List<PassengerInfoDTO> depPassengers;
     private List<PassengerInfoDTO> retPassengers;
 

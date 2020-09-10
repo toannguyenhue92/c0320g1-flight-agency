@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import vn.codegym.flightagency.model.FlightSchedule;
 import vn.codegym.flightagency.service.EmailService;
 
 @Service
@@ -16,7 +15,7 @@ public class EmailServiceImpl implements EmailService {
 
     // Creator: Duy
     @Override
-    public void sendBookingCode(Long code, FlightSchedule flight, String... sendTo) {
+    public void sendBookingCode(Long code, String branch, String... sendTo) {
         StringBuilder text = new StringBuilder();
 
         // set text
@@ -25,7 +24,7 @@ public class EmailServiceImpl implements EmailService {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(sendTo);
         String subject = "[C03Air] Your " +
-                flight.getBranch().getName() +
+                branch +
                 " E-ticket - Booking ID " +
                 code;
         msg.setSubject(subject);
