@@ -52,6 +52,9 @@ public class Account {
     @Column(name = "avatar_image_url")
     private String avatarImageUrl;
 
+    @Column(name = "customer_rank", columnDefinition = "varchar(255) default 'Thành viên'")
+    private String customerRank;
+
     @Column(name = "role")
     @Pattern(regexp = "^(ROLE_USER|ROLE_EMPLOYEE|ROLE_ADMIN)$")
     private String role;
