@@ -8,6 +8,7 @@ import vn.codegym.flightagency.model.Passenger;
 import vn.codegym.flightagency.model.Transaction;
 import vn.codegym.flightagency.model.TransactionDetail;
 import vn.codegym.flightagency.repository.TransactionDetailRepository;
+import vn.codegym.flightagency.service.EmailService;
 import vn.codegym.flightagency.service.PassengerService;
 import vn.codegym.flightagency.service.TransactionDetailService;
 import vn.codegym.flightagency.service.TransactionService;
@@ -18,14 +19,21 @@ import java.util.List;
 @Service
 public class TransactionDetailServiceImpl implements TransactionDetailService {
 
+    // Creator: Duy
     @Autowired
     private TransactionDetailRepository transactionDetailRepository;
 
+    // Creator: Duy
     @Autowired
     private TransactionService transactionService;
 
+    // Creator: Duy
     @Autowired
     private PassengerService passengerService;
+
+    // Creator: Duy
+    @Autowired
+    private EmailService emailService;
 
     // Creator: Duy
     @Override
