@@ -9,6 +9,7 @@ public class EmployeeDTO {
     private Long id;
     private String fullName;
     private Date birthday;
+    private String gender;
     private String email;
     private String phoneNumber;
     private String position;
