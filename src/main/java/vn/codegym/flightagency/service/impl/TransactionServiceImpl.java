@@ -11,6 +11,7 @@ import vn.codegym.flightagency.service.TransactionService;
 import vn.codegym.flightagency.utility.BillCodeGenerator;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,32 +26,19 @@ public class TransactionServiceImpl implements TransactionService {
 
     // Created by Toàn
     @Override
-    public List<Transaction> findUnpaidTransaction(Long accountId) {
+    public Transaction findById(Long id) {
+        return transactionRepository.findById(id).orElse(null);
+    }
+
+    // Created by Toàn
+    @Override
+    public List<Transaction> findUnpaidTransactionByAccount(Long accountId) {
         List<Transaction> transactions = transactionRepository.findUnpaidByAccountId(accountId);
         if (transactions.size() > 0) {
             return transactions;
         } else {
             return null;
         }
-    }
-
-    // Created by Toàn
-    @Override
-    public Transaction payTransaction(Long id, String taxCode) {
-        Optional<Transaction> optional = transactionRepository.findById(id);
-        if (!optional.isPresent()) {
-            return null;
-        }
-        Transaction transaction = optional.get();
-        transaction.setStatus("Đã thanh toán");
-        Bill bill = new Bill();
-        bill.setDateCreated(LocalDateTime.now());
-        bill.setTransaction(transaction);
-        bill.setTaxCode(taxCode);
-        bill = billRepository.save(bill);
-        bill.setBillCode(BillCodeGenerator.generate(bill.getId()));
-        billRepository.save(bill);
-        return transactionRepository.save(transaction);
     }
 
     // Created by Toàn
@@ -71,5 +59,51 @@ public class TransactionServiceImpl implements TransactionService {
             }
             return null;
         }
+    }
+
+    // Created by Toàn
+    @Override
+    public Transaction payTransaction(Long id, String taxCode) {
+        Optional<Transaction> optional = transactionRepository.findById(id);
+        if (!optional.isPresent()) {
+            return null;
+        }
+        Transaction transaction = optional.get();
+        transaction.setStatus(TransactionService.PAID);
+        Bill bill = new Bill();
+        bill.setDateCreated(LocalDateTime.now());
+        bill.setTransaction(transaction);
+        bill.setTaxCode(taxCode);
+        bill = billRepository.save(bill);
+        bill.setBillCode(BillCodeGenerator.generate(bill.getId()));
+        billRepository.save(bill);
+        return transactionRepository.save(transaction);
+    }
+
+    // Created by Toàn
+    @Override
+    public Transaction cancelTransaction(Long id) {
+        Optional<Transaction> optional = transactionRepository.findById(id);
+        if (!optional.isPresent()) {
+            return null;
+        }
+        Transaction transaction = optional.get();
+        transaction.setStatus(TransactionService.CANCELED);
+        return transactionRepository.save(transaction);
+    }
+
+    // Created by Toàn
+    @Override
+    public List<Transaction> payTransactions(List<Long> ids, String taxCode) {
+        List<Transaction> transactions = new LinkedList<>();
+        for (Long id : ids) {
+            Transaction transaction = payTransaction(id, taxCode);
+            if (transaction != null) {
+                transactions.add(transaction);
+            } else {
+                return null;
+            }
+        }
+        return transactions.size() > 0 ? transactions : null;
     }
 }

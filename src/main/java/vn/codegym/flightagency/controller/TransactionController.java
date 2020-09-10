@@ -13,17 +13,24 @@ import java.util.List;
 @CrossOrigin
 public class TransactionController {
 
+    @Autowired
     private TransactionService transactionService;
 
-    @Autowired
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
+    // Created by Toàn
+    @GetMapping(path = "/transaction/{id}")
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id) {
+        Transaction transaction = transactionService.findById(id);
+        if (transaction != null) {
+            return ResponseEntity.ok(transaction);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 
     // Created by Toàn
     @GetMapping(path = "/transaction/unpaid/{accountId}")
     public ResponseEntity<List<Transaction>> getUnpaidTransaction(@PathVariable Long accountId) {
-        List<Transaction> transactions = transactionService.findUnpaidTransaction(accountId);
+        List<Transaction> transactions = transactionService.findUnpaidTransactionByAccount(accountId);
         if (transactions != null) {
             return ResponseEntity.ok(transactions);
         } else {
@@ -44,9 +51,32 @@ public class TransactionController {
     }
 
     // Created by Toàn
+    @PatchMapping(path = "/transaction/pay-list")
+    public ResponseEntity<List<Transaction>> payTransactions(@RequestBody List<Long> ids,
+                                                             @RequestParam(defaultValue = "") String taxCode) {
+        List<Transaction> transactions = transactionService.payTransactions(ids, taxCode);
+        if (transactions != null) {
+            return ResponseEntity.ok(transactions);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    // Created by Toàn
     @GetMapping(path = "/transaction/find-reservation")
     public ResponseEntity<Transaction> findByIdAndPhone(@RequestParam Long id, @RequestParam String phone) {
         Transaction transaction = transactionService.findByIdAndPhone(id, phone);
+        if (transaction != null) {
+            return ResponseEntity.ok(transaction);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    // Created by Toàn
+    @PatchMapping(path = "/transaction/{id}/cancel")
+    public ResponseEntity<Transaction> cancelTransaction(@PathVariable Long id) {
+        Transaction transaction = transactionService.cancelTransaction(id);
         if (transaction != null) {
             return ResponseEntity.ok(transaction);
         } else {

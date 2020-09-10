@@ -16,7 +16,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findUnpaidByAccountId(Long accountId);
 
     // Created by Toàn
-    @Query(value = "SELECT t FROM Transaction t " +
-            "WHERE t.id = ?1 AND t.account.phoneNumber = ?2 AND t.status = 'Chờ thanh toán'")
+    @Query(value = "SELECT t FROM Transaction t WHERE t.id = ?1 AND t.account.phoneNumber = ?2")
     Optional<Transaction> findByIdAndPhone(Long id, String phone);
 }
