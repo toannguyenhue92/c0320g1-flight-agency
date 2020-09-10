@@ -38,9 +38,6 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
         return flightScheduleRepository.findAll(pageable);
     }
 
-    @Override
-    public List<FlightSchedule> searchFlights(FlightSearchDTO flights) {
-        LocalDateTime from = LocalDateTime.of(flights.getDepDate(), LocalTime.of(0, 0));
     // Creator: Duy
     @Override
     public List<FlightSchedule> searchFlights(FlightSearchDTO flights) {
