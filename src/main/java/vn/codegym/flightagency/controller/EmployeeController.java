@@ -6,7 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.codegym.flightagency.model.Passenger;
-import vn.codegym.flightagency.model.dto.PassengerCheckinDto;
+import vn.codegym.flightagency.dto.PassengerCheckinDto;
 import vn.codegym.flightagency.service.PassengerService;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")

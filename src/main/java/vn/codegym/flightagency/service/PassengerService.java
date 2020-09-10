@@ -3,7 +3,7 @@ package vn.codegym.flightagency.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import vn.codegym.flightagency.model.Passenger;
-import vn.codegym.flightagency.model.dto.PassengerCheckinDto;
+import vn.codegym.flightagency.dto.PassengerCheckinDto;
 
 public interface PassengerService {
     // Thành Long

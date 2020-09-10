@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.codegym.flightagency.model.Passenger;
-import vn.codegym.flightagency.model.dto.PassengerCheckinDto;
+import vn.codegym.flightagency.dto.PassengerCheckinDto;
 import vn.codegym.flightagency.repository.PassengerRepository;
 import vn.codegym.flightagency.service.PassengerService;
 import vn.codegym.flightagency.service.search.PassengerSpecification;
