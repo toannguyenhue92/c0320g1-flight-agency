@@ -53,7 +53,7 @@ public class Account {
     private String avatarImageUrl;
 
     @Column(name = "role")
-    @Pattern(regexp = "^(ROLE_USER|ROLE_EMPLOYEE|ROLE_ADMIN)$")
+    @Pattern( regexp = "^(ROLE_USER|ROLE_EMPLOYEE|ROLE_ADMIN)$")
     private String role;
 
     @Column(name = "status")
