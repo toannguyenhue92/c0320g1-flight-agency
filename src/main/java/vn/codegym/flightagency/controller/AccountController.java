@@ -33,7 +33,7 @@ public class AccountController {
     @Autowired(required = false)
     private UserDetailServiceImpl userDetailServiceImpl;
 
-
+    //Created by: Quân
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Account account) {
         Authentication authentication = authenticationManager.authenticate(
@@ -45,14 +45,10 @@ public class AccountController {
         return ResponseEntity.ok(new JwtResponse(jwtToken,accountLogin.getId(),accountLogin.getFullName(), userDetails.getUsername(), accountLogin.getAvatarImageUrl(),userDetails.getAuthorities()));
     }
 
-
+    //Created by: Quân
     @PostMapping("/google")
     public ResponseEntity<?> google(@RequestBody TokenDto tokenDto)  {
       Account accountGoogle ;
-
-//        Google google = new GoogleTemplate(tokenDto.getValue());
-//        Person googleUser = google.plusOperations().getGoogleProfile();
-//        System.out.println(googleUser);
 
         if (accountService.existsEmail(tokenDto.getEmail())){
             accountGoogle = accountService.findByEmail(tokenDto.getEmail());
@@ -65,6 +61,7 @@ public class AccountController {
         return ResponseEntity.ok(new JwtResponse(jwtToken,accountGoogle.getId(),accountGoogle.getFullName(),userDetails.getUsername(),accountGoogle.getAvatarImageUrl(), userDetails.getAuthorities()));
     }
 
+    //Created by: Quân
     @PostMapping("/facebook")
     public ResponseEntity<?> facebook(@RequestBody TokenDto tokenDto)  {
         System.out.println(accountService.getProfileFacebook(tokenDto));

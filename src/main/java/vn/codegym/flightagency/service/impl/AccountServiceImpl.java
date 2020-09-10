@@ -49,23 +49,24 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired(required = false)
     private AuthenticationManager authenticationManager;
-
+    //Created by: Quân
     @Override
     public boolean existsEmail(String email) {
         return accountRepository.existsAccountByEmailAndStatusTrue(email);
     }
-
+    //Created by: Quân
     @Override
     public Account findByEmail(String email) {
         return accountRepository.findByEmailAndStatusIsTrue(email);
     }
-
+    //Created by: Quân
     @Override
     public Account saveAccount(Account account) {
         accountRepository.save(account);
         return account;
     }
 
+    //Created by: Quân
     @Override
     public UserDetails getUserDetail(Account account) {
         Authentication authentication = authenticationManager.authenticate(
@@ -73,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
         );
         return userDetailServiceImpl.loadUserByUsername(authentication.getName());
     }
-
+    //Created by: Quân
     @Override
     public Account getProfileGoogle(TokenDto tokenDto) {
         final NetHttpTransport transport = new NetHttpTransport();
@@ -108,7 +109,7 @@ public class AccountServiceImpl implements AccountService {
 
         return account;
     }
-
+    //Created by: Quân
     @Override
     public Account getProfileFacebook(TokenDto tokenDto) {
         Facebook facebook = new FacebookTemplate(tokenDto.getValue());
