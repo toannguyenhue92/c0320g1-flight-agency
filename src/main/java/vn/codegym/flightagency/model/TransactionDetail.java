@@ -1,0 +1,30 @@
+package vn.codegym.flightagency.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "transaction_details")
+@Getter
+@Setter
+@NoArgsConstructor
+public class TransactionDetail {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "passenger_id")
+    private Passenger passenger;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
+
+    @Column(name = "transaction_detail_baggage")
+    private byte baggage;
+}

@@ -5,6 +5,7 @@ import vn.codegym.flightagency.model.Passenger;
 
 import javax.persistence.criteria.*;
 
+// Thành Long
 public class PassengerSpecification implements Specification<Passenger> {
     private final SearchCriteria criteria;
 

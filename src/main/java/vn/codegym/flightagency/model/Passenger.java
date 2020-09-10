@@ -50,5 +50,4 @@ public class Passenger {
     @Column(name = "address")
     private String address;
 
-
 }
