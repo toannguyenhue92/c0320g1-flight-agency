@@ -26,7 +26,7 @@ public class FlightScheduleController {
 
     // Creator: Duy
     // Find flight schedule
-    @PostMapping("/flight-schedule")
+    @PostMapping("/flight/schedule")
     public ResponseEntity<List<FlightSchedule>> search(@RequestBody FlightSearchDTO flights)
             throws ViolatedException {
         List<FlightSchedule> flightSchedules = flightScheduleService.searchFlights(flights);
@@ -40,6 +40,4 @@ public class FlightScheduleController {
         List<Airport> airports = airportService.getAirports();
         return ResponseEntity.ok(airports);
     }
-
-
 }
