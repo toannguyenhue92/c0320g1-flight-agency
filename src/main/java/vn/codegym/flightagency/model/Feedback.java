@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -47,7 +48,7 @@ public class Feedback {
     private String content;
 
     @Column(name = "feedback_create_date")
-    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDate createDate = LocalDate.now();
 
     @Column(name = "feedback_process_status")
     private Boolean processStatus = Boolean.FALSE;

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import vn.codegym.flightagency.model.Feedback;
 import vn.codegym.flightagency.service.FeedbackService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -24,9 +26,11 @@ public class FeedbackController {
     public ResponseEntity<Page<Feedback>> getAllFeedback(
             @RequestParam(name = "customerName", defaultValue = "") String customerName,
             @RequestParam(name = "createDate", defaultValue = "") String createDate,
-//            @RequestParam(name = "processStatus", defaultValue = "false") String processStatus,
+            @RequestParam(name = "processStatus", defaultValue = "") String processStatus,
             @RequestParam("page") int page){
-        Specification<Feedback> search = feedbackService.getFilter(customerName, createDate);
+
+        Specification<Feedback> search = feedbackService.getFilter(customerName, createDate, processStatus);
+        System.out.println(processStatus instanceof String);
         Page<Feedback> feedbackPages;
         if(search != null){
             feedbackPages = feedbackService.findFeedbackByCriteria(search, page);

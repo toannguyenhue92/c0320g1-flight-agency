@@ -13,6 +13,10 @@ import vn.codegym.flightagency.service.FeedbackService;
 import vn.codegym.flightagency.service.search.FeedbackSpecification;
 import vn.codegym.flightagency.service.search.SearchCriteria;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +50,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Specification<Feedback> getFilter(String customerName, String createDate) {
+    public Specification<Feedback> getFilter(String customerName, String createDate, String processStatus) {
         List<FeedbackSpecification> specs = new ArrayList<>();
         Specification<Feedback> spec;
         // search theo
@@ -56,10 +60,13 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
         // customer of created day
         if (!"".equals(createDate) && !"undefined".equals(createDate)) {
-            specs.add(new FeedbackSpecification(new SearchCriteria("createDate", "like", createDate)));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate dateTime = LocalDate.parse(createDate, formatter);
+            System.out.println(dateTime instanceof LocalDate);
+            specs.add(new FeedbackSpecification(new SearchCriteria("createDate", "equal", createDate)));
         }
         if (!"".equals(processStatus) && !"undefined".equals(processStatus)) {
-            specs.add(new FeedbackSpecification(new SearchCriteria("processStatus", "like", processStatus)));
+            specs.add(new FeedbackSpecification(new SearchCriteria("processStatus", "equal", processStatus)));
         }
         if (specs.size() != 0) {
             spec = Specification.where(specs.get(0));

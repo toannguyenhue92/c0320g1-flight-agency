@@ -11,7 +11,7 @@ public interface FeedbackService {
     Page<Feedback> findAll(int page);
     Feedback findById(Long id);
     void save(Feedback feedback);
-    Specification<Feedback> getFilter(String customerName, String createDate);
+    Specification<Feedback> getFilter(String customerName, String createDate, String processStatus);
     Page<Feedback> findFeedbackByCriteria(Specification<Feedback> spec, int page);
 
     List<Feedback> findAllFeedback();
