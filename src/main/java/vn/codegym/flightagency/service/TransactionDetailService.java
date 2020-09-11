@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import vn.codegym.flightagency.dto.BookingDTO;
 import vn.codegym.flightagency.dto.CheckinDto;
+import vn.codegym.flightagency.dto.PassengerCheckinDto;
 import vn.codegym.flightagency.model.TransactionDetail;
 
 public interface TransactionDetailService {
@@ -14,4 +15,6 @@ public interface TransactionDetailService {
 
     // Thành Long
     Specification<TransactionDetail> getFilter(String bookingCode, String fullName);
+
+    Page<CheckinDto> findAllTransactionDetail(int page);
 }

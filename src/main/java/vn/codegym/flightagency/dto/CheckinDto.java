@@ -11,6 +11,8 @@ public class CheckinDto {
 
     private Airport arrival;
 
+    private Boolean checkin;
+
     public CheckinDto() {
     }
 
@@ -30,6 +32,10 @@ public class CheckinDto {
         return arrival;
     }
 
+    public Boolean getCheckin() {
+        return checkin;
+    }
+
     public void setBookingCode(Long bookingCode) {
         this.bookingCode = bookingCode;
     }
@@ -44,5 +50,9 @@ public class CheckinDto {
 
     public void setArrival(Airport arrival) {
         this.arrival = arrival;
+    }
+
+    public void setCheckin(Boolean checkin) {
+        this.checkin = checkin;
     }
 }

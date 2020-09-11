@@ -23,7 +23,11 @@ public class TransactionDetailController {
                                                                    @RequestParam(name = "page") int page) {
         Specification<TransactionDetail> specs = transactionDetailService.getFilter(bookingCode, fullName);
         Page<CheckinDto> transactionDetails;
-        transactionDetails = transactionDetailService.findTransactionDetailByCriteria(specs, page);
+        if (specs != null) {
+            transactionDetails = transactionDetailService.findTransactionDetailByCriteria(specs, page);
+        }else {
+            transactionDetails = transactionDetailService.findAllTransactionDetail(page);
+        }
 
         if (transactionDetails.isEmpty()) {
             return ResponseEntity.noContent().build();

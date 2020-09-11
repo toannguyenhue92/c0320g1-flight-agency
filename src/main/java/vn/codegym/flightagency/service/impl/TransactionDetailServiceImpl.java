@@ -65,6 +65,7 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
         transactionDetail.setFullName(temp.getPassenger().getFullName());
         transactionDetail.setDeparture(temp.getTransaction().getFlightSchedule().getDepartureAirport());
         transactionDetail.setArrival(temp.getTransaction().getFlightSchedule().getArrivalAirport());
+        transactionDetail.setCheckin(temp.getPassenger().getCheckin());
         return transactionDetail;
     }
 
@@ -77,8 +78,8 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
             temp = (TransactionDetail) iterator.next();
             transactionDetailDto.add(transferToDTO(temp));
         }
-        Page<CheckinDto> _passenger = new PageImpl<>(transactionDetailDto, transactionDetails.getPageable(), transactionDetails.getTotalElements());
-        return _passenger;
+        Page<CheckinDto> _transactionDetail = new PageImpl<>(transactionDetailDto, transactionDetails.getPageable(), transactionDetails.getTotalElements());
+        return _transactionDetail;
     }
 
     // Thành Long
@@ -111,6 +112,13 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
             return spec;
         }
         return null;
+    }
+
+    @Override
+    public Page<CheckinDto> findAllTransactionDetail(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 5);
+        Page<TransactionDetail> transactionDetails = transactionDetailRepository.findAll(pageable);
+        return transferToNewPage(transactionDetails);
     }
 
     // Creator: Duy
