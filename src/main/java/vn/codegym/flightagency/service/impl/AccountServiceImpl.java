@@ -56,11 +56,7 @@ public class AccountServiceImpl implements AccountService {
                 } else {
                     messages.add("Mật khẩu hiện tại không đúng. Xin vui lòng nhập lại.");
                 }
-            } else {
-                messages.add("Vui lòng nhập mật khẩu hiện tại .");
             }
-        } else if (!employeeInfoDto.getNewPassword().equals("")) {
-            messages.add("Vui lòng nhập mật khẩu hiện tại khi đổi mật khẩu.");
         }
         employeeInfoDto.setBackendMessage(messages);
         if (employeeInfoDto.getBackendMessage().size() == 0) {
