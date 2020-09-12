@@ -123,13 +123,11 @@ public class EmployeeAPI {
                     response.put("message", "Tìm kiếm không chính xác !");
                     return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-            if (pageEmployees == null) {
+            if (pageEmployees==null) {
                 response.put("message", "không có kết quả phù hợp !");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
             list = employeeService.coverListEmpToListEmpDTO(pageEmployees.getContent());
-
-
             response.put("tutorials", list);
             response.put("currentPage", pageEmployees.getNumber());
             response.put("totalItems", pageEmployees.getTotalElements());

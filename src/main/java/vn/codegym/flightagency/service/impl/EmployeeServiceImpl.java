@@ -41,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     //    CREATE BY ANH DUC
     @Override
     public Page<Employee> findAllByFullName(String name, Pageable pageable) {
-        return null;
+        return employeeRepository.findAllByFullName(name, pageable);
     }
     //    CREATE BY ANH DUC
     @Override
