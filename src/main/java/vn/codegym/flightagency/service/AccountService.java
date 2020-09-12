@@ -1,14 +1,23 @@
 package vn.codegym.flightagency.service;
 
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.UserDetails;
+import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
-import vn.codegym.flightagency.model.Passenger;
 import vn.codegym.flightagency.model.dto.employeeInfoDto;
 
 public interface AccountService {
+    //Created by: Quân
+    boolean existsEmail(String email);
+    //Created by: Quân
+    Account findByEmail(String email);
+    //Created by: Quân
+    Account saveAccount(Account account);
+    //Created by: Quân
+    UserDetails getUserDetail(Account account);
+    //Created by: Quân
+    Account getProfileGoogle(TokenDto tokenDto);
+    //Created by: Quân
+    Account getProfileFacebook(TokenDto tokenDto);
     //creator: Mậu
     employeeInfoDto findEmployeeInfoDtoById(Long id);
 
@@ -17,4 +26,5 @@ public interface AccountService {
 
     //creator: Mậu
     void changePassword(employeeInfoDto employeeInfoDto);
+}
 }

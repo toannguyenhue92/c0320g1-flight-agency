@@ -59,4 +59,15 @@ public class Account {
     @Column(name = "status")
     private boolean status;
 
+    public Account(String email, String password, String role, boolean status,
+                   String fullName,LocalDate birthDate,String avatarImageUrl,String gender ) {
+        this.email = email;
+        this.password =  password;
+        this.role = role;
+        this.status = status;
+        this.fullName = fullName;
+        this.birthDate = birthDate;
+        this.avatarImageUrl = avatarImageUrl;
+        this.gender = gender;
+    }
 }
