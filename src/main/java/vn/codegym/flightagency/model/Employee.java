@@ -1,5 +1,7 @@
 package vn.codegym.flightagency.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,4 +24,14 @@ public class Employee {
     @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @JsonIgnore
+    public Account getAccount() {
+        return account;
+    }
+
+    @JsonProperty
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }
