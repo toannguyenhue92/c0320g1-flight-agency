@@ -8,6 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.model.ConfirmationToken;
 import vn.codegym.flightagency.repository.AccountRepository;
@@ -17,10 +18,10 @@ import vn.codegym.flightagency.service.EmailSenderService;
 
 import java.util.Random;
 
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 //@CrossOrigin(origins = "*", allowedHeaders = "*", exposedHeaders = "Authorization")
-@Controller
-@RequestMapping("/api/v1")
+@RestController
+@RequestMapping("/api/v1/account")
 public class AccountController {
 
     @Autowired
@@ -56,12 +57,12 @@ public class AccountController {
         return generatedString;
     }
 
-    @GetMapping("/account/test")
+    @GetMapping("/test")
     public ResponseEntity<?> test() {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/account/register")
+    @PostMapping("/register")
     public ResponseEntity<?> registration(@RequestBody Account account) {
 
         System.out.println(account.toString());
@@ -79,23 +80,27 @@ public class AccountController {
             mailMessage.setFrom("quangtien14dt1bkdn@gmail.com");
             //dia chi nguoi gui
             mailMessage.setText("To confirm your account, please click here: "
-                    + "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
+                    + "http://localhost:8080/api/v1/account/confirm-account?token=" + confirmationToken.getConfirmationToken());
             emailSenderService.sendEmail(mailMessage);
         }
         accountService.savingAccount(account);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/account/confirmation-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<?> confirmAccount(@RequestParam("token") String confirmationToken) {
+
+    @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView confirmUserAccount(@RequestParam("token") String confirmationToken) {
+        ModelAndView modelAndView;
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-        
         if (token != null) {
             Account account = accountRepository.findAccountByEmail(token.getAccount().getEmail());
             account.setStatus(true);
-
             accountRepository.save(account);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            modelAndView = new ModelAndView("accountVerified");
+        } else {
+            modelAndView = new ModelAndView("error");
+            modelAndView.addObject("message", "The link is invalid or broken!");
+        }
+        return modelAndView;
     }
 }

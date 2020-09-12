@@ -57,6 +57,6 @@ public class Account {
     private String role;
 
     @Column(name = "status")
-    private boolean status;
+    private boolean status = false;
 
 }

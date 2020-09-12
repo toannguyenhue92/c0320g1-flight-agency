@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -26,15 +27,16 @@ public class ConfirmationToken {
     private String confirmationToken;
 
     @Column(name = "created_date")
-    private LocalDate createdDate;
+    private Date createdDate;
 
     @OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
+
     public ConfirmationToken(Account account) {
         this.account = account;
-        LocalDate createdDate = LocalDate.now();
+        createdDate = new Date();
         confirmationToken = UUID.randomUUID().toString();
     }
 
