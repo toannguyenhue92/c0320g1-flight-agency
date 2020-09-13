@@ -8,16 +8,22 @@ import vn.codegym.flightagency.model.dto.employeeInfoDto;
 public interface AccountService {
     //Created by: Quân
     boolean existsEmail(String email);
+
     //Created by: Quân
     Account findByEmail(String email);
+
     //Created by: Quân
     Account saveAccount(Account account);
+
     //Created by: Quân
     UserDetails getUserDetail(Account account);
+
     //Created by: Quân
     Account getProfileGoogle(TokenDto tokenDto);
+
     //Created by: Quân
     Account getProfileFacebook(TokenDto tokenDto);
+
     //creator: Mậu
     employeeInfoDto findEmployeeInfoDtoById(Long id);
 
@@ -27,4 +33,4 @@ public interface AccountService {
     //creator: Mậu
     void changePassword(employeeInfoDto employeeInfoDto);
 }
-}
+
