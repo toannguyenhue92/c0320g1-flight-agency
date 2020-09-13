@@ -1,13 +1,11 @@
 package vn.codegym.flightagency.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.codegym.flightagency.dto.CheckinDto;
 import vn.codegym.flightagency.model.TransactionDetail;
 import vn.codegym.flightagency.service.TransactionDetailService;
+
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
@@ -18,20 +16,13 @@ public class TransactionDetailController {
 
     // Thành Long
     @GetMapping("/customer/checkin")
-    public ResponseEntity<Page<CheckinDto>> searchTransactionDetail(@RequestParam(name = "bookingCode", defaultValue = "") String bookingCode,
-                                                                   @RequestParam(name = "fullName", defaultValue = "") String fullName,
-                                                                   @RequestParam(name = "page") int page) {
-        Specification<TransactionDetail> specs = transactionDetailService.getFilter(bookingCode, fullName);
-        Page<CheckinDto> transactionDetails;
-        if (specs != null) {
-            transactionDetails = transactionDetailService.findTransactionDetailByCriteria(specs, page);
-        }else {
-            transactionDetails = transactionDetailService.findAllTransactionDetail(page);
-        }
-
+    public ResponseEntity<List<TransactionDetail>> searchTransactionDetail(@RequestParam(name = "id", defaultValue ="") Long id){
+        List<TransactionDetail> transactionDetails = transactionDetailService.findByTransactionDetail(id);
         if (transactionDetails.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(transactionDetails);
     }
+
+
 }

@@ -23,4 +23,9 @@ public interface PassengerService {
     // Creator: Duy
     List<Passenger> addAllPassengers(List<PassengerInfoDTO> passengerInfoDtoList);
 
+
+    void checkinPassenger(Passenger passenger);
+
+    Passenger findById(Long id);
+
 }

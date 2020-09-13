@@ -111,6 +111,19 @@ public class PassengerServiceImpl implements PassengerService {
         return  passengerList;
     }
 
+    // Thành Long
+    @Override
+    public void checkinPassenger(Passenger passenger) {
+        passenger.setCheckin(true);
+        passengerRepository.save(passenger);
+    }
+
+    // Thành Long
+    @Override
+    public Passenger findById(Long id) {
+        return passengerRepository.findById(id).orElse(null);
+    }
+
     // Creator: Duy
     private Passenger findPassengerByIdCard(String idCard) {
         return passengerRepository.findPassengerByIdentifierCard(idCard);
