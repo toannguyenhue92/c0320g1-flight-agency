@@ -6,9 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.model.Passenger;
-import vn.codegym.flightagency.model.dto.employeeInfoDto;
 import vn.codegym.flightagency.repository.PassengerRepository;
 import vn.codegym.flightagency.service.PassengerService;
 

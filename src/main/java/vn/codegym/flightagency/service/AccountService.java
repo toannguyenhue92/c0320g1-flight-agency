@@ -3,7 +3,7 @@ package vn.codegym.flightagency.service;
 import org.springframework.security.core.userdetails.UserDetails;
 import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
-import vn.codegym.flightagency.model.dto.employeeInfoDto;
+import vn.codegym.flightagency.dto.employeeInfoDto;
 
 public interface AccountService {
     //Created by: Quân

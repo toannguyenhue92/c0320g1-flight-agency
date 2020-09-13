@@ -1,4 +1,4 @@
-package vn.codegym.flightagency.model.dto;
+package vn.codegym.flightagency.dto;
 
 import lombok.Data;
 

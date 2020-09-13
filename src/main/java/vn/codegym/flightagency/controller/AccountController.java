@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.codegym.flightagency.dto.JwtResponse;
 import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
-import vn.codegym.flightagency.model.dto.employeeInfoDto;
+import vn.codegym.flightagency.dto.employeeInfoDto;
 import vn.codegym.flightagency.security.JwtTokenUtil;
 import vn.codegym.flightagency.service.AccountService;
 import vn.codegym.flightagency.service.impl.UserDetailServiceImpl;

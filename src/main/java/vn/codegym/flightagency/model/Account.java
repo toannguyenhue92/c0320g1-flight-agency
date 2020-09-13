@@ -1,9 +1,9 @@
 package vn.codegym.flightagency.model;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -70,4 +70,5 @@ public class Account {
         this.avatarImageUrl = avatarImageUrl;
         this.gender = gender;
     }
+
 }
