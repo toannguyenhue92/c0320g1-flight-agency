@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import vn.codegym.flightagency.dto.AdminPasswordChangeDTO;
 import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.model.ConfirmationToken;
 import vn.codegym.flightagency.repository.AccountRepository;
@@ -102,5 +102,21 @@ public class AccountController {
             modelAndView.addObject("message", "The link is invalid or broken!");
         }
         return modelAndView;
+    }
+
+    @PutMapping(value = "/password/{id}")
+    public ResponseEntity<AdminPasswordChangeDTO> AdminPasswordChange(@PathVariable Long id, @RequestBody AdminPasswordChangeDTO passwordChangeDTO) {
+        Account account = accountService.findAccountById(id);
+        if (account == null) {
+            return new ResponseEntity<AdminPasswordChangeDTO>(HttpStatus.NOT_FOUND);
+        }
+        accountService.changePassword(passwordChangeDTO);
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(account.getEmail());
+        mailMessage.setSubject("Complete Changing Password!");
+        mailMessage.setFrom("quangtien14dt1bkdn@gmail.com");
+        mailMessage.setText("Your password has been changing !");
+        emailSenderService.sendEmail(mailMessage);
+        return new ResponseEntity<AdminPasswordChangeDTO>(passwordChangeDTO, HttpStatus.OK);
     }
 }
