@@ -6,10 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import vn.codegym.flightagency.model.Bill;
 
-import java.util.List;
-
 public interface BillRepository extends JpaRepository<Bill, Long>, JpaSpecificationExecutor<Bill> {
     Page<Bill> findByTransaction_Account_Id(Long accountId, Pageable pageable);
-
+    Bill findBillByBillCode(String billCode);
 }
 

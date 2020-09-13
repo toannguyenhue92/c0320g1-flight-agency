@@ -11,6 +11,7 @@ public interface BillService {
     Page<Bill> getBillsByAccountId(Long accountId, int page);
     Page<Bill> getSearchedBills(Long accountId, String billCode, String brand, String departure, String arrival, int page);
     SelectDto getSelectDto();
+    Bill getBillById(Long id);
 
 
 }

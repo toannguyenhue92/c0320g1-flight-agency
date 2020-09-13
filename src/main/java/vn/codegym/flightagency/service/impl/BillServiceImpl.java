@@ -1,5 +1,6 @@
 package vn.codegym.flightagency.service.impl;
 
+import javassist.NotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class BillServiceImpl implements BillService {
     @Override
     public Page<Bill> getBillsByAccountId(Long accountId, int currentPage) {
         if(currentPage > 0 ) {
-            Pageable pageable = PageRequest.of(--currentPage, 3, sort);
+            Pageable pageable = PageRequest.of(--currentPage, 4, sort);
             return billRepository.findByTransaction_Account_Id(accountId, pageable);
         }
         return billRepository.findByTransaction_Account_Id(accountId, pageable);
@@ -84,6 +85,11 @@ public class BillServiceImpl implements BillService {
         return new SelectDto(airports,branchList);
 
 }
+
+    @Override
+    public Bill getBillById(Long id) {
+        return billRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
 
 
 }

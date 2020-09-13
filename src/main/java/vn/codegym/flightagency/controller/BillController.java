@@ -39,12 +39,16 @@ public class BillController {
         if (bills.isEmpty()) return new ResponseEntity<>(bills, HttpStatus.NO_CONTENT);
         return ResponseEntity.ok(bills);
     }
-    // C-Ngan
+
     @GetMapping("customer/bills/select-info")
     public ResponseEntity<SelectDto> getSelects(){
         return ResponseEntity.ok(this.billService.getSelectDto());
     }
 
+    @GetMapping("customer/bill/{id}")
+    public ResponseEntity<Bill> getBillById(@PathVariable Long id){
+        return ResponseEntity.ok(this.billService.getBillById(id));
+    }
 
 
 }
