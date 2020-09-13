@@ -1,25 +1,33 @@
 package vn.codegym.flightagency.repository;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import vn.codegym.flightagency.model.FlightSchedule;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Repository
 public interface FlightSchedulePromotionRepository extends JpaRepository<FlightSchedule, Long> {
 
-    @Query( value =
-            "Select * from flight_schedules where departure_airport_id = ?1 and arrival_airport_id = ?2  and status = 'active' and departure_time between ?3 and ?4 ",nativeQuery = true
+    @Query( value = "SELECT * FROM flight_agency.promo \n" +
+            "inner join  flight_agency.branches ON promo.airline = branches.branch_id \n" +
+            "inner join flight_agency.flight_schedules ON branches.branch_id = flight_schedules.branch_id \n" +
+            "where flight_agency.promo.promo_date_end >= now() and flight_agency.promo.promo_date_start <= now() \n" +
+            "and flight_agency.flight_schedules.arrival_time between flight_agency. promo.flight_departure_date_start AND flight_agency.promo.flight_departure_date_end \n" +
+            "and arrival_airport_id = arrival_place and departure_airport_id = departure_place and flight_schedules.status = 'active'"
+             ,nativeQuery = true
+
     )
 
-//    @Query(value =
-//            "Select f from FlightSchedule f where " +
-//                    "f.departureAirport.id = ?1 and " +
-//                    "f.arrivalAirport.id = ?2  and " +
-//                    "f.status = 'active' and " +
-//                    "f.departureDateTime between ?3 and ?4"
-//    )
-    List<FlightSchedule> findAllFlightSchedules(Long depCode, Long arrCode, LocalDateTime from, LocalDateTime to, Sort sortBy);
+
+//    List<FlightSchedule> findAllFlightSchedules(Long depCode, Long arrCode, LocalDateTime from, LocalDateTime to, Sort sortBy);
+
+    List<FlightSchedule> findAllFlightSchedulesPromotion(Long depCode, Long arrCode, LocalDateTime from, LocalDateTime to);
+
+
+
+
+
 }

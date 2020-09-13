@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface FlightSchedulePromotionService {
     List<FlightSchedule> searchFlightsPromotion(FlightSearchDTO flights);
-
 }
