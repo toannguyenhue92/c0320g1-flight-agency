@@ -1,6 +1,5 @@
 package vn.codegym.flightagency.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +17,7 @@ import vn.codegym.flightagency.service.impl.UserDetailServiceImpl;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api/v1")
 public class AccountController {
 
     @Autowired
