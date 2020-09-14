@@ -1,13 +1,11 @@
 package vn.codegym.flightagency.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "transactions")
@@ -24,15 +22,6 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "flight_schedule_id", nullable = false)
     private FlightSchedule flightSchedule;
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "transaction_passenger",
-//            joinColumns = @JoinColumn(name = "transaction_id"),
-//            inverseJoinColumns = @JoinColumn(name = "passenger_id")
-//    )
-//    @JsonManagedReference
-//    private List<Passenger> passengers;
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)

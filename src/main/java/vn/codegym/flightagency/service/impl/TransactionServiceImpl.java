@@ -2,33 +2,19 @@ package vn.codegym.flightagency.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vn.codegym.flightagency.model.Bill;
-import vn.codegym.flightagency.model.Passenger;
-import vn.codegym.flightagency.model.Transaction;
+import vn.codegym.flightagency.model.*;
 import vn.codegym.flightagency.repository.BillRepository;
+import vn.codegym.flightagency.repository.TransactionDetailRepository;
 import vn.codegym.flightagency.repository.TransactionRepository;
 import vn.codegym.flightagency.service.TransactionService;
-import vn.codegym.flightagency.service.PassengerService;
 import vn.codegym.flightagency.utility.BillCodeGenerator;
-
-import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import vn.codegym.flightagency.dto.PassengerInfoDTO;
-import vn.codegym.flightagency.model.Account;
-import vn.codegym.flightagency.model.FlightSchedule;
-import vn.codegym.flightagency.model.Passenger;
-import vn.codegym.flightagency.model.Transaction;
-import vn.codegym.flightagency.repository.TransactionRepository;
-import vn.codegym.flightagency.service.PassengerService;
-import vn.codegym.flightagency.service.TransactionService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -36,6 +22,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @Autowired
+    private TransactionDetailRepository transactionDetailRepository;
 
     @Autowired
     private BillRepository billRepository;
@@ -60,21 +49,23 @@ public class TransactionServiceImpl implements TransactionService {
     // Created by Toàn
     @Override
     public Transaction findByIdAndPhone(Long id, String phone) {
-        Optional<Transaction> optional = transactionRepository.findByIdAndPhone(id, phone);
+        Optional<Transaction> optional = transactionRepository.findById(id);
         if (optional.isPresent()) {
-            return optional.get();
-        } else {
-            optional = transactionRepository.findById(id);
-            if (optional.isPresent()) {
-                Transaction transaction = optional.get();
-                for (Passenger p : transaction.getPassengers()) {
-                    if (phone.equals(p.getPhoneNumber())) {
-                        return transaction;
+            Transaction transaction = optional.get();
+            if (phone.equals(transaction.getAccount().getPhoneNumber())) {
+                return transaction;
+            } else {
+                List<TransactionDetail> transactionDetails = transactionDetailRepository.findByTransaction_Id(id);
+                if (transactionDetails.size() > 0) {
+                    for (TransactionDetail detail : transactionDetails) {
+                        if (phone.equals(detail.getPassenger().getPhoneNumber())) {
+                            return transaction;
+                        }
                     }
                 }
             }
-            return null;
         }
+        return null;
     }
 
     // Created by Toàn
@@ -121,6 +112,13 @@ public class TransactionServiceImpl implements TransactionService {
             }
         }
         return transactions.size() > 0 ? transactions : null;
+    }
+
+    // Created by Toàn
+    @Override
+    public List<TransactionDetail> findTransactionDetails(Long id) {
+        List<TransactionDetail> details = transactionDetailRepository.findByTransaction_Id(id);
+        return details.size() > 0 ? details : null;
     }
 
     // Creator: Duy

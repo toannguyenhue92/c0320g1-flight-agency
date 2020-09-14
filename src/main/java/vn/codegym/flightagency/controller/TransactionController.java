@@ -1,9 +1,14 @@
 package vn.codegym.flightagency.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.codegym.flightagency.dto.BookingDTO;
+import vn.codegym.flightagency.exception.ViolatedException;
 import vn.codegym.flightagency.model.Transaction;
+import vn.codegym.flightagency.model.TransactionDetail;
+import vn.codegym.flightagency.service.TransactionDetailService;
 import vn.codegym.flightagency.service.TransactionService;
 
 import java.util.List;
@@ -16,12 +21,35 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    @Autowired
+    private TransactionDetailService transactionDetailService;
+
+    // Creator: Duy
+    // Find flight schedule
+    @PostMapping("/transaction/booking")
+    public ResponseEntity<?> makeBooking(@RequestBody BookingDTO booking)
+            throws ViolatedException {
+        transactionDetailService.saveTransactionDetail(booking);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     // Created by Toàn
     @GetMapping(path = "/transaction/{id}")
     public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id) {
         Transaction transaction = transactionService.findById(id);
         if (transaction != null) {
             return ResponseEntity.ok(transaction);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    // Created by Toàn
+    @GetMapping(path = "/transaction/{id}/details")
+    public ResponseEntity<List<TransactionDetail>> getTransactionDetails(@PathVariable Long id) {
+        List<TransactionDetail> details = transactionService.findTransactionDetails(id);
+        if (details != null) {
+            return ResponseEntity.ok(details);
         } else {
             return ResponseEntity.noContent().build();
         }
@@ -82,30 +110,5 @@ public class TransactionController {
         } else {
             return ResponseEntity.badRequest().build();
         }
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import vn.codegym.flightagency.dto.BookingDTO;
-import vn.codegym.flightagency.exception.ViolatedException;
-import vn.codegym.flightagency.service.TransactionDetailService;
-import vn.codegym.flightagency.service.TransactionService;
-
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-@RestController
-@RequestMapping("/api/v1")
-public class TransactionController {
-
-    @Autowired
-    private TransactionDetailService transactionDetailService;
-
-    // Creator: Duy
-    // Find flight schedule
-    @PostMapping("/transaction/booking")
-    public ResponseEntity<?> makeBooking(@RequestBody BookingDTO booking)
-            throws ViolatedException {
-        transactionDetailService.saveTransactionDetail(booking);
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

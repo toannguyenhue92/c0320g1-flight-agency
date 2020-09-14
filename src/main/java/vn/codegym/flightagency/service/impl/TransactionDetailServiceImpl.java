@@ -12,7 +12,6 @@ import vn.codegym.flightagency.service.PassengerService;
 import vn.codegym.flightagency.service.TransactionDetailService;
 import vn.codegym.flightagency.service.TransactionService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

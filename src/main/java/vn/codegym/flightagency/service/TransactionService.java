@@ -1,6 +1,7 @@
 package vn.codegym.flightagency.service;
 
 import vn.codegym.flightagency.model.Transaction;
+import vn.codegym.flightagency.model.TransactionDetail;
 
 import java.util.List;
 
@@ -33,5 +34,8 @@ public interface TransactionService {
 
     // Created by Toàn
     Transaction cancelTransaction(Long id);
+
+    // Created by Toàn
+    List<TransactionDetail> findTransactionDetails(Long id);
 
 }
