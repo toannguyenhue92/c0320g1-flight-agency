@@ -1,6 +1,5 @@
 package vn.codegym.flightagency.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,14 +25,14 @@ public class Transaction {
     @JoinColumn(name = "flight_schedule_id", nullable = false)
     private FlightSchedule flightSchedule;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-      @JoinTable(
-            name = "transaction_passenger",
-            joinColumns = @JoinColumn(name = "transaction_id"),
-            inverseJoinColumns = @JoinColumn(name = "passenger_id")
-    )
-    @JsonManagedReference
-    private List<Passenger> passengers;
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "transaction_passenger",
+//            joinColumns = @JoinColumn(name = "transaction_id"),
+//            inverseJoinColumns = @JoinColumn(name = "passenger_id")
+//    )
+//    @JsonManagedReference
+//    private List<Passenger> passengers;
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)

@@ -5,8 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.codegym.flightagency.dto.BookingDTO;
+import vn.codegym.flightagency.exception.ViolatedException;
 import vn.codegym.flightagency.model.Transaction;
 import vn.codegym.flightagency.repository.TransactionRepository;
+import vn.codegym.flightagency.service.TransactionDetailService;
 import vn.codegym.flightagency.service.TransactionService;
 
 @RestController
@@ -28,7 +31,17 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
     }
 
+    @Autowired
+    private TransactionDetailService transactionDetailService;
 
+    // Creator: Duy
+    // Find flight schedule
+    @PostMapping("/transaction/booking")
+    public ResponseEntity<?> makeBooking(@RequestBody BookingDTO booking)
+            throws ViolatedException {
+        transactionDetailService.saveTransactionDetail(booking);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 
 

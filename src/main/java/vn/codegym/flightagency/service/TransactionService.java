@@ -9,5 +9,9 @@ import java.util.List;
 public interface TransactionService {
     // C-Ngan
     Page<Transaction> getTransactionsByAccountId(Long accountId, int currentPage);
+    // Creator: Duy
+    Transaction save(Transaction transaction);
 
+    //Creator: Duy
+    Transaction createTransaction(Long flightScheduleId, Long accountId, Double totalPrice);
 }
