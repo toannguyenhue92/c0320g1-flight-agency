@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 //BHung
 @Data
-public class TransactionDTO {
+public class EmployeeTransactionDTO {
     private Long id;
     private FlightSchedule flightSchedule;
     private Account account;

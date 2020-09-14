@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import vn.codegym.flightagency.model.Transaction;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<Transaction,Long> {
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 }

@@ -1,13 +1,10 @@
 package vn.codegym.flightagency.dto;
-
 import lombok.Data;
-import vn.codegym.flightagency.model.Passenger;
-import vn.codegym.flightagency.model.Transaction;
-
 import java.util.List;
 
+//BHung
 @Data
 public class TransactionPassengerDTO {
-    private List<TransactionDTO> transactions;
-    private List<PassengerDTO> passengers;
+    private List<EmployeeTransactionDTO> transactions;
+    private List<EmployeePassengerDTO> passengers;
 }

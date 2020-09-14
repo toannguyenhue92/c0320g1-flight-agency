@@ -1,6 +1,9 @@
 package vn.codegym.flightagency.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,10 +46,11 @@ public class EmployeeController {
 
     //BHung lay danh sach chuyến bay
     @PostMapping("/employee/flightSchedule")
-    public ResponseEntity<List<FlightSchedule>> findAllFlightSchedules(@RequestBody EmployeeFlightSearchDTO employeeFlightSearchDTO){
-        List<FlightSchedule> flightSchedules = flightScheduleService.findAllFlightScheduleByEmployee(employeeFlightSearchDTO.getDeparturePlace().getId(),
+    public ResponseEntity<Page<FlightSchedule>> findAllFlightSchedules(@RequestBody EmployeeFlightSearchDTO employeeFlightSearchDTO,
+                                                                       @PageableDefault Pageable currentPage){
+        Page<FlightSchedule> flightSchedules = flightScheduleService.findAllFlightScheduleByEmployee(employeeFlightSearchDTO.getDeparturePlace().getId(),
                 employeeFlightSearchDTO.getArrivalPlace().getId(), employeeFlightSearchDTO.getDepartureDate(),
-                employeeFlightSearchDTO.getAdult()+ employeeFlightSearchDTO.getChild(),"active");
+                employeeFlightSearchDTO.getAdult()+ employeeFlightSearchDTO.getChild(),"active",currentPage);
         if (flightSchedules==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -75,10 +79,9 @@ public class EmployeeController {
     }
 
     //BHung lưu trans và pass
-    @PostMapping("/transPass/save")
-    public ResponseEntity<?> saveTransactionsAndPassengers(@RequestBody TransactionPassengerDTO transactionPassengerDTO){
+    @PostMapping("employee/transPass/save")
+    public void saveTransactionsAndPassengers(@RequestBody TransactionPassengerDTO transactionPassengerDTO){
         employeeService.saveTransactionsAndTickets(transactionPassengerDTO.getTransactions(),transactionPassengerDTO.getPassengers());
-        return ResponseEntity.ok("thành công");
     }
 
     //BHung tim kiem transaction

@@ -12,8 +12,14 @@ import java.util.List;
 public class AirportServiceImpl implements AirportService {
 
     @Autowired
-    AirportRepository airportRepository;
+    private AirportRepository airportRepository;
 
+    @Override
+    public List<Airport> getAirports() {
+        return airportRepository.findAll();
+    }
+
+    //BHung
     @Override
     public List<Airport> findAllAirport() {
         return airportRepository.findAll();

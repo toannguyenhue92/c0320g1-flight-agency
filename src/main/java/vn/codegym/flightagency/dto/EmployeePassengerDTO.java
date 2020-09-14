@@ -8,7 +8,7 @@ import java.util.List;
 
 //BHung
 @Data
-public class PassengerDTO {
+public class EmployeePassengerDTO {
     private Long id;
     private String fullName;
     private String identifierCard;
@@ -16,4 +16,6 @@ public class PassengerDTO {
     private String phoneNumber;
     private String gender;
     private Boolean checkin;
+    private int deptLuggagePrice;
+    private int arvLuggagePrice;
 }

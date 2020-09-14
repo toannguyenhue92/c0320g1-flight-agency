@@ -5,6 +5,8 @@ import vn.codegym.flightagency.model.Airport;
 import java.util.List;
 
 public interface AirportService {
-    //Hung
+
+    List<Airport> getAirports();
+    //BHung
     List<Airport> findAllAirport();
 }
