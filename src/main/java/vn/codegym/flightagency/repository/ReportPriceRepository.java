@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface ReportPriceRepository extends JpaRepository<ReportPrice, Long> {
         //Thành
-        @Query(value = "CALL find_total_price(?1, ?2);", nativeQuery = true)
-        List<ReportPrice> findTotalPricePerDate(LocalDateTime date1, LocalDateTime date2);
+        @Query(value = "CALL find_total_price(?1, ?2, ?3, ?4);", nativeQuery = true)
+        List<ReportPrice> findTotalPricePerDate(LocalDateTime date1, LocalDateTime date2,LocalDateTime date3, LocalDateTime date4);
 
 }

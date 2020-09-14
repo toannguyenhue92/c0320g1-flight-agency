@@ -22,6 +22,15 @@ public class ReportPriceImpl implements ReportPriceService {
     public List<ReportPrice> findAllTransaction(ReportPriceDTO reportPriceDTO) {
         LocalDateTime date1 = LocalDateTime.of(reportPriceDTO.getDate1(), LocalTime.of(0,0));
         LocalDateTime date2 = LocalDateTime.of(reportPriceDTO.getDate2(), LocalTime.of(23,59));
-        return reportPriceRepository.findTotalPricePerDate(date1,date2);
+//        LocalDateTime date3 = null;
+//        LocalDateTime date4 = null;
+//        if (reportPriceDTO.getDate3() != null && reportPriceDTO.getDate4() != null){
+//            date3 =  LocalDateTime.of(reportPriceDTO.getDate3(), LocalTime.of(0,0));
+//            date4 = LocalDateTime.of(reportPriceDTO.getDate4(), LocalTime.of(23,59));
+//            return reportPriceRepository.findTotalPricePerDate(date1,date2,date3,date4);
+//        }else {
+//
+//        }
+        return reportPriceRepository.findTotalPricePerDate(date1,date2, null, null);
     }
 }

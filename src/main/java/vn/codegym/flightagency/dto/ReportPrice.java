@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @Table(name = "price_report")
 public class ReportPrice {
     //Thành
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long id;
 
-    @Column(name = "created_time")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column
+//    private Long id;
+    @Id
+    @Column(name = "created_date")
     private LocalDateTime date;
 
     @Column(name = "total")

@@ -19,6 +19,7 @@ public class ReportPriceController {
 
     @PostMapping("/pricereport")
     public List<ReportPrice> getAllTransactions(@RequestBody ReportPriceDTO reportPriceDTO){
+        List<ReportPrice> reportPrice = transactionService.findAllTransaction(reportPriceDTO);
         return transactionService.findAllTransaction(reportPriceDTO);
     }
 
