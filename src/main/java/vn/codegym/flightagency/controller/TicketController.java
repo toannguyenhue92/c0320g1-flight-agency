@@ -22,31 +22,31 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
-    @GetMapping("/tickets")
+    @GetMapping("/admin/tickets")
     public Page<Ticket> ListTicket(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
                                    @PageableDefault(value=6)Pageable pageable){
             return ticketService.findAllByName(search.get(),pageable);
     }
 
-    @GetMapping("/tickets/BookingCode")
+    @GetMapping("/admin/tickets/BookingCode")
     public Page<Ticket> ListTicketByBookingCode(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
                                    @PageableDefault(value=6)Pageable pageable){
         return ticketService.findAllByBookingCode(search.get(),pageable);
     }
 
-    @GetMapping("/tickets/Flight")
+    @GetMapping("/admin/tickets/Flight")
     public Page<Ticket> ListTicketByFlight(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
                                                 @PageableDefault(value=6)Pageable pageable){
         return ticketService.findAllByFlight(search.get(),pageable);
     }
 
-    @GetMapping("/tickets/{id}")
+    @GetMapping("/admin/tickets/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable(value = "id")Long id){
         Ticket ticket = ticketService.findById(id);
         return ResponseEntity.ok().body(ticket);
     }
 
-    @PutMapping("/tickets/{id}")
+    @PutMapping("/admin/tickets/{id}")
     public ResponseEntity<Ticket> updateTicketById(@PathVariable(value = "id")Long id, @RequestBody Ticket ticketUpdate){
             Ticket ticket=ticketService.findById(id);
             ticket.setName(ticketUpdate.getName());
@@ -56,7 +56,7 @@ public class TicketController {
     }
 
     Map<Ticket, LocalDateTime> mapTicketDeleted =new HashMap<>();
-    @DeleteMapping("/tickets/{id}")
+    @DeleteMapping("/admin/tickets/{id}")
     public  Map<Ticket,LocalDateTime> deleteTicket(@PathVariable(value = "id")Long id){
         Ticket ticket =ticketService.findById(id);
         LocalDateTime dateTime = LocalDateTime.now();
