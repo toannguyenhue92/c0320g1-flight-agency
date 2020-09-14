@@ -7,7 +7,12 @@ import vn.codegym.flightagency.model.Bill;
 
 public interface BillRepository extends JpaRepository<Bill, Long> {
     Page<Bill> findBillsByBillCode(Pageable pageable, String billCode);
-    Page<Bill> findByBillCodeIsAndTaxCodeIsAndTransaction_Account_FullName(String billCode, String billTax, String name, Pageable pageable);
-    Page<Bill> findByBillCodeIsOrTaxCodeIsOrTransaction_Account_FullName(String billCode, String billTax, String name, Pageable pageable);
+    Page<Bill> findByBillCodeIsOrTaxCodeIsOrTransaction_Account_FullNameContaining(String billCode, String billTax, String name, Pageable pageable);
+    Page<Bill> findByTransaction_Account_FullNameContaining(String name, Pageable pageable);
+    Page<Bill> findByTaxCodeIs(String billTax,Pageable pageable);
+    Page<Bill> findByBillCodeIs(String billCode,Pageable pageable);
+    Page<Bill> findByBillCodeIsAndTaxCodeIsOrTransaction_Account_FullNameContaining(String billCode, String billTax, String name, Pageable pageable);
+    Page<Bill> findByBillCodeIsAndTransaction_Account_FullNameContaining(String billCode, String name, Pageable pageable);
 
 }
+

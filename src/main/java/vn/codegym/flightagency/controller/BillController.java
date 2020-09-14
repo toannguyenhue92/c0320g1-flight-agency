@@ -37,6 +37,7 @@ public class BillController {
                                                      @RequestParam(name="billTax",required = false,defaultValue = "") String billTax,
                                                      @RequestParam(name="name",required = false,defaultValue = "") String name,
                                                      Pageable pageable) {
+        String noParam = "";
         System.out.println(billCode);
         System.out.println(billTax);
         System.out.println(name);

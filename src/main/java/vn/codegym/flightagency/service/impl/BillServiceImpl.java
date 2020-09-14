@@ -24,6 +24,17 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Page<Bill> searchBills(String billCode, String billTax, String name, Pageable pageable) {
-        return billRepository.findByBillCodeIsOrTaxCodeIsOrTransaction_Account_FullName(billCode,billTax,name,pageable);
+        if(billCode.equals("") && billTax.equals("")){
+            return billRepository.findByTransaction_Account_FullNameContaining(name,pageable);
+        } else if (billCode.equals("") && name.equals("")){
+            return billRepository.findByTaxCodeIs(billTax,pageable);
+        } else if (billTax.equals("") && name.equals("")) {
+            return billRepository.findByBillCodeIs(billCode,pageable);
+        } else if (!billCode.equals("") && !billTax.equals("")){
+            return  billRepository.findByBillCodeIsAndTaxCodeIsOrTransaction_Account_FullNameContaining(billCode,billTax,name,pageable);
+        } else if (!billCode.equals("")) {
+            return billRepository.findByBillCodeIsAndTransaction_Account_FullNameContaining(billCode,name,pageable);
+        }
+        return billRepository.findByBillCodeIsOrTaxCodeIsOrTransaction_Account_FullNameContaining(billCode,billTax,name,pageable);
     }
 }
