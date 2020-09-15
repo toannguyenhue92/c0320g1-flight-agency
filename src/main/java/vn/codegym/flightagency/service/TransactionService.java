@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface TransactionService {
 
-    String WAITING = "Chờ thanh toán";
-    String CANCELED = "Hủy";
-    String PAID = "Đã thanh toán";
+    String WAITING = "chờ thanh toán";
+    String CANCELED = "hủy";
+    String PAID = "đã thanh toán";
 
     // Creator: Duy
     Transaction save(Transaction transaction);
