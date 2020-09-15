@@ -19,5 +19,5 @@ public interface AccountService {
     Account getProfileFacebook(TokenDto tokenDto);
 
     //CREATE BY ANH DUC
-    Account autoRegAccount(Employee employee);
+    Account autoRegAccount(Account account);
 }

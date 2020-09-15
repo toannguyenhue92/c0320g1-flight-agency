@@ -7,13 +7,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.codegym.flightagency.dto.EmployeeDTO;
+import vn.codegym.flightagency.dto.AccountDTO;
 import vn.codegym.flightagency.dto.ResponseDTO;
-import vn.codegym.flightagency.model.Employee;
+import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.service.AccountService;
 import vn.codegym.flightagency.service.EmployeeService;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -30,19 +32,25 @@ public class EmployeeAPI {
 
     //CREATE BY ANH DUC
     @GetMapping("/employees")
-    public ResponseEntity<? extends Object> getAllEmployee() {
-        List<EmployeeDTO> employeeDTOList = new ArrayList<EmployeeDTO>();
-        employeeDTOList = employeeService.coverListEmpToListEmpDTO(employeeService.findAll());
-        ResponseDTO response = new ResponseDTO();
-        if (employeeDTOList.isEmpty()) {
-            response.setStatus(HttpStatus.NOT_FOUND);
-            response.setMessage("Data Null");
-            return new ResponseEntity<Object>(response, response.getStatus());
+    public ResponseEntity<Map<String, Object>> getAllEmployee(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<AccountDTO> pageEmployees = employeeService.findAllAccount(paging);
+        Map<String, Object> response = new HashMap<>();
+        if (pageEmployees.isEmpty()) {
+            response.put("status", HttpStatus.NOT_FOUND);
+            response.put("message", "Data Null");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        response.setStatus(HttpStatus.OK);
-        response.setMessage("Get data Thành Công");
-        response.setBody(employeeDTOList);
-        return new ResponseEntity<Object>(response, response.getStatus());
+        response.put("status", HttpStatus.OK);
+        response.put("message", "Lấy dữ liệu thành công !");
+        response.put("body", pageEmployees.getContent());
+        response.put("currentPage", pageEmployees.getNumber());
+        response.put("totalItems", pageEmployees.getTotalElements());
+        response.put("totalPages", pageEmployees.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
@@ -50,7 +58,7 @@ public class EmployeeAPI {
     @GetMapping("/employees/{id}")
     public ResponseEntity<? extends Object> getEmployeeById(@PathVariable("id") Long id) {
         ResponseDTO response = new ResponseDTO();
-        Optional<Employee> employee = employeeService.findById(id);
+        Optional<Account> employee = employeeService.findById(id);
         if (!employee.isPresent()) {
             response.setStatus(HttpStatus.NOT_FOUND);
             response.setMessage("Nhân viên Id :" + id + " không tồn tại!");
@@ -64,24 +72,23 @@ public class EmployeeAPI {
 
     //CREATE BY ANH DUC
     @PostMapping("/employees")
-    public ResponseEntity<? extends Object> saveEmployees(@RequestBody List<EmployeeDTO> employeeDTOList) {
+    public ResponseEntity<? extends Object> saveEmployees(@RequestBody List<AccountDTO> accountDTOList) {
         ResponseDTO response = new ResponseDTO();
-        List<Employee> employees = new ArrayList<Employee>();
-        employees = employeeService.coverListEmpDTOToListEmp(employeeDTOList);
+        List<Account> employees = new ArrayList<Account>();
+        employees = employeeService.coverListEmpDTOToListAccount(accountDTOList);
 
         if (employees == null) {
             response.setStatus(HttpStatus.NOT_FOUND);
             response.setMessage("Lưu dữ liệu thất bại");
             return new ResponseEntity<Object>(response, response.getStatus());
         }
-        for (Employee n : employees) {
+        for (Account n : employees) {
             if (employeeService.checkEmailAlready(n.getEmail())) {
                 response.setStatus(HttpStatus.NOT_FOUND);
                 response.setMessage("Email Đã tồn tại : " + n.getEmail());
                 return new ResponseEntity<Object>(response, response.getStatus());
             }
-            n.setAccount(accountService.autoRegAccount(n));
-            employeeService.save(n);
+            employeeService.save(accountService.autoRegAccount(n));
         }
         response.setStatus(HttpStatus.OK);
         response.setMessage("Lưu dữ liệu thành công");
@@ -96,8 +103,7 @@ public class EmployeeAPI {
             @RequestParam(defaultValue = "10") int size
     ) {
         Pageable paging = PageRequest.of(page, size);
-        Page<Employee> pageEmployees;
-        List<EmployeeDTO> list = new ArrayList<>();
+        Page<AccountDTO> pageEmployees;
         Map<String, Object> response = new HashMap<>();
 
         try {
@@ -106,14 +112,13 @@ public class EmployeeAPI {
                     pageEmployees = employeeService.findAllByFullName(value, paging);
                     break;
                 case "birthday":
-                    Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(value);
-                    pageEmployees = employeeService.findAllByBirthday(date1, paging);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    //convert String to LocalDate
+                    LocalDate localDate = LocalDate.parse(value, formatter);
+                    pageEmployees = employeeService.findAllByBirthday(localDate, paging);
                     break;
                 case "phone":
                     pageEmployees = employeeService.findAllByPhoneNumber(value, paging);
-                    break;
-                case "position":
-                    pageEmployees = employeeService.findAllByPosition(value, paging);
                     break;
                 case "gender":
                     pageEmployees = employeeService.findAllByGender(value, paging);
@@ -123,12 +128,11 @@ public class EmployeeAPI {
                     response.put("message", "Tìm kiếm không chính xác !");
                     return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-            if (pageEmployees==null) {
+            if (pageEmployees == null) {
                 response.put("message", "không có kết quả phù hợp !");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-            list = employeeService.coverListEmpToListEmpDTO(pageEmployees.getContent());
-            response.put("tutorials", list);
+            response.put("body", pageEmployees.getContent());
             response.put("currentPage", pageEmployees.getNumber());
             response.put("totalItems", pageEmployees.getTotalElements());
             response.put("totalPages", pageEmployees.getTotalPages());

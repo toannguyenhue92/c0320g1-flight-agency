@@ -22,6 +22,7 @@ import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.repository.AccountRepository;
 import vn.codegym.flightagency.security.JwtTokenUtil;
 import vn.codegym.flightagency.service.AccountService;
+import vn.codegym.flightagency.service.EmailService;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -140,16 +141,16 @@ public class AccountServiceImpl implements AccountService {
 
     //CREATE BY ANH DUC
     @Override
-    public Account autoRegAccount(Employee employee) {
-        Account account = new Account();
-        account.setEmail(employee.getEmail());
+    public Account autoRegAccount(Account account) {
         account.setRole("ROLE_EMPLOYEE");
         account.setPassword("random");
+        account.setAddress("random");
+        account.setStatus(true);
         accountRepository.save(account);
-        String to = employee.getEmail();
+        String to = account.getEmail();
         String subject = "Chào mừng bạn gia nhập CGB Airlines ";
         String text = " Thông tin tài khoản của bạn \n " +
-                "User : " + employee.getEmail() +
+                "User : " + account.getEmail() +
                 "Password: " + account.getPassword() +
                 "Tài khoản này được dùng để đăng nhập vào hệ thống tại http://localhost:4200/employee/login";
         emailService.sendSimpleMessage(to, subject, text);

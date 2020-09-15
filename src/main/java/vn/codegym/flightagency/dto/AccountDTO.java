@@ -2,15 +2,15 @@ package vn.codegym.flightagency.dto;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
-public class EmployeeDTO {
+public class AccountDTO {
     private Long id;
     private String fullName;
-    private Date birthday;
+    private LocalDate birthday;
     private String gender;
     private String email;
     private String phoneNumber;
-    private String position;
+    private String avatarImageUrl;
 }

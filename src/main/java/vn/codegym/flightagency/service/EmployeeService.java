@@ -2,57 +2,62 @@ package vn.codegym.flightagency.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import vn.codegym.flightagency.dto.EmployeeDTO;
-import vn.codegym.flightagency.model.Employee;
+import vn.codegym.flightagency.dto.AccountDTO;
+import vn.codegym.flightagency.model.Account;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeService {
 
     //CREATE BY ANH DUC
-    List<Employee> findAll();
+    List<Account> findAll();
 
     //CREATE BY ANH DUC
-    Optional<Employee> findById(Long id);
+    Page<AccountDTO> findAllAccount(Pageable pageable);
 
     //CREATE BY ANH DUC
-    Employee findByEmail(String email);
+    Optional<Account> findById(Long id);
 
     //CREATE BY ANH DUC
-    Page<Employee> findAllByFullName(String name, Pageable pageable);
+    Account findByEmail(String email);
 
     //CREATE BY ANH DUC
-    Page<Employee> findAllByBirthday(Date birthday, Pageable pageable);
+    Page<AccountDTO> findAllByFullName(String name, Pageable pageable);
 
     //CREATE BY ANH DUC
-    Page<Employee> findAllByPhoneNumber(String phone, Pageable pageable);
+    Page<AccountDTO> findAllByBirthday(LocalDate birthday, Pageable pageable);
 
     //CREATE BY ANH DUC
-    Page<Employee> findAllByPosition(String position, Pageable pageable);
+    Page<AccountDTO> findAllByPhoneNumber(String phone, Pageable pageable);
+
+    //    CREATE BY ANH DUC
+    public Page<AccountDTO> findAllByGender(String gender, Pageable pageable);
+
+    //    CREATE BY ANH DUC
+    public Page<AccountDTO> findAllByEmail(String gender, Pageable pageable);
 
     //CREATE BY ANH DUC
     Boolean checkEmailAlready(String email);
 
     //CREATE BY ANH DUC
-    void save(Employee employee);
+    void save(Account account);
 
     //CREATE BY ANH DUC
     void remove(Long id);
 
     //CREATE BY ANH DUC
-    EmployeeDTO coverEmpToEmpDTO(Employee employee);
+    AccountDTO coverAccountToEmpDTO(Account account);
 
     //CREATE BY ANH DUC
-    Employee coverEmpDTOToEmp(EmployeeDTO employeeDTO);
+    Account coverEmpDTOToAccount(AccountDTO accountDTO);
 
     //CREATE BY ANH DUC
-    List<EmployeeDTO> coverListEmpToListEmpDTO(List<Employee> employees);
+    Page<AccountDTO> coverListAccountToListEmpDTO(Page<Account> accounts);
 
     //CREATE BY ANH DUC
-    List<Employee> coverListEmpDTOToListEmp(List<EmployeeDTO> employeeDTOList);
+    List<Account> coverListEmpDTOToListAccount(List<AccountDTO> accountDTOList);
 
-    //    CREATE BY ANH DUC
-    public Page<Employee> findAllByGender(String gender, Pageable pageable);
+
 }

@@ -2,78 +2,90 @@ package vn.codegym.flightagency.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import vn.codegym.flightagency.dto.EmployeeDTO;
-import vn.codegym.flightagency.model.Employee;
-import vn.codegym.flightagency.repository.EmployeeRepository;
+import vn.codegym.flightagency.dto.AccountDTO;
+import vn.codegym.flightagency.model.Account;
+import vn.codegym.flightagency.repository.AccountRepository;
 import vn.codegym.flightagency.service.EmployeeService;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
-@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
     //CREATE BY ANH DUC
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private AccountRepository employeeRepository;
 
     //CREATE BY ANH DUC
     @Override
-    public List<Employee> findAll() {
+    public List<Account> findAll() {
+
         return employeeRepository.findAll();
     }
+    //CREATE BY ANH DUC
+    @Override
+    public Page<AccountDTO> findAllAccount(Pageable pageable) {
+        Page<Account> accounts = employeeRepository.findAll(pageable);
+        return transferToDTO(accounts);
+    }
 
     //CREATE BY ANH DUC
     @Override
-    public Optional<Employee> findById(Long id) {
+    public Optional<Account> findById(Long id) {
         return employeeRepository.findById(id);
     }
+
     //    CREATE BY ANH DUC
     @Override
-    public Employee findByEmail(String email) {
+    public Account findByEmail(String email) {
         return employeeRepository.findByEmail(email);
     }
+
     //    CREATE BY ANH DUC
     @Override
-    public Page<Employee> findAllByFullName(String name, Pageable pageable) {
-        return employeeRepository.findAllByFullName(name, pageable);
+    public Page<AccountDTO> findAllByFullName(String name, Pageable pageable) {
+        return transferToDTO(employeeRepository.findAllByFullName(name, pageable));
     }
+
     //    CREATE BY ANH DUC
     @Override
-    public Page<Employee> findAllByBirthday(Date birthday, Pageable pageable) {
-        return employeeRepository.findAllByBirthday(birthday, pageable);
+    public Page<AccountDTO> findAllByBirthday(LocalDate birthday, Pageable pageable) {
+        return transferToDTO(employeeRepository.findAllByBirthDate(birthday, pageable));
     }
+
     //    CREATE BY ANH DUC
     @Override
-    public Page<Employee> findAllByPhoneNumber(String phone, Pageable pageable) {
-        return employeeRepository.findAllByPhoneNumber(phone, pageable);
+    public Page<AccountDTO> findAllByPhoneNumber(String phone, Pageable pageable) {
+        return transferToDTO(employeeRepository.findAllByPhoneNumber(phone, pageable));
     }
+
+
     //    CREATE BY ANH DUC
     @Override
-    public Page<Employee> findAllByPosition(String position, Pageable pageable) {
-        return employeeRepository.findAllByPosition(position, pageable);
+    public Page<AccountDTO> findAllByGender(String gender, Pageable pageable) {
+        return transferToDTO(employeeRepository.findAllByGender(gender, pageable));
     }
+
     //    CREATE BY ANH DUC
     @Override
-    public Page<Employee> findAllByGender(String gender, Pageable pageable) {
-        return employeeRepository.findAllByGender(gender, pageable);
+    public Page<AccountDTO> findAllByEmail(String email, Pageable pageable) {
+        return transferToDTO(employeeRepository.findAllByEmail(email, pageable));
     }
+
     //    CREATE BY ANH DUC
     @Override
     public Boolean checkEmailAlready(String email) {
-        Employee employee = employeeRepository.findByEmail(email);
-        return employee != null;
+        Account account = employeeRepository.findByEmail(email);
+        return account != null;
     }
 
     //CREATE BY ANH DUC
     @Override
-    public void save(Employee employee) {
-        employeeRepository.save(employee);
+    public void save(Account account) {
+        employeeRepository.save(account);
     }
 
     //CREATE BY ANH DUC
@@ -84,44 +96,64 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //CREATE BY ANH DUC
     @Override
-    public EmployeeDTO coverEmpToEmpDTO(Employee employee) {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setId(employee.getId());
-        employeeDTO.setFullName(employee.getFullName());
-        employeeDTO.setBirthday(employee.getBirthday());
-        employeeDTO.setGender(employee.getGender());
-        employeeDTO.setEmail(employee.getEmail());
-        employeeDTO.setPhoneNumber(employee.getPhoneNumber());
-        employeeDTO.setPosition(employee.getPosition());
-        return employeeDTO;
+    public AccountDTO coverAccountToEmpDTO(Account employee) {
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setId(employee.getId());
+        accountDTO.setFullName(employee.getFullName());
+        accountDTO.setBirthday(employee.getBirthDate());
+        accountDTO.setGender(employee.getGender());
+        accountDTO.setEmail(employee.getEmail());
+        accountDTO.setPhoneNumber(employee.getPhoneNumber());
+        accountDTO.setAvatarImageUrl(employee.getAvatarImageUrl());
+        return accountDTO;
     }
 
     //CREATE BY ANH DUC
     @Override
-    public Employee coverEmpDTOToEmp(EmployeeDTO employeeDTO) {
-        Employee employee = new Employee();
-        employee.setId(employeeDTO.getId());
-        employee.setFullName(employeeDTO.getFullName());
-        employee.setBirthday(employeeDTO.getBirthday());
-        employee.setGender(employeeDTO.getGender());
-        employee.setEmail(employeeDTO.getEmail());
-        employee.setPhoneNumber(employeeDTO.getPhoneNumber());
-        employee.setPosition(employeeDTO.getPosition());
+    public Account coverEmpDTOToAccount(AccountDTO accountDTO) {
+        Account employee = new Account();
+        employee.setId(accountDTO.getId());
+        employee.setFullName(accountDTO.getFullName());
+        employee.setBirthDate(accountDTO.getBirthday());
+        employee.setGender(accountDTO.getGender());
+        employee.setEmail(accountDTO.getEmail());
+        employee.setPhoneNumber(accountDTO.getPhoneNumber());
+        employee.setAvatarImageUrl(accountDTO.getAvatarImageUrl());
         return employee;
     }
+
     //    CREATE BY ANH DUC
     @Override
-    public List<EmployeeDTO> coverListEmpToListEmpDTO(List<Employee> employees) {
-        List<EmployeeDTO> employeeDTOList = new ArrayList<EmployeeDTO>();
-        employees.forEach((n) -> employeeDTOList.add(coverEmpToEmpDTO(n)));
-        return employeeDTOList;
+    public Page<AccountDTO> coverListAccountToListEmpDTO(Page<Account> accounts) {
+        return null;
     }
+
+    public Page<AccountDTO> transferToDTO(Page<Account> Accounts) {
+        Iterator iterator = Accounts.iterator();
+        List<AccountDTO> accountDTOList = new ArrayList<AccountDTO>();
+        while (iterator.hasNext()) {
+            Account account = (Account) iterator.next();
+            AccountDTO accountDTO = new AccountDTO();
+            accountDTO.setId(account.getId());
+            accountDTO.setFullName(account.getFullName());
+            accountDTO.setEmail(account.getEmail());
+            accountDTO.setGender(account.getGender());
+            accountDTO.setAvatarImageUrl(account.getAvatarImageUrl());
+            accountDTO.setBirthday(account.getBirthDate());
+            accountDTO.setPhoneNumber(account.getPhoneNumber());
+            accountDTOList.add(accountDTO);
+        }
+        return new PageImpl<AccountDTO>(accountDTOList, Accounts.getPageable(), Accounts.getTotalElements());
+    }
+
+    //    ModelMapper modelMapper = new ModelMapper();
+//    Order order = modelMapper.map(orderDto, Order.class);
     //    CREATE BY ANH DUC
     @Override
-    public List<Employee> coverListEmpDTOToListEmp(List<EmployeeDTO> employeeDTOList) {
-        List<Employee> employees = new ArrayList<Employee>();
-        employeeDTOList.forEach((n) -> employees.add(coverEmpDTOToEmp(n)));
-        return employees;
+    public List<Account> coverListEmpDTOToListAccount(List<AccountDTO> accountDTOList) {
+        List<Account> accounts = new ArrayList<Account>();
+        accountDTOList.forEach((n) -> accounts.add(coverEmpDTOToAccount(n)));
+        return accounts;
     }
 
 
