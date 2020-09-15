@@ -13,6 +13,7 @@ import vn.codegym.flightagency.dto.CustomerUpdateDTO;
 import vn.codegym.flightagency.dto.JwtResponse;
 import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
+import vn.codegym.flightagency.dto.employeeInfoDto;
 import vn.codegym.flightagency.security.JwtTokenUtil;
 import vn.codegym.flightagency.service.AccountService;
 import vn.codegym.flightagency.service.impl.UserDetailServiceImpl;
@@ -34,6 +35,27 @@ public class AccountController {
 
     @Autowired(required = false)
     private UserDetailServiceImpl userDetailServiceImpl;
+
+    //creator: Mậu-  xem thông tin nhân viên
+    @GetMapping("employee/{id}")
+    public ResponseEntity<employeeInfoDto> findEmployeeById(@PathVariable Long id) {
+        employeeInfoDto employeeInfoDto = accountService.findEmployeeInfoDtoById(id);
+        if (employeeInfoDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(employeeInfoDto);
+    }
+
+    //creator: Mậu- đổi mật khẩu nhân viên
+    @PutMapping("employee/changePassword/{id}")
+    public ResponseEntity<employeeInfoDto> changePassword(@PathVariable Long id, @RequestBody employeeInfoDto employeeInfoDto) {
+        Account account = accountService.findEmployeeById(id);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        accountService.changePassword(employeeInfoDto);
+        return new ResponseEntity<>(employeeInfoDto, HttpStatus.OK);
+    }
 
     //Created by: Quân
     @PostMapping("/login")
@@ -112,4 +134,5 @@ public class AccountController {
         accountService.changePassword(customerChangePasswordDTO);
         return new ResponseEntity<CustomerChangePasswordDTO>(customerChangePasswordDTO, HttpStatus.OK);
     }
+
 }

@@ -3,6 +3,11 @@ package vn.codegym.flightagency.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.codegym.flightagency.dto.PassengerInfoDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import vn.codegym.flightagency.model.Passenger;
 import vn.codegym.flightagency.repository.PassengerRepository;
 import vn.codegym.flightagency.service.PassengerService;
@@ -19,14 +24,14 @@ public class PassengerServiceImpl implements PassengerService {
     // Creator: Duy
     @Override
     public Passenger saveAndUpdate(PassengerInfoDTO _passenger) {
-       Passenger passenger = findPassengerByIdCard(_passenger.getIdentifierCard());
-       if (passenger != null) {
-           passenger.setEmail(_passenger.getEmail());
-           passenger.setPhoneNumber(_passenger.getPhoneNumber());
-       } else {
-           passenger = transferToPassenger(_passenger);
-       }
-       return passengerRepository.save(passenger);
+        Passenger passenger = findPassengerByIdCard(_passenger.getIdentifierCard());
+        if (passenger != null) {
+            passenger.setEmail(_passenger.getEmail());
+            passenger.setPhoneNumber(_passenger.getPhoneNumber());
+        } else {
+            passenger = transferToPassenger(_passenger);
+        }
+        return passengerRepository.save(passenger);
     }
 
     // Creator: Duy
@@ -37,7 +42,7 @@ public class PassengerServiceImpl implements PassengerService {
             Passenger passenger = saveAndUpdate(passengerInfoDtoList.get(i));
             passengerList.add(passenger);
         }
-        return  passengerList;
+        return passengerList;
     }
 
     // Creator: Duy
@@ -55,5 +60,14 @@ public class PassengerServiceImpl implements PassengerService {
         passenger.setPhoneNumber(passengerInfoDto.getPhoneNumber());
         passenger.setIdentifierCard(passengerInfoDto.getIdentifierCard());
         return passenger;
+    }
+
+    @Override
+    public Page<Passenger> getAllCustomer(Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), 5, Sort.by("full_name"));
+
+        return passengerRepository.findAllCustomer(pageable);
+
+
     }
 }

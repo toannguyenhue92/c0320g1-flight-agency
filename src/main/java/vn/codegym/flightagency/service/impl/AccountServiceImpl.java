@@ -23,6 +23,7 @@ import vn.codegym.flightagency.dto.CustomerChangePasswordDTO;
 import vn.codegym.flightagency.dto.CustomerUpdateDTO;
 import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
+import vn.codegym.flightagency.dto.employeeInfoDto;
 import vn.codegym.flightagency.repository.AccountRepository;
 import vn.codegym.flightagency.security.JwtTokenUtil;
 import vn.codegym.flightagency.service.AccountService;
@@ -59,6 +60,53 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired(required = false)
     private AuthenticationManager authenticationManager;
+    //creator: Mậu
+    @Override
+    public employeeInfoDto findEmployeeInfoDtoById(Long id) {
+        employeeInfoDto employeeInfoDtos = new employeeInfoDto();
+        Account account = accountRepository.findById(id).orElse(null);
+        if (account != null) {
+            employeeInfoDtos.setFullName(account.getFullName());
+            employeeInfoDtos.setGender(account.getGender());
+            employeeInfoDtos.setBirthday(account.getBirthDate());
+            employeeInfoDtos.setEmail(account.getEmail());
+            employeeInfoDtos.setPhoneNumber(account.getPhoneNumber());
+            employeeInfoDtos.setAddress(account.getAddress());
+            employeeInfoDtos.setAvatarUrl(account.getAvatarImageUrl());
+            return employeeInfoDtos;
+        }
+        return null;
+    }
+
+    //creator: Mậu
+    @Override
+    public Account findEmployeeById(Long id) {
+        return accountRepository.findById(id).orElse(null);
+    }
+
+    //creator: Mậu
+    @Override
+    public void changePassword(employeeInfoDto employeeInfoDto) {
+        Account account = accountRepository.findById(employeeInfoDto.getId()).orElse(null);
+        assert account != null;
+        List<String> messages = new ArrayList<>();
+        if (!employeeInfoDto.getPassword().equals("")) {
+            if (!employeeInfoDto.getNewPassword().equals("")) {
+                if (BCrypt.checkpw(employeeInfoDto.getPassword(), account.getPassword())) {
+                    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                    account.setPassword(encoder.encode(employeeInfoDto.getNewPassword()));
+                } else {
+                    messages.add("Mật khẩu hiện tại không đúng. Xin vui lòng nhập lại.");
+                }
+            }
+        }
+        employeeInfoDto.setBackendMessage(messages);
+        if (employeeInfoDto.getBackendMessage().size() == 0) {
+            accountRepository.save(account);
+        }
+
+    }
+
     //Created by: Quân
     @Override
     public boolean existsEmail(String email) {
