@@ -1,18 +1,73 @@
 package vn.codegym.flightagency.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 @Entity
-@Data
+@Table(name = "accounts")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String email ;
-    private String password ;
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "code")
+    private String code;
+
+    @Column(name = "full_name", nullable = false)
+    @Size(min = 6)
+    private String fullName;
+
+    @Column(name = "password", nullable = false)
+    @Size(min = 6)
+    private String password;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @Email
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "avatar_image_url")
+    private String avatarImageUrl;
+
+    @Column(name = "role")
+    @Pattern(regexp = "^(ROLE_USER|ROLE_EMPLOYEE|ROLE_ADMIN)$")
     private String role;
-    @OneToOne(mappedBy = "account")
-    private Employee employee;
+
+    @Column(name = "status")
+    private boolean status;
+
+    public Account(String email, String password, String role, boolean status,
+                   String fullName,LocalDate birthDate,String avatarImageUrl,String gender ) {
+        this.email = email;
+        this.password =  password;
+        this.role = role;
+        this.status = status;
+        this.fullName = fullName;
+        this.birthDate = birthDate;
+        this.avatarImageUrl = avatarImageUrl;
+        this.gender = gender;
+    }
 }
