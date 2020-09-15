@@ -16,12 +16,6 @@ public interface PromoService {
 
     public List<Promo> getPromoNotActive(Pageable pageable);
 
-    public List<Promo> searchPromo(String namePromo, String airline,
-                                   String departurePlace, String arrivalPlace,
-                                   LocalDateTime promoDateStart, LocalDateTime promoDateEnd,
-                                   LocalDateTime flightDepartureDateStart, LocalDateTime flightDepartureDateEnd,
-                                   Pageable pageable);
-
     public LocalDateTime convertDate(String date);
 }
 
