@@ -18,4 +18,10 @@ public class AirportServiceImpl implements AirportService {
     public List<Airport> getAirports() {
         return airportRepository.findAll();
     }
+
+    //BHung
+    @Override
+    public List<Airport> findAllAirport() {
+        return airportRepository.findAll();
+    }
 }

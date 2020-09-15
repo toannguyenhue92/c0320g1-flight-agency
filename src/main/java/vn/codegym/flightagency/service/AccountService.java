@@ -17,4 +17,6 @@ public interface AccountService {
     Account getProfileGoogle(TokenDto tokenDto);
     //Created by: Quân
     Account getProfileFacebook(TokenDto tokenDto);
+    //BHung
+    Account findAccountByEmail(String email);
 }

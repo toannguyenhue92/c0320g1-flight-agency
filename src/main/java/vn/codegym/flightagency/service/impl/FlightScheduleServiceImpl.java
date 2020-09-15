@@ -1,6 +1,9 @@
 package vn.codegym.flightagency.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.codegym.flightagency.dto.FlightSearchDTO;
@@ -9,17 +12,30 @@ import vn.codegym.flightagency.repository.FlightScheduleRepository;
 import vn.codegym.flightagency.service.FlightScheduleService;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class FlightScheduleServiceImpl implements FlightScheduleService {
 
     @Autowired
-    private FlightScheduleRepository flightScheduleRepository;
+    FlightScheduleRepository flightScheduleRepository;
+
+    //BHung employee tìm kiếm chuyến bay
+    @Override
+    public Page<FlightSchedule> findAllFlightScheduleByEmployee(long deptPlaceId, long arrPlaceId, String deptDate, int capacity, String status, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(),5);
+        return flightScheduleRepository.findAllFlightScheduleByEmployee(deptPlaceId,arrPlaceId,deptDate,capacity,status,pageable);
+    }
+
+    //BHung tim kiem chuyen bay
+    @Override
+    public FlightSchedule findFlightById(Long id) {
+        return flightScheduleRepository.findById(id).orElse(null);
+    }
 
     // Creator: Duy
     private final Map<String, String> sortType = new HashMap<>();

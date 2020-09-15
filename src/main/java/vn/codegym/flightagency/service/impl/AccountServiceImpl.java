@@ -134,5 +134,10 @@ public class AccountServiceImpl implements AccountService {
 
 
     }
+    //BHung
+    @Override
+    public Account findAccountByEmail(String email) {
+        return accountRepository.findByEmail(email);
+    }
 }
 

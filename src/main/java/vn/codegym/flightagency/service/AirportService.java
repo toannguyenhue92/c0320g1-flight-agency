@@ -7,4 +7,6 @@ import java.util.List;
 public interface AirportService {
 
     List<Airport> getAirports();
+    //BHung
+    List<Airport> findAllAirport();
 }

@@ -1,6 +1,6 @@
 package vn.codegym.flightagency.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,4 +49,10 @@ public class Transaction {
 
     @Column(name = "status")
     private String status;
+
+    //BHung
+    @OneToMany(mappedBy = "transaction")
+    @JsonIgnoreProperties("transaction")
+    private List<TransactionDetail> transactionDetails;
+
 }

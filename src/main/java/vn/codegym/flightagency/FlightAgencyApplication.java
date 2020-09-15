@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import vn.codegym.flightagency.model.Bill;
 import vn.codegym.flightagency.repository.BillRepository;
 
-@SpringBootApplication
+@SpringBootApplication()
 public class FlightAgencyApplication {
 
 

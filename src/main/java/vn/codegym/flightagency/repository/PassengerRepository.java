@@ -11,4 +11,6 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long > {
     // Creator: Duy
     Passenger findPassengerByIdentifierCard(String idCard);
 
+    //BHung
+    Passenger findByIdentifierCard(String identifyCard);
 }
