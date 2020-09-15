@@ -9,7 +9,7 @@ import java.util.List;
 public interface EmployeeService {
 
     //BHung luu trans và pass
-    void saveTransactionsAndTickets(List<EmployeeTransactionDTO> transactions, List<EmployeePassengerDTO> passengers);
+    List<Transaction> saveTransactionsAndTickets(List<EmployeeTransactionDTO> transactions, List<EmployeePassengerDTO> passengers);
 
     //BHung find trans By Id
     Transaction findTransactionById(Long id);

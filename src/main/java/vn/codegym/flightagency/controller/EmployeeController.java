@@ -80,8 +80,13 @@ public class EmployeeController {
 
     //BHung lưu trans và pass
     @PostMapping("employee/transPass/save")
-    public void saveTransactionsAndPassengers(@RequestBody TransactionPassengerDTO transactionPassengerDTO){
-        employeeService.saveTransactionsAndTickets(transactionPassengerDTO.getTransactions(),transactionPassengerDTO.getPassengers());
+    public ResponseEntity<List<Transaction>> saveTransactionsAndPassengers(@RequestBody TransactionPassengerDTO transactionPassengerDTO){
+        List<Transaction> transactionList = employeeService.saveTransactionsAndTickets(transactionPassengerDTO.getTransactions(),transactionPassengerDTO.getPassengers());
+        if(transactionList==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else {
+            return ResponseEntity.ok(transactionList);
+        }
     }
 
     //BHung tim kiem transaction
