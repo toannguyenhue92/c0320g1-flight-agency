@@ -15,7 +15,7 @@ public class TransactionDetailController {
     TransactionDetailService transactionDetailService;
 
     // Thành Long
-    @GetMapping("/customer/checkin")
+    @GetMapping("/checkin")
     public ResponseEntity<List<TransactionDetail>> searchTransactionDetail(@RequestParam(name = "id", defaultValue ="") Long id){
         List<TransactionDetail> transactionDetails = transactionDetailService.findByTransactionDetail(id);
         if (transactionDetails.isEmpty()) {

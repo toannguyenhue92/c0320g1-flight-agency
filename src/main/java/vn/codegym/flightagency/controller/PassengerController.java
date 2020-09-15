@@ -16,7 +16,7 @@ public class PassengerController {
     PassengerService passengerService;
 
     // Thành Long
-    @PutMapping("customer/checkin/checkin-list")
+    @PutMapping("checkin/checkin-list")
     public Map<String, Boolean> checkinPassenger(@RequestBody Map<String, Long[]> requestBody) {
         Long[] ids = requestBody.get("ids").clone();
         Map<String, Boolean> response = new HashMap<>();
