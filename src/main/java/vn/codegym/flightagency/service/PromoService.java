@@ -8,7 +8,7 @@ public interface PromoService {
     //Tùng
     Promo findById(Long id);
 
-    void save(PromoUpdateDTO promoDTO);
+    void save(Promo promo);
 
     void delete(Promo promo);
 }

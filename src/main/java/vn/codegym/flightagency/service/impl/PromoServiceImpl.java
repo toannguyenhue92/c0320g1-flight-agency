@@ -21,17 +21,7 @@ public class PromoServiceImpl implements PromoService {
     }
 
     @Override
-    public void save(PromoUpdateDTO promoDTO) {
-        Promo promo = promoRepository.findById(promoDTO.getId()).orElse(null);
-        promo.setNamePromo(promoDTO.getPromoName());
-        promo.setDiscount(promoDTO.getDiscount());
-        promo.setAirline(promoDTO.getAirline());
-        promo.setArrivalPlace(promoDTO.getArrivalPlace());
-        promo.setDeparturePlace(promoDTO.getDeparturePlace());
-        promo.setPromoDateStart(promoDTO.getPromoDateStart());
-        promo.setPromoDateEnd(promoDTO.getPromoDateEnd());
-        promo.setFlightDepartureDateStart(promoDTO.getFlightDepartureDateStart());
-        promo.setFlightDepartureDateEnd(promoDTO.getFlightDepartureDateEnd());
+    public void save(Promo promo) {
         promoRepository.save(promo);
     }
 
