@@ -40,24 +40,11 @@ public class PromoServiceImpl implements PromoService {
     }
 
     @Override
-    public List<Promo> searchPromo(String namePromo, String airline,
-                                   String departurePlace, String arrivalPlace,
-                                   LocalDateTime promoDateStart, LocalDateTime promoDateEnd,
-                                   LocalDateTime flightDepartureDateStart, LocalDateTime flightDepartureDateEnd,
-                                   Pageable pageable) {
-        return promoRepository.search(namePromo, airline,
-                                    departurePlace, arrivalPlace,
-                                    promoDateStart, promoDateEnd,
-                                    flightDepartureDateStart, flightDepartureDateEnd,
-                                    pageable);
+    public LocalDateTime convertDate(String date) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(date, dateFormatter);
+        LocalDateTime localDateTime = localDate.atStartOfDay();
+        return localDateTime;
     }
 
-    @Override
-    public LocalDateTime convertDate(String date) {
-        DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate ld = LocalDate.parse(date, DATEFORMATTER);
-        LocalDateTime ldt = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
-        System.out.println(ldt);
-        return ldt;
-    }
 }
