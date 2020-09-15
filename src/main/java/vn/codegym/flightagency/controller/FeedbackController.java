@@ -30,7 +30,7 @@ public class FeedbackController {
             @RequestParam("page") int page){
 
         Specification<Feedback> search = feedbackService.getFilter(customerName, createDate, processStatus);
-        System.out.println(processStatus instanceof String);
+//        System.out.println(processStatus instanceof String);
         Page<Feedback> feedbackPages;
         if(search != null){
             feedbackPages = feedbackService.findFeedbackByCriteria(search, page);

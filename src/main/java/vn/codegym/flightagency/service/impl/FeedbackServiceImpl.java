@@ -60,10 +60,11 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
         // customer of created day
         if (!"".equals(createDate) && !"undefined".equals(createDate)) {
+            System.out.println(createDate);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate dateTime = LocalDate.parse(createDate, formatter);
-            System.out.println(dateTime instanceof LocalDate);
-            specs.add(new FeedbackSpecification(new SearchCriteria("createDate", "equal", createDate)));
+            System.out.println(dateTime);
+            specs.add(new FeedbackSpecification(new SearchCriteria("createDate", "dateEqual", dateTime.toString())));
         }
         if (!"".equals(processStatus) && !"undefined".equals(processStatus)) {
             specs.add(new FeedbackSpecification(new SearchCriteria("processStatus", "equal", processStatus)));

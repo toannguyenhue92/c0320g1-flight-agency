@@ -25,7 +25,7 @@ public class FeedbackSpecification implements Specification<Feedback> {
         } else if (criteria.getOperation().equalsIgnoreCase("equal")) {
             Boolean _processStatus = Boolean.valueOf(criteria.getValues().get(0));
             return criteriaBuilder.equal(root.get(criteria.getKey()), _processStatus);
-        } else if (criteria.getOperation().equalsIgnoreCase("equal")) {
+        } else if (criteria.getOperation().equalsIgnoreCase("dateEqual")) {
             LocalDate _createDate = LocalDate.parse(criteria.getValues().get(0));
             System.out.println(_createDate instanceof LocalDate);
             return criteriaBuilder.equal(root.get(criteria.getKey()), _createDate);
