@@ -1,10 +1,10 @@
 package vn.codegym.flightagency.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.http.HttpStatus;
+        import lombok.AllArgsConstructor;
+        import lombok.Getter;
+        import lombok.NoArgsConstructor;
+        import lombok.Setter;
+        import org.springframework.http.HttpStatus;
 
 //CRATE BY ANH DUC
 @Getter

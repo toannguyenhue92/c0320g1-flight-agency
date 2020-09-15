@@ -39,5 +39,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     public Page<Account> findAllByPhoneNumber(String phone, Pageable pageable);
 
     //    CREATE BY ANH DUC
-    public Page<Account> findAllByGender(String gender, Pageable pageable);
+    public Page<Account> findAllByAddress(String gender, Pageable pageable);
 }

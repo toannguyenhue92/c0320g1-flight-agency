@@ -108,8 +108,11 @@ public class EmployeeAPI {
 
         try {
             switch (key) {
-                case "fullname":
+                case "fullName":
                     pageEmployees = employeeService.findAllByFullName(value, paging);
+                    break;
+                case "email":
+                    pageEmployees = employeeService.findAllByEmail(value, paging);
                     break;
                 case "birthday":
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -117,10 +120,10 @@ public class EmployeeAPI {
                     LocalDate localDate = LocalDate.parse(value, formatter);
                     pageEmployees = employeeService.findAllByBirthday(localDate, paging);
                     break;
-                case "phone":
+                case "phoneNumber":
                     pageEmployees = employeeService.findAllByPhoneNumber(value, paging);
                     break;
-                case "gender":
+                case "address":
                     pageEmployees = employeeService.findAllByGender(value, paging);
                     break;
 
