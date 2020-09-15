@@ -26,6 +26,7 @@ import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.repository.AccountRepository;
 import vn.codegym.flightagency.security.JwtTokenUtil;
 import vn.codegym.flightagency.service.AccountService;
+import vn.codegym.flightagency.service.EmailService;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -46,6 +47,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private EmailService emailService;
 
     @Value("${secretPsw}")
     String secretPsw;
@@ -228,6 +232,24 @@ public class AccountServiceImpl implements AccountService {
         if (customerChangePasswordDTO.getBackendMessage().size() == 0) {
             accountRepository.save(account);
         }
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public Account autoRegAccount(Account account) {
+        account.setRole("ROLE_EMPLOYEE");
+        account.setPassword("random");
+        account.setAddress("random");
+        account.setStatus(true);
+        accountRepository.save(account);
+        String to = account.getEmail();
+        String subject = "Chào mừng bạn gia nhập CGB Airlines ";
+        String text = " Thông tin tài khoản của bạn \n " +
+                "User : " + account.getEmail() +
+                "Password: " + account.getPassword() +
+                "Tài khoản này được dùng để đăng nhập vào hệ thống tại http://localhost:4200/employee/login";
+        emailService.sendSimpleMessage(to, subject, text);
+        return account;
     }
 }
 

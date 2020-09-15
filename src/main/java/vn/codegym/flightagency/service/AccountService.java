@@ -33,4 +33,7 @@ public interface AccountService {
 
     //    Created By Thiện
     void changePassword(CustomerChangePasswordDTO customerChangePasswordDTO);
+
+    //CREATE BY ANH DUC
+    Account autoRegAccount(Account account);
 }

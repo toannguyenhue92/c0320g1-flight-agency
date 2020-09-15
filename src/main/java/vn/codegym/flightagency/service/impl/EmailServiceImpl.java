@@ -39,4 +39,15 @@ public class EmailServiceImpl implements EmailService {
         msg.setText(text.toString());
         javaMailSender.send(msg);
     }
+
+    //CREATE BY ANH DUC
+    @Override
+    public void sendSimpleMessage(String to, String subject, String text) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom("CGB Airlines <CGBAirlines@gmail.com>");
+        msg.setTo(to);
+        msg.setSubject(subject);
+        msg.setText(text);
+        javaMailSender.send(msg);
+    }
 }
