@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import vn.codegym.flightagency.repository.AccountRepository;
+import vn.codegym.flightagency.service.AccountService;
 import vn.codegym.flightagency.service.EmailService;
+
+import javax.print.DocFlavor;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -14,8 +18,12 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender javaMailSender;
 
     // Creator: Duy
+    @Autowired
+    private AccountRepository accountRepository;
+    // Creator: Duy
     @Override
-    public void sendBookingCode(Long code, String branch, String... sendTo) {
+    public void sendBookingCode(Long code, String branch, Long accountId) {
+        String sendTo = accountRepository.findById(accountId).get().getEmail();
         StringBuilder text = new StringBuilder();
 
         // set text
@@ -23,7 +31,7 @@ public class EmailServiceImpl implements EmailService {
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(sendTo);
-        String subject = "[C03Air] Your " +
+        String subject = "[CBG Air] Your " +
                 branch +
                 " E-ticket - Booking ID " +
                 code;
