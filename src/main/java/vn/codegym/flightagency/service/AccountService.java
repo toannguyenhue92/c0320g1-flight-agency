@@ -1,6 +1,8 @@
 package vn.codegym.flightagency.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import vn.codegym.flightagency.dto.CustomerChangePasswordDTO;
+import vn.codegym.flightagency.dto.CustomerUpdateDTO;
 import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
 
@@ -19,4 +21,16 @@ public interface AccountService {
     Account getProfileFacebook(TokenDto tokenDto);
     //BHung
     Account findAccountByEmail(String email);
+
+    //    Created By Thiện
+    Account findAccountById(Long id) ;
+
+    //    Created By Thiện
+    CustomerUpdateDTO findCustomerUpdateDTOById(Long id) ;
+
+    //    Created By Thiện
+    void updateCustomer(CustomerUpdateDTO customerUpdateDTO);
+
+    //    Created By Thiện
+    void changePassword(CustomerChangePasswordDTO customerChangePasswordDTO);
 }
