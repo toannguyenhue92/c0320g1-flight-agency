@@ -6,7 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import vn.codegym.flightagency.exception.ViolatedException;
 import vn.codegym.flightagency.model.Airport;
 import vn.codegym.flightagency.model.Branch;
 import vn.codegym.flightagency.model.Promo;
@@ -15,6 +17,7 @@ import vn.codegym.flightagency.repository.BranchRepository;
 import vn.codegym.flightagency.repository.PromoRepository;
 import vn.codegym.flightagency.service.PromoService;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,31 +74,57 @@ public class PromoController {
     }
 
     @PostMapping(value="/create")
-    public ResponseEntity<Promo> createNewPromo(@RequestBody Promo promo) {
+    public ResponseEntity<Promo> createNewPromo(@Valid @RequestBody Promo promo, BindingResult bindingResult) throws ViolatedException {
+        if (bindingResult.hasErrors()) {
+            throw new ViolatedException(bindingResult);
+        }
         promo.setDelete(Boolean.FALSE);
         promoService.createNewPromo(promo);
-//        return ResponseEntity.ok().body(promo);
         return new ResponseEntity<Promo>(promo, HttpStatus.CREATED);
     }
 
     @PostMapping(value="/search")
     public ResponseEntity<List<Promo>> searchPromo(@RequestParam("page") int currentPage,
-                                                   @RequestBody Map<String, Object> infoSearch) {
+                                                   @RequestBody Map<String, String> infoSearch) {
         Pageable pageable = PageRequest.of(currentPage-1, this.NUMBER_OF_PAGE, Sort.by("id"));
 
-        String namePromo = infoSearch.get("namePromo").toString();
-        String airline = infoSearch.get("airline").toString();
-        String departurePlace = infoSearch.get("departurePlace").toString();
-        String arrivalPlace = infoSearch.get("arrivalPlace").toString();
-        LocalDateTime promoDateStart = this.promoService.convertDate(infoSearch.get("promoDateStart").toString());
-        LocalDateTime promoDateEnd = this.promoService.convertDate(infoSearch.get("promoDateEnd").toString());
-        LocalDateTime flightDepartureDateStart = this.promoService.convertDate(infoSearch.get("flightDepartureDateStart").toString());
-        LocalDateTime flightDepartureDateEnd = this.promoService.convertDate(infoSearch.get("flightDepartureDateEnd").toString());
+        String namePromo = infoSearch.get("namePromo");
+        String airline =  infoSearch.get("airline");
+        String departurePlace = infoSearch.get("departurePlace");
+        String arrivalPlace = infoSearch.get("arrivalPlace");
+        String promoDateStart_Str = infoSearch.get("promoDateStart");
+        String promoDateEnd_Str = infoSearch.get("promoDateEnd");
+        String flightDepartureDateStart_Str = infoSearch.get("flightDepartureDateStart");
+        String flightDepartureDateEnd_Str = infoSearch.get("flightDepartureDateEnd");
 
-        List<Promo> promotions = promoService.searchPromo(namePromo, airline, departurePlace, arrivalPlace,
-                promoDateStart, promoDateEnd,
-                flightDepartureDateStart, flightDepartureDateEnd,
-                pageable);
+        List<Promo> promotions = new ArrayList<>();
+
+        if(promoDateStart_Str.equals("") && promoDateEnd_Str.equals("") && flightDepartureDateStart_Str.equals("") && flightDepartureDateEnd_Str.equals("")) {
+            promotions = promoRepository.searchNotIncludedDate(namePromo, airline, departurePlace, arrivalPlace, pageable);
+        } else {
+            if (promoDateStart_Str.equals("")) {
+                promoDateStart_Str = "1900-01-01";
+            }
+            if (promoDateEnd_Str.equals("")) {
+                promoDateEnd_Str = "2900-01-01";
+            }
+            if (flightDepartureDateStart_Str.equals("")) {
+                flightDepartureDateStart_Str = "1900-01-01";
+            }
+            if (flightDepartureDateEnd_Str.equals("")) {
+                flightDepartureDateEnd_Str = "2900-01-01";
+            }
+            LocalDateTime promoDateStart = this.promoService.convertDate(promoDateStart_Str);
+            LocalDateTime promoDateEnd = this.promoService.convertDate(promoDateEnd_Str);
+            LocalDateTime flightDepartureDateStart = this.promoService.convertDate(flightDepartureDateStart_Str);
+            LocalDateTime flightDepartureDateEnd = this.promoService.convertDate(flightDepartureDateEnd_Str);
+
+            promotions = promoRepository.search(namePromo, airline, departurePlace, arrivalPlace,
+                    promoDateStart, promoDateEnd,
+                    flightDepartureDateStart, flightDepartureDateEnd,
+                    pageable);
+        }
+
         return new ResponseEntity<List<Promo>>(promotions, HttpStatus.OK);
     }
 
