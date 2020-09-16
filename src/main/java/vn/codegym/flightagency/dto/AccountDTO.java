@@ -3,6 +3,7 @@ package vn.codegym.flightagency.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class AccountDTO {
@@ -13,4 +14,5 @@ public class AccountDTO {
     private String email;
     private String phoneNumber;
     private String avatarImageUrl;
+    private List<String> backendMessage;
 }

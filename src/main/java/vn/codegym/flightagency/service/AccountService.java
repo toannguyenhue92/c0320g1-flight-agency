@@ -1,11 +1,8 @@
 package vn.codegym.flightagency.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import vn.codegym.flightagency.dto.CustomerChangePasswordDTO;
-import vn.codegym.flightagency.dto.CustomerUpdateDTO;
-import vn.codegym.flightagency.dto.TokenDto;
+import vn.codegym.flightagency.dto.*;
 import vn.codegym.flightagency.model.Account;
-import vn.codegym.flightagency.dto.employeeInfoDto;
 
 public  interface AccountService {
     
@@ -53,5 +50,11 @@ public  interface AccountService {
 
     //creator: Mậu
     void changePassword(employeeInfoDto employeeInfoDto);
+
+    //creator: Tiến
+    void changePassword(AdminPasswordChangeDTO adminPasswordChangeDTO);
+
+    //creator: Tiến
+    AccountDTO getAdminInfo(Long id);
 }
 

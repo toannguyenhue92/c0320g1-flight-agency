@@ -20,11 +20,8 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
-import vn.codegym.flightagency.dto.CustomerChangePasswordDTO;
-import vn.codegym.flightagency.dto.CustomerUpdateDTO;
-import vn.codegym.flightagency.dto.TokenDto;
+import vn.codegym.flightagency.dto.*;
 import vn.codegym.flightagency.model.Account;
-import vn.codegym.flightagency.dto.employeeInfoDto;
 import vn.codegym.flightagency.repository.AccountRepository;
 import vn.codegym.flightagency.security.JwtTokenUtil;
 import vn.codegym.flightagency.service.AccountService;
@@ -106,7 +103,6 @@ public class AccountServiceImpl implements AccountService {
         if (employeeInfoDto.getBackendMessage().size() == 0) {
             accountRepository.save(account);
         }
-
     }
 
     //Created by: Quân
@@ -303,6 +299,28 @@ public class AccountServiceImpl implements AccountService {
                 "Tài khoản này được dùng để đăng nhập vào hệ thống tại http://localhost:4200/employee/login";
         emailService.sendSimpleMessage(to, subject, text);
         return account;
+    }
+    //creator : Tiến đổi mật khẩu admin
+
+    @Override
+    public void changePassword(AdminPasswordChangeDTO adminPasswordChangeDTO) {
+
+    }
+
+    @Override
+    public AccountDTO getAdminInfo(Long id) {
+        AccountDTO accountDTO = new AccountDTO();
+        Account account = accountRepository.findById(id).orElse(null);
+        if (account != null) {
+            accountDTO.setFullName(account.getFullName());
+            accountDTO.setBirthday(account.getBirthDate());
+            accountDTO.setGender(account.getGender());
+            accountDTO.setEmail(account.getEmail());
+            accountDTO.setPhoneNumber(account.getPhoneNumber());
+            accountDTO.setAvatarImageUrl(account.getAvatarImageUrl());
+            return accountDTO;
+        }
+        return null;
     }
 }
 
