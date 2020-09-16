@@ -2,6 +2,7 @@ package vn.codegym.flightagency.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import vn.codegym.flightagency.dto.PassengerDTO;
 import vn.codegym.flightagency.dto.PassengerInfoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -49,7 +50,15 @@ public interface PassengerService {
     Page<Passenger> findAllByGender(String gender, Pageable pageable);
 
 
+    void savePassenger(Passenger passenger);
 
+    PassengerDTO findPassengerDtoByUserId(Long id);
+
+    Passenger findPassengerById(Long id);
+
+    void updatePassenger(PassengerDTO passengerDTO, Long id);
+
+    Passenger create(PassengerDTO passengerDTO);
 }
 
 
