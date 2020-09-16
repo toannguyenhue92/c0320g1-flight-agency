@@ -31,7 +31,7 @@ public class EmployeeAPI {
     private AccountService accountService;
 
     //CREATE BY ANH DUC
-    @GetMapping("/employees")
+    @GetMapping("/employee")
     public ResponseEntity<Map<String, Object>> getAllEmployee(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
@@ -55,7 +55,7 @@ public class EmployeeAPI {
     }
 
     //CREATE BY ANH DUC
-    @GetMapping("/employees/{id}")
+    @GetMapping("/employee/{id}")
     public ResponseEntity<? extends Object> getEmployeeById(@PathVariable("id") Long id) {
         ResponseDTO response = new ResponseDTO();
         Optional<Account> employee = employeeService.findById(id);
@@ -71,7 +71,7 @@ public class EmployeeAPI {
     }
 
     //CREATE BY ANH DUC
-    @PostMapping("/employees")
+    @PostMapping("/employee")
     public ResponseEntity<? extends Object> saveEmployees(@RequestBody List<AccountDTO> accountDTOList) {
         ResponseDTO response = new ResponseDTO();
         List<Account> employees = new ArrayList<Account>();
@@ -95,7 +95,7 @@ public class EmployeeAPI {
         return new ResponseEntity<Object>(response, response.getStatus());
     }
 
-    @GetMapping("/employees/search")
+    @GetMapping("/employee/search")
     public ResponseEntity<Map<String, Object>> search(
             @RequestParam("key") String key,
             @RequestParam("value") String value,
