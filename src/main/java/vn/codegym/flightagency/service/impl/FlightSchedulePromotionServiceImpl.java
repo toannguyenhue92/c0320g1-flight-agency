@@ -8,6 +8,7 @@ import vn.codegym.flightagency.model.FlightSchedule;
 import vn.codegym.flightagency.repository.FlightSchedulePromotionRepository;
 import vn.codegym.flightagency.service.FlightSchedulePromotionService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -37,6 +38,14 @@ public class FlightSchedulePromotionServiceImpl implements FlightSchedulePromoti
         return flightSchedulePromotionRepository.findAllFlightSchedulesPromotion(flights.getDeparture(), flights.getArrival(), from, to);
     }
 
+    @Override
+    public List<FlightSchedule> listFlightsPromotion(LocalDate dateFromTo) {
+        LocalDateTime from = LocalDateTime.of(dateFromTo, LocalTime.of(0, 0));
+        LocalDateTime to = LocalDateTime.of(dateFromTo, LocalTime.of(23, 59));
+        return flightSchedulePromotionRepository.listFlightSchedulesPromotion(from , to);
+    }
+
+
 //    private Sort getSort(String type) {
 //        if ("".equals(type))
 //            return null;
@@ -45,8 +54,5 @@ public class FlightSchedulePromotionServiceImpl implements FlightSchedulePromoti
 //        }
 //        return Sort.by(sortType.get(type));
 //    }
-
-
-
 
 }
