@@ -17,7 +17,6 @@ import vn.codegym.flightagency.service.AccountService;
 import vn.codegym.flightagency.service.impl.UserDetailServiceImpl;
 
 
-
 @RestController
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -53,6 +52,7 @@ public class AccountController {
         accountService.changePassword(employeeInfoDto);
         return new ResponseEntity<>(employeeInfoDto, HttpStatus.OK);
     }
+
 
     //Created by: Quân
     @PostMapping("/login")
