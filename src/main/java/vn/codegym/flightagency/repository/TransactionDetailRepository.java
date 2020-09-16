@@ -11,4 +11,6 @@ public interface TransactionDetailRepository extends JpaRepository<TransactionDe
 
     // Created by Toàn
     List<TransactionDetail> findByTransaction_Id(Long id);
+    List<TransactionDetail> findAllByTransactionIdAndPassenger_CheckinIsFalse(Long id);
+
 }
