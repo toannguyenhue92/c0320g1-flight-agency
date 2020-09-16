@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import vn.codegym.flightagency.dto.PromoUpdateDTO;
 import vn.codegym.flightagency.exception.ViolatedException;
 import vn.codegym.flightagency.model.Airport;
 import vn.codegym.flightagency.model.Branch;
@@ -20,12 +21,13 @@ import vn.codegym.flightagency.service.PromoService;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1/employee/promotion")
+@RequestMapping("/api/v1")
 public class PromoController {
 
     public int NUMBER_OF_PAGE = 3;
@@ -39,10 +41,10 @@ public class PromoController {
     @Autowired
     private AirportRepository airportRepository;
 
-    @GetMapping(value="")
+    @GetMapping(value = "")
     public ResponseEntity<List<Promo>> findAllAndSearchPromo(@RequestParam("status") String status,
                                                              @RequestParam("page") int currentPage) {
-        Pageable pageable = PageRequest.of(currentPage-1, this.NUMBER_OF_PAGE, Sort.by("id"));
+        Pageable pageable = PageRequest.of(currentPage - 1, this.NUMBER_OF_PAGE, Sort.by("id"));
         List<Promo> promotions = new ArrayList<>();
         switch (status) {
             case "active":
@@ -61,19 +63,7 @@ public class PromoController {
         return new ResponseEntity<List<Promo>>(promotions, HttpStatus.OK);
     }
 
-    @GetMapping(value="/airline")
-    public ResponseEntity<List<Branch>> getApiOfAirline() {
-        List<Branch> airLineList = branchRepository.findAll();
-        return new ResponseEntity<List<Branch>>(airLineList, HttpStatus.OK);
-    }
-
-    @GetMapping(value="/airport")
-    public ResponseEntity<List<Airport>> getApiOfAirport() {
-        List<Airport> airportList = airportRepository.findAll();
-        return new ResponseEntity<List<Airport>>(airportList, HttpStatus.OK);
-    }
-
-    @PostMapping(value="/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<Promo> createNewPromo(@Valid @RequestBody Promo promo, BindingResult bindingResult) throws ViolatedException {
         if (bindingResult.hasErrors()) {
             throw new ViolatedException(bindingResult);
@@ -83,13 +73,13 @@ public class PromoController {
         return new ResponseEntity<Promo>(promo, HttpStatus.CREATED);
     }
 
-    @PostMapping(value="/search")
+    @PostMapping(value = "/search")
     public ResponseEntity<List<Promo>> searchPromo(@RequestParam("page") int currentPage,
                                                    @RequestBody Map<String, String> infoSearch) {
-        Pageable pageable = PageRequest.of(currentPage-1, this.NUMBER_OF_PAGE, Sort.by("id"));
+        Pageable pageable = PageRequest.of(currentPage - 1, this.NUMBER_OF_PAGE, Sort.by("id"));
 
         String namePromo = infoSearch.get("namePromo");
-        String airline =  infoSearch.get("airline");
+        String airline = infoSearch.get("airline");
         String departurePlace = infoSearch.get("departurePlace");
         String arrivalPlace = infoSearch.get("arrivalPlace");
         String promoDateStart_Str = infoSearch.get("promoDateStart");
@@ -99,7 +89,7 @@ public class PromoController {
 
         List<Promo> promotions = new ArrayList<>();
 
-        if(promoDateStart_Str.equals("") && promoDateEnd_Str.equals("") && flightDepartureDateStart_Str.equals("") && flightDepartureDateEnd_Str.equals("")) {
+        if (promoDateStart_Str.equals("") && promoDateEnd_Str.equals("") && flightDepartureDateStart_Str.equals("") && flightDepartureDateEnd_Str.equals("")) {
             promotions = promoRepository.searchNotIncludedDate(namePromo, airline, departurePlace, arrivalPlace, pageable);
         } else {
             if (promoDateStart_Str.equals("")) {
@@ -128,5 +118,51 @@ public class PromoController {
         return new ResponseEntity<List<Promo>>(promotions, HttpStatus.OK);
     }
 
-    
+    @GetMapping("/employee/promotion/promo-edit/{id}")
+    public ResponseEntity<Promo> getPromo(@PathVariable Long id) {
+        Promo promo = promoService.findById(id);
+        if (promo == null) {
+            return new ResponseEntity<Promo>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Promo>(promo, HttpStatus.OK);
+    }
+
+
+    @PutMapping("employee/promotion/update-edit/{id}")
+    public ResponseEntity<Promo> updatePromo(@PathVariable Long id, @RequestBody PromoUpdateDTO promoUpdateDTO) {
+        Promo promo = promoService.findById(id);
+        promo.setNamePromo(promoUpdateDTO.getNamePromo());
+        promo.setDiscount(promoUpdateDTO.getDiscount());
+        promo.setAirline(promoUpdateDTO.getAirline());
+        promo.setDeparturePlace(promoUpdateDTO.getDeparturePlace());
+        promo.setArrivalPlace(promoUpdateDTO.getArrivalPlace());
+        promo.setPromoDateStart(promoUpdateDTO.getPromoDateStart());
+        promo.setPromoDateEnd(promoUpdateDTO.getPromoDateEnd());
+        promo.setFlightDepartureDateStart(promoUpdateDTO.getFlightDepartureDateStart());
+        promo.setFlightDepartureDateEnd(promoUpdateDTO.getFlightDepartureDateEnd());
+        promoService.save(promo);
+        return ResponseEntity.ok().body(promo);
+    }
+
+    @PostMapping("employee/promotion/promo-delete/{id}")
+    public Map<String, Boolean> deletePromo(@PathVariable(value = "id") Long promoId) {
+        Promo promo = promoService.findById(promoId);
+        promo.setDelete(Boolean.TRUE);
+        promoService.save(promo);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
+    }
+
+    @GetMapping("employee/promotion/airline")
+    public ResponseEntity<List<Branch>> getApiOfAirline() {
+        List<Branch> airLineList = branchRepository.findAll();
+        return new ResponseEntity<List<Branch>>(airLineList, HttpStatus.OK);
+    }
+
+    @GetMapping("employee/promotion/airport")
+    public ResponseEntity<List<Airport>> getApiOfAirport() {
+        List<Airport> airportList = airportRepository.findAll();
+        return new ResponseEntity<List<Airport>>(airportList, HttpStatus.OK);
+    }
 }

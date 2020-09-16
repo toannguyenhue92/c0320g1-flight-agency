@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.codegym.flightagency.model.Promo;
+import vn.codegym.flightagency.dto.PromoUpdateDTO;
+import vn.codegym.flightagency.model.Promo;
 import vn.codegym.flightagency.repository.PromoRepository;
 import vn.codegym.flightagency.service.PromoService;
 
@@ -45,6 +47,23 @@ public class PromoServiceImpl implements PromoService {
         LocalDate localDate = LocalDate.parse(date, dateFormatter);
         LocalDateTime localDateTime = localDate.atStartOfDay();
         return localDateTime;
+    }
+
+    //Tùng
+    @Override
+    public Promo findById(Long id) {
+        return promoRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void save(Promo promo) {
+        promoRepository.save(promo);
+    }
+
+    @Override
+    public void delete(Promo promo) {
+        promo.setDelete(false);
+        promoRepository.save(promo);
     }
 
 }
