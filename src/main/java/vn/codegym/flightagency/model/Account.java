@@ -52,6 +52,9 @@ public class Account {
     @Column(name = "avatar_image_url")
     private String avatarImageUrl;
 
+    @Column(name = "customer_rank", columnDefinition = "varchar(255) default 'Thành viên'")
+    private String customerRank;
+
     @Column(name = "role")
     @Pattern(regexp = "^(ROLE_USER|ROLE_EMPLOYEE|ROLE_ADMIN)$")
     private String role;
@@ -59,4 +62,15 @@ public class Account {
     @Column(name = "status")
     private boolean status;
 
+    public Account(String email, String password, String role, boolean status,
+                   String fullName,LocalDate birthDate,String avatarImageUrl,String gender ) {
+        this.email = email;
+        this.password =  password;
+        this.role = role;
+        this.status = status;
+        this.fullName = fullName;
+        this.birthDate = birthDate;
+        this.avatarImageUrl = avatarImageUrl;
+        this.gender = gender;
+    }
 }
