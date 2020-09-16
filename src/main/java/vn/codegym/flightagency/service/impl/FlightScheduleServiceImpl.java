@@ -7,6 +7,7 @@ import vn.codegym.flightagency.dto.FlightSearchDTO;
 import vn.codegym.flightagency.model.FlightSchedule;
 import vn.codegym.flightagency.repository.FlightScheduleRepository;
 import vn.codegym.flightagency.service.FlightScheduleService;
+import vn.codegym.flightagency.service.TransactionService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +22,10 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
     @Autowired
     private FlightScheduleRepository flightScheduleRepository;
 
+
+    @Autowired
+    private TransactionService transactionService;
+
     // Creator: Duy
     private final Map<String, String> sortType = new HashMap<>();
     {
@@ -33,6 +38,8 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
     // Creator: Duy
     @Override
     public List<FlightSchedule> searchFlights(FlightSearchDTO flights) {
+        int persons = flights.getAdults() + flights.getChildren();
+        int size = 0;
         LocalDateTime from;
         if (flights.getDepDate().compareTo(LocalDate.now()) == 0) {
             LocalDateTime now = LocalDateTime.now();
@@ -42,7 +49,14 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
         }
         LocalDateTime to = LocalDateTime.of(flights.getDepDate(), LocalTime.of(23, 59));
         Sort sort = getSort(flights.getSortBy()) ;
-        return flightScheduleRepository.findAllFlightSchedules(flights.getDeparture(), flights.getArrival(), from, to, sort);
+        List<FlightSchedule> flightScheduleList = flightScheduleRepository.findAllFlightSchedules(flights.getDeparture(), flights.getArrival(), from, to, sort);
+        size = flightScheduleList.size();
+        for (int i = 0; i < size; i++) {
+           if(transactionService.checkFull(flightScheduleList.get(i).getId(), persons)) {
+               flightScheduleList.remove(i);
+           }
+        }
+        return flightScheduleList;
     }
 
     // Creator: Duy

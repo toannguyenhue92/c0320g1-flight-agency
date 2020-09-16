@@ -16,6 +16,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     // C-Ngan
     Page<Transaction> findByAccount_IdIsAndStatusIs(Long accountId, String status, Pageable pageable);
 
+    // Creator: Duy
+    List<Transaction> findAllByFlightSchedule_Id(Long id);
+
 
 
 }

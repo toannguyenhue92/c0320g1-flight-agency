@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.stereotype.Service;
 import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.model.FlightSchedule;
 import vn.codegym.flightagency.model.Transaction;
@@ -14,6 +13,7 @@ import vn.codegym.flightagency.repository.TransactionRepository;
 import vn.codegym.flightagency.service.TransactionService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
@@ -32,10 +32,6 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return transactionRepository.findByAccount_IdIs(accountId, page);
     }
-
-
-
-
 
     // Creator: Duy
     @Override
@@ -63,4 +59,13 @@ public class TransactionServiceImpl implements TransactionService {
         return transaction;
     }
 
+    @Override
+    public boolean checkFull(Long id, int persons) {
+        int counter = persons;
+        List<Transaction> transactions = transactionRepository.findAllByFlightSchedule_Id(id);
+        for (Transaction transaction : transactions) {
+            counter += transaction.getTransactionDetails().size();
+        }
+        return counter > 100;
+    }
 }
