@@ -7,12 +7,13 @@ import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
 import vn.codegym.flightagency.dto.employeeInfoDto;
 
-public interface AccountService {
+public  interface AccountService {
+    
     //Created by: Quân
-    boolean existsEmail(String email);
+     boolean existsEmail(String email);
 
     //Created by: Quân
-    Account findByEmail(String email);
+      Account findByEmail(String email);
 
     //Created by: Quân
     Account saveAccount(Account account);
