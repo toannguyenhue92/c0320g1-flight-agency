@@ -46,14 +46,12 @@ public class PromoController {
 
     @PutMapping("employee/promotion/update-edit/{id}")
     public ResponseEntity<Promo> updatePromo(@PathVariable Long id, @RequestBody PromoUpdateDTO promoUpdateDTO) {
-        System.out.println(promoUpdateDTO.getAirline());
         Promo promo = promoService.findById(id);
         promo.setNamePromo(promoUpdateDTO.getNamePromo());
         promo.setDiscount(promoUpdateDTO.getDiscount());
-
         promo.setAirline(promoUpdateDTO.getAirline());
-        promo.setArrivalPlace(promoUpdateDTO.getArrivalPlace());
         promo.setDeparturePlace(promoUpdateDTO.getDeparturePlace());
+        promo.setArrivalPlace(promoUpdateDTO.getArrivalPlace());
         promo.setPromoDateStart(promoUpdateDTO.getPromoDateStart());
         promo.setPromoDateEnd(promoUpdateDTO.getPromoDateEnd());
         promo.setFlightDepartureDateStart(promoUpdateDTO.getFlightDepartureDateStart());
