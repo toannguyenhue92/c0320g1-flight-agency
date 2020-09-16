@@ -6,6 +6,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.Date;
 import com.google.api.services.people.v1.model.Person;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +40,7 @@ import java.util.logging.Logger;
 
 @Service
 public class AccountServiceImpl implements AccountService {
+
 
     @Autowired
     AccountRepository accountRepository;
@@ -286,8 +288,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account autoRegAccount(Account account) {
         account.setRole("ROLE_EMPLOYEE");
-        account.setPassword("random");
-        account.setAddress("random");
+        String newPassword;
+        String passwordEncryption;
+        newPassword = RandomStringUtils.randomAlphanumeric(10);
+        passwordEncryption = passwordEncoder.encode(newPassword);
+        account.setPassword(passwordEncryption);
         account.setStatus(true);
         accountRepository.save(account);
         String to = account.getEmail();

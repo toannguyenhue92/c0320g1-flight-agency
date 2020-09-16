@@ -11,6 +11,8 @@ import vn.codegym.flightagency.model.FlightSchedule;
 import java.util.List;
 
 public interface FlightScheduleService {
+    //D-Bach
+    Page<FlightSchedule> findAllFlightSchedule(Pageable pageable);
 
     //ADuy
     List<FlightSchedule> searchFlights(FlightSearchDTO flights);

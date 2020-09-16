@@ -15,6 +15,13 @@ import java.util.List;
 public interface FlightScheduleRepository extends JpaRepository<FlightSchedule, Long> {
 
     // Creator: Duy
+//    @Query(nativeQuery = true, value =
+//            "Select * from flight_schedules where " +
+//            "departure_airport_id = ?1 and " +
+//            "arrival_airport_id = ?2  and " +
+//            "status = 'active' and " +
+//            "departure_time between ?3 and ?4 "
+//    )
     @Query(value =
             "Select f from FlightSchedule f where " +
             "f.departureAirport.id = ?1 and " +

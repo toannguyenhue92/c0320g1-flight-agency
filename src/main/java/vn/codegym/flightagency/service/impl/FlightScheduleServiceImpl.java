@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.codegym.flightagency.dto.FlightSearchDTO;
@@ -44,6 +46,12 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
         sortType.put("priceDown", "price");
         sortType.put("time", "departureDateTime");
         sortType.put("branch", "branch.name");
+    }
+
+    //D-Bach
+    @Override
+    public Page<FlightSchedule> findAllFlightSchedule(Pageable pageable) {
+        return flightScheduleRepository.findAll(pageable);
     }
 
     // Creator: Duy
