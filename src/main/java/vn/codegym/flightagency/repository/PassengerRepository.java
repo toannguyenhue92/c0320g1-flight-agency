@@ -39,5 +39,5 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long > , J
     Page<Passenger> findAllByPhoneNumberContaining(String phone, Pageable pageable);
 
     // creator: Mậu
-    Page<Passenger> findAllByGender(String gender, Pageable pageable);
+    Page<Passenger> findAllByGenderContaining(String gender, Pageable pageable);
 }
