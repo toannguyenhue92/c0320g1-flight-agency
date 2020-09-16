@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import vn.codegym.flightagency.model.Passenger;
+import java.time.LocalDate;
+
 
 
 @Repository
@@ -23,4 +25,19 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long > , J
 
     // Thành Long
     Page<Passenger> findAllByCheckinIsTrue(Pageable pageable);
+
+    // creator: Mậu
+    Page<Passenger> findAllByEmailContaining(String email,Pageable pageable);
+
+    // creator: Mậu
+    Page<Passenger> findAllByFullNameContaining(String name, Pageable pageable);
+
+    // creator: Mậu
+    Page<Passenger> findAllByBirthDate(LocalDate birthDate, Pageable pageable);
+
+    // creator: Mậu
+    Page<Passenger> findAllByPhoneNumberContaining(String phone, Pageable pageable);
+
+    // creator: Mậu
+    Page<Passenger> findAllByGender(String gender, Pageable pageable);
 }

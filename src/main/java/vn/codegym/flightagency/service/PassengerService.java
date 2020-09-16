@@ -11,6 +11,9 @@ import vn.codegym.flightagency.dto.PassengerInfoDTO;
 
 import java.util.List;
 
+import java.time.LocalDate;
+
+
 public interface PassengerService {
     // Thành Long
     Page<PassengerCheckinDto> findPassengerByCriteria(Specification<Passenger> spec, int page);
@@ -26,7 +29,8 @@ public interface PassengerService {
 
     // Creator: Duy
     List<Passenger> addAllPassengers(List<PassengerInfoDTO> passengerInfoDtoList);
-    //creator : Mậu
+
+
     Page<Passenger> getAllCustomer(Pageable page);
 
 
@@ -34,4 +38,18 @@ public interface PassengerService {
 
     Passenger findById(Long id);
 
+    Page<Passenger> findByEmail(String email, Pageable pageable);
+
+    Page<Passenger> findAllByFullName(String name, Pageable pageable);
+
+    Page<Passenger> findAllByBirthday(LocalDate date, Pageable pageable);
+
+    Page<Passenger> findByPhoneNumber(String phoneNumber, Pageable pageable);
+
+    Page<Passenger> findAllByGender(String gender, Pageable pageable);
+
+
+
 }
+
+
