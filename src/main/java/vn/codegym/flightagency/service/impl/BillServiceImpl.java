@@ -33,7 +33,7 @@ public class BillServiceImpl implements BillService {
         } else if (!billCode.equals("") && !billTax.equals("")){
             return  billRepository.findByBillCodeIsAndTaxCodeIsOrTransaction_Account_FullNameContaining(billCode,billTax,name,pageable);
         } else if (!billCode.equals("")) {
-            return billRepository.findByBillCodeIsAndTransaction_Account_FullNameContaining(billCode,name,pageable);
+            return billRepository.findByBillCodeIsAndTaxCodeIsAndTransaction_Account_FullNameContaining(billCode,billTax,name,pageable);
         }
         return billRepository.findByBillCodeIsOrTaxCodeIsOrTransaction_Account_FullNameContaining(billCode,billTax,name,pageable);
     }
