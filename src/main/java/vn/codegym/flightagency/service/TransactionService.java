@@ -3,13 +3,14 @@ package vn.codegym.flightagency.service;
 import vn.codegym.flightagency.model.Transaction;
 import vn.codegym.flightagency.model.TransactionDetail;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TransactionService {
 
-    String WAITING = "chờ thanh toán";
-    String CANCELED = "hủy";
-    String PAID = "đã thanh toán";
+    String WAITING = "Chờ thanh toán";
+    String CANCELED = "Đã hủy";
+    String PAID = "Đã thanh toán";
 
     // Creator: Duy
     Transaction save(Transaction transaction);
@@ -37,5 +38,10 @@ public interface TransactionService {
 
     // Created by Toàn
     List<TransactionDetail> findTransactionDetails(Long id);
+
+    // Created by Toàn
+    List<Transaction> findOverdueTransaction();
+
+    List<Transaction> saveAll(List<Transaction> transactions);
 
 }

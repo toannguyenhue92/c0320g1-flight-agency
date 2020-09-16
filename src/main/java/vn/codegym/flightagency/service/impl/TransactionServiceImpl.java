@@ -147,4 +147,13 @@ public class TransactionServiceImpl implements TransactionService {
         return transaction;
     }
 
+    @Override
+    public List<Transaction> findOverdueTransaction() {
+        return transactionRepository.findOverdueTransaction(LocalDateTime.now());
+    }
+
+    @Override
+    public List<Transaction> saveAll(List<Transaction> transactions) {
+        return transactionRepository.saveAll(transactions);
+    }
 }
