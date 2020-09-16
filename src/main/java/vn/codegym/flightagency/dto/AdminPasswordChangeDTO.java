@@ -2,7 +2,6 @@ package vn.codegym.flightagency.dto;
 
 import lombok.Data;
 
-
 @Data
 public class AdminPasswordChangeDTO {
     private Long id;
@@ -10,5 +9,4 @@ public class AdminPasswordChangeDTO {
     private String newPassword;
     private String confirmPassword;
     private String backendMessage;
-
 }
