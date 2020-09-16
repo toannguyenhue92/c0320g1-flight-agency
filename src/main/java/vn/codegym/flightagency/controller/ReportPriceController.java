@@ -2,6 +2,7 @@ package vn.codegym.flightagency.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import vn.codegym.flightagency.dto.ReportAirline;
 import vn.codegym.flightagency.dto.ReportPrice;
 import vn.codegym.flightagency.dto.ReportPriceDTO;
 import vn.codegym.flightagency.service.ReportPriceService;
@@ -22,5 +23,8 @@ public class ReportPriceController {
         List<ReportPrice> reportPrice = transactionService.findAllTransaction(reportPriceDTO);
         return transactionService.findAllTransaction(reportPriceDTO);
     }
-
+    @PostMapping("/airlinereport")
+    public List<ReportAirline> getAllAirline(@RequestBody ReportPriceDTO reportPriceDTO){
+        return transactionService.findAllTransactionByAirline(reportPriceDTO);
+    }
 }

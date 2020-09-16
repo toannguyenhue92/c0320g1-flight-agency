@@ -11,6 +11,4 @@ public class ReportPriceDTO {
     //Thành
     private LocalDate date1;
     private LocalDate date2;
-//    private LocalDate date3;
-//    private LocalDate date4;
 }
