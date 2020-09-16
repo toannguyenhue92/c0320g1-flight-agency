@@ -1,11 +1,13 @@
 package vn.codegym.flightagency.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -35,7 +37,15 @@ public class Passenger {
     @Column(name = "gender")
     private String gender;
 
-    @ManyToMany(mappedBy = "passengers")
-    @JsonBackReference
-    private List<Transaction> transactions;
+    @Column(name = "checkin_status", columnDefinition = "boolean default false")
+    private Boolean checkin;
+
+    //Creator Hậu
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @Column(name = "address")
+    private String address;
+
+
 }

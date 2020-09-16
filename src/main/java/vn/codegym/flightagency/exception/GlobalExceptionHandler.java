@@ -12,6 +12,8 @@ import java.util.Date;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    // Creator : Cường
+    // Method is used when application throw a instance of ViolatedException
     @ExceptionHandler(ViolatedException.class)
     public ResponseEntity<?> handleViolatedException(ViolatedException ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), request.getDescription(false));

@@ -3,6 +3,7 @@ package vn.codegym.flightagency.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

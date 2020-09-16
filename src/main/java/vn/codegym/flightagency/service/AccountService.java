@@ -1,68 +1,57 @@
 package vn.codegym.flightagency.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import vn.codegym.flightagency.dto.AdminPasswordChangeDTO;
+import vn.codegym.flightagency.dto.CustomerChangePasswordDTO;
+import vn.codegym.flightagency.dto.CustomerUpdateDTO;
+import vn.codegym.flightagency.dto.TokenDto;
 import vn.codegym.flightagency.model.Account;
-import vn.codegym.flightagency.repository.AccountRepository;
+import vn.codegym.flightagency.dto.employeeInfoDto;
 
-import java.util.ArrayList;
-import java.util.List;
+public  interface AccountService {
+    
+    //Created by: Quân
+     boolean existsEmail(String email);
 
-@Service("AccountService")
-public class AccountService implements UserDetailsService{
+    //Created by: Quân
+      Account findByEmail(String email);
 
-    @Autowired
-    AccountRepository accountRepository;
+    //Created by: Quân
+    Account saveAccount(Account account);
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //Created by: Quân
+    UserDetails getUserDetail(Account account);
 
-    public Account getAccountByEmail(String email) {
-        return accountRepository.findAccountByEmail(email);
-    }
+    //Created by: Quân
+    Account getProfileGoogle(TokenDto tokenDto);
 
-    public void savingAccount(Account account) {
-        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
-        accountRepository.save(account);
-    }
+    //Created by: Quân
+    Account getProfileFacebook(TokenDto tokenDto);
+    //BHung
+    Account findAccountByEmail(String email);
 
-    public void changePassword(AdminPasswordChangeDTO passwordChangeDTO) {
-        Account account = accountRepository.findById(passwordChangeDTO.getId()).orElse(null);
-        assert account != null;
-        String messages = "";
-        if (!passwordChangeDTO.getPassword().equals("")) { //đã nhập password cũ
-            if (!passwordChangeDTO.getNewPassword().equals("")) { //đã nhập password mới
-                if (BCrypt.checkpw(passwordChangeDTO.getNewPassword(), account.getPassword())) { // check nhập password cũ đã đúng chưa
-                    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); // encode password mới
-                    account.setPassword(encoder.encode(passwordChangeDTO.getNewPassword()));// set password mới vào account
-                }else {
-                    messages = "Mật khẩu hiện tại không đúng .Xin vui lòng nhập lại!"; // password check không đúng
-                }
-            } else {
-                messages = "Vui lòng nhập mật khẩu hiện tại đi kèm mật khẩu mới và xác nhận mật khẩu"; // check lỗi chưa nhập password mới
-            }
-        } else if (!passwordChangeDTO.getNewPassword().equals("")) {
-            messages = "Vui lòng nhập mật khẩu hiện tại"; // chưa nhập password cũ
-        }
-        passwordChangeDTO.setBackendMessage(messages);
-        if (passwordChangeDTO.getBackendMessage().equals("")) {
-            accountRepository.save(account);
-        }
-    }
+    //    Created By Thiện
+    Account findAccountById(Long id) ;
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
-    }
+    //    Created By Thiện
+    CustomerUpdateDTO findCustomerUpdateDTOById(Long id) ;
 
-    public Account findAccountById(Long id) {
-        return accountRepository.findById(id).orElse(null);
-    }
+    //    Created By Thiện
+    void updateCustomer(CustomerUpdateDTO customerUpdateDTO);
 
+    //    Created By Thiện
+    void changePassword(CustomerChangePasswordDTO customerChangePasswordDTO);
+
+    //CREATE BY ANH DUC
+    Account autoRegAccount(Account account);
+
+
+    //creator: Mậu
+    employeeInfoDto findEmployeeInfoDtoById(Long id);
+
+    //creator: Mậu
+    Account findEmployeeById(Long id);
+
+    //creator: Mậu
+    void changePassword(employeeInfoDto employeeInfoDto);
 }
+
