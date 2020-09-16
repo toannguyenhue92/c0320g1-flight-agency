@@ -9,5 +9,8 @@ import vn.codegym.flightagency.model.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account,Long> {
 
-    Page<Account> findAllByStatusFalseAndRoleContains(Pageable pageable,String fullName);
+    //B-HoangLong
+    Page<Account> findAllByStatusFalseAndRoleContains(Pageable pageable, String role);
+    //B-HoangLong
+    Account findByIdAndRoleContains(Long id,String role);
 }
