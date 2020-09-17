@@ -187,7 +187,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public Page<Passenger> findAllByGender(String gender, Pageable pageable) {
-        return passengerRepository.findAllByGender(gender, pageable);
+        return passengerRepository.findAllByGenderContaining(gender, pageable);
     }
 
     @Override
