@@ -7,7 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.codegym.flightagency.dto.PassengerDTO;
+import vn.codegym.flightagency.model.Passenger;
 import vn.codegym.flightagency.model.Ticket;
+import vn.codegym.flightagency.model.TransactionDetail;
+import vn.codegym.flightagency.repository.PassengerRepository;
 import vn.codegym.flightagency.service.TicketService;
 
 import java.time.LocalDateTime;
@@ -22,43 +26,46 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private PassengerRepository passengerRepository;
+
     @GetMapping("/admin/tickets")
-    public Page<Ticket> ListTicket(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
-                                   @PageableDefault(value=6)Pageable pageable){
+    public Page<TransactionDetail> ListTicket(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
+                                              @PageableDefault(value=2)Pageable pageable){
             return ticketService.findAllByName(search.get(),pageable);
     }
 
     @GetMapping("/admin/tickets/BookingCode")
-    public Page<Ticket> ListTicketByBookingCode(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
+    public Page<TransactionDetail> ListTicketByBookingCode(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
                                    @PageableDefault(value=6)Pageable pageable){
         return ticketService.findAllByBookingCode(search.get(),pageable);
     }
 
     @GetMapping("/admin/tickets/Flight")
-    public Page<Ticket> ListTicketByFlight(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
+    public Page<TransactionDetail> ListTicketByFlight(@RequestParam(name = "search", defaultValue = "") Optional<String> search,
                                                 @PageableDefault(value=6)Pageable pageable){
         return ticketService.findAllByFlight(search.get(),pageable);
     }
 
     @GetMapping("/admin/tickets/{id}")
-    public ResponseEntity<Ticket> getTicketById(@PathVariable(value = "id")Long id){
-        Ticket ticket = ticketService.findById(id);
+    public ResponseEntity<TransactionDetail> getTicketById(@PathVariable(value = "id")Long id){
+        TransactionDetail ticket = ticketService.findById(id);
         return ResponseEntity.ok().body(ticket);
     }
 
     @PutMapping("/admin/tickets/{id}")
-    public ResponseEntity<Ticket> updateTicketById(@PathVariable(value = "id")Long id, @RequestBody Ticket ticketUpdate){
-            Ticket ticket=ticketService.findById(id);
-            ticket.setName(ticketUpdate.getName());
-            ticket.setEmail(ticketUpdate.getEmail());
-            ticketService.save(ticket);
+    public ResponseEntity<Passenger> updateTicketById(@PathVariable(value = "id")Long id, @RequestBody PassengerDTO passengerDTO){
+        Passenger ticket = passengerRepository.findById(id).orElse(null);
+//        ticket.setFullName(passengerDTO.getFullName);
+//        ticket.setEmail(passengerDTO.getEmail);
+//            ticketService.save(ticket);
         return ResponseEntity.ok().body(ticket);
     }
 
-    Map<Ticket, LocalDateTime> mapTicketDeleted =new HashMap<>();
+    Map<TransactionDetail, LocalDateTime> mapTicketDeleted =new HashMap<>();
     @DeleteMapping("/admin/tickets/{id}")
-    public  Map<Ticket,LocalDateTime> deleteTicket(@PathVariable(value = "id")Long id){
-        Ticket ticket =ticketService.findById(id);
+    public  Map<TransactionDetail,LocalDateTime> deleteTicket(@PathVariable(value = "id")Long id){
+        TransactionDetail ticket =ticketService.findById(id);
         LocalDateTime dateTime = LocalDateTime.now();
         mapTicketDeleted.put(ticket,dateTime);
         ticketService.deleteById(id);
