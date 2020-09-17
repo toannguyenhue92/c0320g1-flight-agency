@@ -9,7 +9,7 @@ public class AccountDTO {
     private Long id;
     private String fullName;
     private LocalDate birthday;
-    private String gender;
+    private String address;
     private String email;
     private String phoneNumber;
     private String avatarImageUrl;

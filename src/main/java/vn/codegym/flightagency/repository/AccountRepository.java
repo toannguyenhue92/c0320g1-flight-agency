@@ -16,20 +16,33 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
 
     //Created by: Quân
     boolean existsAccountByEmailAndStatusTrue(String email);
-    //BHung
-    Account findByEmail(String email);
-    //    CREATE BY ANH DUC
-     Page<Account> findAllByFullName(String name, Pageable pageable);
+
+    Account findAccountByEmail(String email);
+
+//    //    CREATE BY ANH DUC
+//    public Page<Account> findAllAccount(Pageable pageable);
+//
+//    ;
 
     //    CREATE BY ANH DUC
-     Page<Account> findAllByEmail(String email, Pageable pageable);
+    public Account findByEmail(String email);
 
     //    CREATE BY ANH DUC
-     Page<Account> findAllByBirthDate(LocalDate birthday, Pageable pageable);
+    public Page<Account> findAllByFullName(String name, Pageable pageable);
 
     //    CREATE BY ANH DUC
-     Page<Account> findAllByPhoneNumber(String phone, Pageable pageable);
+    public Page<Account> findAllByEmail(String email, Pageable pageable);
 
     //    CREATE BY ANH DUC
+    public Page<Account> findAllByBirthDate(LocalDate birthday, Pageable pageable);
+
+    //    CREATE BY ANH DUC
+    public Page<Account> findAllByPhoneNumber(String phone, Pageable pageable);
+
+    //    CREATE BY ANH DUC
+    public Page<Account> findAllByAddress(String gender, Pageable pageable);
+
+    //    CREATE BY ANH DUC
+    public Page<Account> findAllByRole(String role, Pageable pageable);
      Page<Account> findAllByGender(String gender, Pageable pageable);
 }
