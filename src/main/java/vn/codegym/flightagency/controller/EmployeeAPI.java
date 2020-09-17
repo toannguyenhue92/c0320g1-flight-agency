@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
 //CREATE BY ANH DUC
@@ -145,4 +145,33 @@ public class EmployeeAPI {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //B-HoangLong
+    @GetMapping("employee/edit-employee/{id}")
+    public ResponseEntity<AccountDTO> getEmployeeEditById(@PathVariable Long id) {
+        AccountDTO employee = this.accountService.findEmployeeDtoById(id);
+        if (employee == null) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<AccountDTO>(employee, HttpStatus.OK);
+    }
+
+    //B-HoangLong
+    @PutMapping("employee/delete-in-list/{id}")
+    public ResponseEntity<Account> deleteEmployeeById(@PathVariable Long id) {
+        Account employeeDelete = this.accountService.findEmployeeById(id);
+        if (employeeDelete == null) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        this.accountService.deleteEmployee(employeeDelete);
+        return new ResponseEntity<>(employeeDelete, HttpStatus.OK);
+    }
+
+    //B-HoangLong
+    @PutMapping("employee/edit-in-list/{id}")
+    public ResponseEntity<AccountDTO> updateUser(@PathVariable Long id, @RequestBody AccountDTO employeeEditDto) {
+        this.accountService.editEmployee(employeeEditDto,id);
+        return new ResponseEntity<AccountDTO>(employeeEditDto, HttpStatus.OK);
+    }
+
 }

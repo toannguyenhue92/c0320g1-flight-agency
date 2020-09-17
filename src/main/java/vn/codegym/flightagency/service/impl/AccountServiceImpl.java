@@ -20,11 +20,8 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
-import vn.codegym.flightagency.dto.CustomerChangePasswordDTO;
-import vn.codegym.flightagency.dto.CustomerUpdateDTO;
-import vn.codegym.flightagency.dto.TokenDto;
+import vn.codegym.flightagency.dto.*;
 import vn.codegym.flightagency.model.Account;
-import vn.codegym.flightagency.dto.employeeInfoDto;
 import vn.codegym.flightagency.repository.AccountRepository;
 import vn.codegym.flightagency.security.JwtTokenUtil;
 import vn.codegym.flightagency.service.AccountService;
@@ -305,6 +302,50 @@ public class AccountServiceImpl implements AccountService {
                 "Tài khoản này được dùng để đăng nhập vào hệ thống tại http://localhost:4200/employee/login";
         emailService.sendSimpleMessage(to, subject, text);
         return account;
+    }
+
+    //B-HoangLong
+    @Override
+    public void saveEmployee(Account employeeDelete) {
+        this.accountRepository.save(employeeDelete);
+    }
+
+    //B-HoangLong
+    @Override
+    public void editEmployee(AccountDTO employeeEditDto, Long id) {
+        Account employee = findEmployeeById(id);
+        employee.setFullName(employeeEditDto.getFullName());
+        employee.setAddress(employeeEditDto.getAddress());
+        employee.setEmail(employeeEditDto.getEmail());
+        employee.setPhoneNumber(employeeEditDto.getPhoneNumber());
+        employee.setBirthDate(employeeEditDto.getBirthday());
+        this.accountRepository.save(employee);
+    }
+
+    //B-HoangLong
+    @Override
+    public AccountDTO findEmployeeDtoById(Long id) {
+        Account employee = this.accountRepository.findById(id).orElse(null);
+        return this.changeAccountToAccountEmployeeEditDto(employee);
+    }
+
+    //B-HoangLong
+    private AccountDTO changeAccountToAccountEmployeeEditDto(Account employee){
+        AccountDTO employeeEditDto = new AccountDTO();
+        employeeEditDto.setId(employee.getId());
+        employeeEditDto.setFullName(employee.getFullName());
+        employeeEditDto.setAddress(employee.getAddress());
+        employeeEditDto.setEmail(employee.getEmail());
+        employeeEditDto.setPhoneNumber(employee.getPhoneNumber());
+        employeeEditDto.setBirthday(employee.getBirthDate());
+        return employeeEditDto;
+    }
+
+    //B-HoangLong
+    @Override
+    public void deleteEmployee(Account employeeDelete){
+        employeeDelete.setStatus(false);
+        this.accountRepository.save(employeeDelete);
     }
 }
 
