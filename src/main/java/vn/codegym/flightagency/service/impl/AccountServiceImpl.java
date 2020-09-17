@@ -144,7 +144,6 @@ public class AccountServiceImpl implements AccountService {
     public Account autoRegAccount(Account account) {
         account.setRole("ROLE_EMPLOYEE");
         account.setPassword("random");
-        account.setAddress("random");
         account.setStatus(true);
         accountRepository.save(account);
         String to = account.getEmail();
