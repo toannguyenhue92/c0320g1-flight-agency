@@ -2,27 +2,20 @@ package vn.codegym.flightagency.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import vn.codegym.flightagency.dto.AccountDTO;
+import org.springframework.stereotype.Repository;
 import vn.codegym.flightagency.model.Account;
 
 import java.time.LocalDate;
-import java.util.Date;
-
-public interface AccountRepository extends JpaRepository<Account, Long> {
+@Repository
+public interface AccountRepository extends JpaRepository<Account,Long> {
     //Created by: Quân
     Account findByEmailAndStatusIsTrue(String email);
 
     //Created by: Quân
     boolean existsAccountByEmailAndStatusTrue(String email);
-
-    Account findAccountByEmail(String email);
-
-//    //    CREATE BY ANH DUC
-//    public Page<Account> findAllAccount(Pageable pageable);
-//
-//    ;
-
     //    CREATE BY ANH DUC
     public Account findByEmail(String email);
 

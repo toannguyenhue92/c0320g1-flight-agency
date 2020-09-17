@@ -1,5 +1,6 @@
 package vn.codegym.flightagency.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class TransactionDetail {
 
     @ManyToOne
     @JoinColumn(name = "transaction_id")
+    @JsonIgnoreProperties("transactionDetails")
     private Transaction transaction;
 
     @Column(name = "transaction_detail_baggage")

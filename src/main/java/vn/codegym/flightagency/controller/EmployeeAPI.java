@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
 //CREATE BY ANH DUC
@@ -31,7 +31,7 @@ public class EmployeeAPI {
     private AccountService accountService;
 
     //CREATE BY ANH DUC
-    @GetMapping("/employee")
+    @GetMapping("/employeeAPI")
     public ResponseEntity<Map<String, Object>> getAllEmployee(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
@@ -55,7 +55,7 @@ public class EmployeeAPI {
     }
 
     //CREATE BY ANH DUC
-    @GetMapping("/employee/{id}")
+    @GetMapping("/employeeAPI/{id}")
     public ResponseEntity<? extends Object> getEmployeeById(@PathVariable("id") Long id) {
         ResponseDTO response = new ResponseDTO();
         Optional<Account> employee = employeeService.findById(id);
@@ -71,7 +71,7 @@ public class EmployeeAPI {
     }
 
     //CREATE BY ANH DUC
-    @PostMapping("/employee")
+    @PostMapping("/employeeAPI")
     public ResponseEntity<? extends Object> saveEmployees(@RequestBody List<AccountDTO> accountDTOList) {
         ResponseDTO response = new ResponseDTO();
         List<Account> employees = new ArrayList<Account>();
@@ -94,8 +94,8 @@ public class EmployeeAPI {
         response.setMessage("Lưu dữ liệu thành công");
         return new ResponseEntity<Object>(response, response.getStatus());
     }
-    //CREATE BY ANH DUC
-    @GetMapping("/employee/search")
+
+    @GetMapping("/employeeAPI/search")
     public ResponseEntity<Map<String, Object>> search(
             @RequestParam("key") String key,
             @RequestParam("value") String value,

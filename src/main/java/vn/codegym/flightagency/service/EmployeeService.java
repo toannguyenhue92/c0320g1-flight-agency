@@ -3,7 +3,10 @@ package vn.codegym.flightagency.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import vn.codegym.flightagency.dto.AccountDTO;
+import vn.codegym.flightagency.dto.EmployeePassengerDTO;
+import vn.codegym.flightagency.dto.EmployeeTransactionDTO;
 import vn.codegym.flightagency.model.Account;
+import vn.codegym.flightagency.model.Transaction;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,6 +14,11 @@ import java.util.Optional;
 
 public interface EmployeeService {
 
+    //BHung luu trans và pass
+    List<Transaction> saveTransactionsAndTickets(List<EmployeeTransactionDTO> transactions, List<EmployeePassengerDTO> passengers);
+
+    //BHung find trans By Id
+    Transaction findTransactionById(Long id);
     //CREATE BY ANH DUC
     List<Account> findAll();
 

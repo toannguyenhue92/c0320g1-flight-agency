@@ -58,6 +58,12 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
         }
     }
 
+    // Thành Long
+    @Override
+    public List<TransactionDetail> findByTransactionDetail(Long id) {
+        return transactionDetailRepository.findAllByTransactionIdAndPassenger_CheckinIsFalse(id);
+    }
+
     // Creator: Duy
     private void addDetail(Transaction transaction, Passenger passenger, List<PassengerInfoDTO> baggageInfo) {
         TransactionDetail transactionDetail = new TransactionDetail();
