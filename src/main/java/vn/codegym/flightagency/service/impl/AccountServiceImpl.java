@@ -175,7 +175,9 @@ public class AccountServiceImpl implements AccountService {
         Facebook facebook = new FacebookTemplate(tokenDto.getValue());
         final String[] fields = {"email", "birthday", "name", "gender"};
         User userFacebook = facebook.fetchObject("me", User.class, fields);
+
         String email = userFacebook.getEmail();
+        System.out.println(userFacebook.getBirthday());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate birthday = LocalDate.parse(userFacebook.getBirthday(),formatter);
         String name = userFacebook.getName();
