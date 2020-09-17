@@ -313,7 +313,7 @@ public class AccountServiceImpl implements AccountService {
     public void editEmployee(AccountDTO employeeEditDto, Long id) {
         Account employee = findEmployeeById(id);
         employee.setFullName(employeeEditDto.getFullName());
-        employee.setGender(employeeEditDto.getGender());
+        employee.setAddress(employeeEditDto.getAddress());
         employee.setEmail(employeeEditDto.getEmail());
         employee.setPhoneNumber(employeeEditDto.getPhoneNumber());
         employee.setBirthDate(employeeEditDto.getBirthday());
@@ -332,7 +332,7 @@ public class AccountServiceImpl implements AccountService {
         AccountDTO employeeEditDto = new AccountDTO();
         employeeEditDto.setId(employee.getId());
         employeeEditDto.setFullName(employee.getFullName());
-        employeeEditDto.setGender(employee.getGender());
+        employeeEditDto.setAddress(employee.getAddress());
         employeeEditDto.setEmail(employee.getEmail());
         employeeEditDto.setPhoneNumber(employee.getPhoneNumber());
         employeeEditDto.setBirthday(employee.getBirthDate());

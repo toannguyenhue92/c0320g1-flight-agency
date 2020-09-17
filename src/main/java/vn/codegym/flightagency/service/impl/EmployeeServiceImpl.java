@@ -123,7 +123,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     //CREATE BY ANH DUC
     @Override
     public Page<AccountDTO> findAllAccount(Pageable pageable) {
-        Page<Account> accounts = employeeRepository.findAllByRole("ROLE_EMPLOYEE",pageable);
+        Page<Account> accounts = employeeRepository.findAllByRoleAndStatusIsTrue("ROLE_EMPLOYEE",pageable);
         return transferToDTO(accounts);
     }
 

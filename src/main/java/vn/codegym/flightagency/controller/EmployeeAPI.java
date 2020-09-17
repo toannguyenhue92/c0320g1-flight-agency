@@ -108,7 +108,7 @@ public class EmployeeAPI {
 
         try {
             switch (key) {
-                case "fullname":
+                case "fullName":
                     pageEmployees = employeeService.findAllByFullName(value, paging);
                     break;
                 case "email":
