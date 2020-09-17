@@ -44,6 +44,6 @@ public class FlightPromoController {
         List<FlightSchedule>  dateFlightSchedules = flightSchedulePromotionService.listFlightsPromotion(LocalDate.parse(departureAirport));
         return ResponseEntity.ok(dateFlightSchedules);
     }
-    
+
     
 }

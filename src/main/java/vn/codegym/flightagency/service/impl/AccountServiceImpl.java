@@ -301,7 +301,7 @@ public class AccountServiceImpl implements AccountService {
         String subject = "Chào mừng bạn gia nhập CGB Airlines ";
         String text = " Thông tin tài khoản của bạn \n " +
                 "User : " + account.getEmail() +
-                "Password: " + account.getPassword() +
+                "Password: " + newPassword +
                 "Tài khoản này được dùng để đăng nhập vào hệ thống tại http://localhost:4200/employee/login";
         emailService.sendSimpleMessage(to, subject, text);
         return account;

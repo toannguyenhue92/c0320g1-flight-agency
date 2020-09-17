@@ -13,6 +13,7 @@ public class ResponseDTO {
     private HttpStatus status;
     private String message;
     private Object body;
+
     public ResponseDTO(HttpStatus notFound, String message) {
     }
 }
