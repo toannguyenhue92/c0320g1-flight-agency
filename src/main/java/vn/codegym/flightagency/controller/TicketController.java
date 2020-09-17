@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.codegym.flightagency.dto.PassengerDTO;
+import vn.codegym.flightagency.dto.PassengerInfoDTO;
 import vn.codegym.flightagency.model.Passenger;
 import vn.codegym.flightagency.model.Ticket;
 import vn.codegym.flightagency.model.TransactionDetail;
@@ -54,11 +55,16 @@ public class TicketController {
     }
 
     @PutMapping("/admin/tickets/{id}")
-    public ResponseEntity<Passenger> updateTicketById(@PathVariable(value = "id")Long id, @RequestBody PassengerDTO passengerDTO){
+    public ResponseEntity<Passenger> updateTicketById(@PathVariable(value = "id")Long id,
+                                                      @RequestBody PassengerInfoDTO passengerInfoDTO){
         Passenger ticket = passengerRepository.findById(id).orElse(null);
-//        ticket.setFullName(passengerDTO.getFullName);
-//        ticket.setEmail(passengerDTO.getEmail);
-//            ticketService.save(ticket);
+        if (ticket == null){
+            System.out.println("null");
+        }else {
+            ticket.setFullName(passengerInfoDTO.getFullName());
+            ticket.setEmail(passengerInfoDTO.getEmail());
+            passengerRepository.save(ticket);
+        }
         return ResponseEntity.ok().body(ticket);
     }
 
