@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
 //CREATE BY ANH DUC
@@ -108,8 +108,11 @@ public class EmployeeAPI {
 
         try {
             switch (key) {
-                case "fullname":
+                case "fullName":
                     pageEmployees = employeeService.findAllByFullName(value, paging);
+                    break;
+                case "email":
+                    pageEmployees = employeeService.findAllByEmail(value, paging);
                     break;
                 case "birthday":
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -117,10 +120,10 @@ public class EmployeeAPI {
                     LocalDate localDate = LocalDate.parse(value, formatter);
                     pageEmployees = employeeService.findAllByBirthday(localDate, paging);
                     break;
-                case "phone":
+                case "phoneNumber":
                     pageEmployees = employeeService.findAllByPhoneNumber(value, paging);
                     break;
-                case "gender":
+                case "address":
                     pageEmployees = employeeService.findAllByGender(value, paging);
                     break;
 
@@ -142,4 +145,33 @@ public class EmployeeAPI {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //B-HoangLong
+    @GetMapping("employee/edit-employee/{id}")
+    public ResponseEntity<AccountDTO> getEmployeeEditById(@PathVariable Long id) {
+        AccountDTO employee = this.accountService.findEmployeeDtoById(id);
+        if (employee == null) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<AccountDTO>(employee, HttpStatus.OK);
+    }
+
+    //B-HoangLong
+    @PutMapping("employee/delete-in-list/{id}")
+    public ResponseEntity<Account> deleteEmployeeById(@PathVariable Long id) {
+        Account employeeDelete = this.accountService.findEmployeeById(id);
+        if (employeeDelete == null) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        this.accountService.deleteEmployee(employeeDelete);
+        return new ResponseEntity<>(employeeDelete, HttpStatus.OK);
+    }
+
+    //B-HoangLong
+    @PutMapping("employee/edit-in-list/{id}")
+    public ResponseEntity<AccountDTO> updateUser(@PathVariable Long id, @RequestBody AccountDTO employeeEditDto) {
+        this.accountService.editEmployee(employeeEditDto,id);
+        return new ResponseEntity<AccountDTO>(employeeEditDto, HttpStatus.OK);
+    }
+
 }

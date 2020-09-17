@@ -27,7 +27,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/employee/promotion")
 public class PromoController {
 
     public int NUMBER_OF_PAGE = 3;
@@ -118,7 +118,7 @@ public class PromoController {
         return new ResponseEntity<List<Promo>>(promotions, HttpStatus.OK);
     }
 
-    @GetMapping("/employee/promotion/promo-edit/{id}")
+    @GetMapping("/promo-edit/{id}")
     public ResponseEntity<Promo> getPromo(@PathVariable Long id) {
         Promo promo = promoService.findById(id);
         if (promo == null) {
@@ -128,7 +128,7 @@ public class PromoController {
     }
 
 
-    @PutMapping("employee/promotion/update-edit/{id}")
+    @PutMapping("/update-edit/{id}")
     public ResponseEntity<Promo> updatePromo(@PathVariable Long id, @RequestBody PromoUpdateDTO promoUpdateDTO) {
         Promo promo = promoService.findById(id);
         promo.setNamePromo(promoUpdateDTO.getNamePromo());
@@ -144,7 +144,7 @@ public class PromoController {
         return ResponseEntity.ok().body(promo);
     }
 
-    @PostMapping("employee/promotion/promo-delete/{id}")
+    @PutMapping("/promo-delete/{id}")
     public Map<String, Boolean> deletePromo(@PathVariable(value = "id") Long promoId) {
         Promo promo = promoService.findById(promoId);
         promo.setDelete(Boolean.TRUE);
@@ -154,13 +154,13 @@ public class PromoController {
         return response;
     }
 
-    @GetMapping("employee/promotion/airline")
+    @GetMapping("/airline")
     public ResponseEntity<List<Branch>> getApiOfAirline() {
         List<Branch> airLineList = branchRepository.findAll();
         return new ResponseEntity<List<Branch>>(airLineList, HttpStatus.OK);
     }
 
-    @GetMapping("employee/promotion/airport")
+    @GetMapping("/airport")
     public ResponseEntity<List<Airport>> getApiOfAirport() {
         List<Airport> airportList = airportRepository.findAll();
         return new ResponseEntity<List<Airport>>(airportList, HttpStatus.OK);

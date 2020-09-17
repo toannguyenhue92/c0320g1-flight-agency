@@ -88,7 +88,6 @@ public class AccountController {
     //Created by: Quân
     @PostMapping("/facebook")
     public ResponseEntity<?> facebook(@RequestBody TokenDto tokenDto)  {
-        System.out.println(accountService.getProfileFacebook(tokenDto));
         Account accountFacebook ;
         if (accountService.existsEmail(tokenDto.getEmail())){
             accountFacebook = accountService.findByEmail(tokenDto.getEmail());

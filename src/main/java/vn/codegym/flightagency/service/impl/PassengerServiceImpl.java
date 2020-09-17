@@ -109,6 +109,7 @@ public class PassengerServiceImpl implements PassengerService {
         } else {
             passenger = transferToPassenger(_passenger);
         }
+        passenger.setCheckin(false);
         return passengerRepository.save(passenger);
     }
 
@@ -186,7 +187,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public Page<Passenger> findAllByGender(String gender, Pageable pageable) {
-        return passengerRepository.findAllByGender(gender, pageable);
+        return passengerRepository.findAllByGenderContaining(gender, pageable);
     }
 
     @Override

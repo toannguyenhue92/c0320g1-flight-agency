@@ -15,5 +15,8 @@ public interface BillRepository extends JpaRepository<Bill, Long>, JpaSpecificat
     Page<Bill> findByBillCodeIs(String billCode,Pageable pageable);
     Page<Bill> findByBillCodeIsAndTaxCodeIsOrTransaction_Account_FullNameContaining(String billCode, String billTax, String name, Pageable pageable);
     Page<Bill> findByBillCodeIsAndTransaction_Account_FullNameContaining(String billCode, String name, Pageable pageable);
+
+    Page<Bill> findByBillCodeIsAndTaxCodeIsAndTransaction_Account_FullNameContaining(String billCode,String billTax,String name,Pageable pageable);
 }
+
 
