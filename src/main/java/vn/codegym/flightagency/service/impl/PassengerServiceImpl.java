@@ -109,6 +109,7 @@ public class PassengerServiceImpl implements PassengerService {
         } else {
             passenger = transferToPassenger(_passenger);
         }
+        passenger.setCheckin(false);
         return passengerRepository.save(passenger);
     }
 
