@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -54,4 +56,9 @@ public class FlightSchedule {
     @OneToMany(mappedBy = "flightSchedule")
     @JsonIgnore
     private List<Transaction> transactions;
+
+    @Column(name = "discount")
+    @Min(0)
+    @Max(1)
+    private Double discount;
 }
