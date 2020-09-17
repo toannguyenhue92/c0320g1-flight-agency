@@ -13,4 +13,5 @@ public class AccountDTO {
     private String email;
     private String phoneNumber;
     private String avatarImageUrl;
+    private String address;
 }
