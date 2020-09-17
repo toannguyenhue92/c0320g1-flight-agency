@@ -142,32 +142,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     //    CREATE BY ANH DUC
     @Override
     public Page<AccountDTO> findAllByFullName(String name, Pageable pageable) {
-        return transferToDTO(employeeRepository.findAllByFullName(name, pageable));
+        return transferToDTO(employeeRepository.findAllByFullNameAndRoleAndStatus(name,"ROLE_EMPLOYEE",true, pageable));
     }
 
     //    CREATE BY ANH DUC
     @Override
     public Page<AccountDTO> findAllByBirthday(LocalDate birthday, Pageable pageable) {
-        return transferToDTO(employeeRepository.findAllByBirthDate(birthday, pageable));
+        return transferToDTO(employeeRepository.findAllByBirthDateAndRoleAndStatus(birthday,"ROLE_EMPLOYEE",true, pageable));
     }
 
     //    CREATE BY ANH DUC
     @Override
     public Page<AccountDTO> findAllByPhoneNumber(String phone, Pageable pageable) {
-        return transferToDTO(employeeRepository.findAllByPhoneNumber(phone, pageable));
+        return transferToDTO(employeeRepository.findAllByPhoneNumberAndRoleAndStatus(phone,"ROLE_EMPLOYEE",true, pageable));
     }
 
 
     //    CREATE BY ANH DUC
     @Override
     public Page<AccountDTO> findAllByGender(String address, Pageable pageable) {
-        return transferToDTO(employeeRepository.findAllByAddress(address, pageable));
+        return transferToDTO(employeeRepository.findAllByAddressAndRoleAndStatus(address,"ROLE_EMPLOYEE",true, pageable));
     }
 
     //    CREATE BY ANH DUC
     @Override
     public Page<AccountDTO> findAllByEmail(String email, Pageable pageable) {
-        return transferToDTO(employeeRepository.findAllByEmail(email, pageable));
+        return transferToDTO(employeeRepository.findAllByEmailAndRoleAndStatus(email,"ROLE_EMPLOYEE",true, pageable));
     }
 
     //    CREATE BY ANH DUC

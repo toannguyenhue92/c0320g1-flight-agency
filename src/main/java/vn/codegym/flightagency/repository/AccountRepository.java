@@ -20,19 +20,19 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
     public Account findByEmail(String email);
 
     //    CREATE BY ANH DUC
-    public Page<Account> findAllByFullName(String name, Pageable pageable);
+    public Page<Account> findAllByFullNameAndRoleAndStatus(String name,String role,Boolean status, Pageable pageable);
 
     //    CREATE BY ANH DUC
-    public Page<Account> findAllByEmail(String email, Pageable pageable);
+    public Page<Account> findAllByEmailAndRoleAndStatus(String email,String role,Boolean status, Pageable pageable);
 
     //    CREATE BY ANH DUC
-    public Page<Account> findAllByBirthDate(LocalDate birthday, Pageable pageable);
+    public Page<Account> findAllByBirthDateAndRoleAndStatus(LocalDate birthday,String role,Boolean status, Pageable pageable);
 
     //    CREATE BY ANH DUC
-    public Page<Account> findAllByPhoneNumber(String phone, Pageable pageable);
+    public Page<Account> findAllByPhoneNumberAndRoleAndStatus(String phone,String role,Boolean status, Pageable pageable);
 
     //    CREATE BY ANH DUC
-    public Page<Account> findAllByAddress(String gender, Pageable pageable);
+    public Page<Account> findAllByAddressAndRoleAndStatus(String gender,String role,Boolean status, Pageable pageable);
 
     //    CREATE BY ANH DUC
     public Page<Account> findAllByRoleAndStatus(String role,Boolean status, Pageable pageable);
